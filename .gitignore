@@ -1,0 +1,57 @@
+bin
+bin_vs2010
+ipch
+Temp
+x64
+.vs
+obj
+debug
+release
+
+
+*.sdf
+*.opensdf
+*.suo
+*.aps
+*.pdb
+*.db
+*.lsp
+*.log
+*.tlog
+*.dwl
+*.dwl2
+*.exp
+*.pch
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Executables
+*.exe
+*.out
+*.app

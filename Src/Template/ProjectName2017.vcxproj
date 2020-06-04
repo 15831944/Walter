@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{74BE5750-44E4-4C50-83A8-4C7B850D7AAC}</ProjectGuid>
+    <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\2017\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\2017\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\2017\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\2017\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc-win32;..\..\..\CadCommon\CadCommon\TYCom\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-win32;..\..\..\CadCommon\CadCommon\TYCom\lib\x86\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>CadCommon2017.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\CadCommon\TYCom\lib\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc-win32;..\..\..\CadCommon\CadCommon\TYCom\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-win32;..\..\..\CadCommon\CadCommon\TYCom\lib\x86\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>CadCommon2017.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Common\Access\AccessDatabase.cpp" />
+    <ClCompile Include="Common\Com.cpp" />
+    <ClCompile Include="Common\Excel\CExcel.cpp" />
+    <ClCompile Include="Common\Excel\Excel.cpp" />
+    <ClCompile Include="Common\MarkupXml\Markup.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\GridCell.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\GridCellBase.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrl.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrlUtil.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\GridDropTarget.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\InPlaceEdit.cpp" />
+    <ClCompile Include="UiCommon\MfcGridCtrl\TitleTip.cpp" />
+    <ClCompile Include="UI\DialogFileName.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\Access\AccessDatabase.h" />
+    <ClInclude Include="Common\Com.h" />
+    <ClInclude Include="Common\Excel\CApplication.h" />
+    <ClInclude Include="Common\Excel\CBorder.h" />
+    <ClInclude Include="Common\Excel\CBorders.h" />
+    <ClInclude Include="Common\Excel\CExcel.h" />
+    <ClInclude Include="Common\Excel\CFont0.h" />
+    <ClInclude Include="Common\Excel\Cnterior.h" />
+    <ClInclude Include="Common\Excel\CRange.h" />
+    <ClInclude Include="Common\Excel\CRanges.h" />
+    <ClInclude Include="Common\Excel\CWorkbook.h" />
+    <ClInclude Include="Common\Excel\CWorkbooks.h" />
+    <ClInclude Include="Common\Excel\CWorksheet.h" />
+    <ClInclude Include="Common\Excel\CWorksheets.h" />
+    <ClInclude Include="Common\Excel\Excel.h" />
+    <ClInclude Include="Common\MarkupXml\Markup.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="res\resource.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellRange.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\GridCell.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\GridCellBase.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrl.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrlUtil.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\GridDropTarget.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\InPlaceEdit.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\MemDC.h" />
+    <ClInclude Include="UiCommon\MfcGridCtrl\TitleTip.h" />
+    <ClInclude Include="UI\DialogFileName.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="UiCommon\MfcGridCtrl\CellTypes\vssver2.scc" />
+    <None Include="UiCommon\MfcGridCtrl\vssver2.scc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\ProjectName.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="AsdkAcUiSample.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

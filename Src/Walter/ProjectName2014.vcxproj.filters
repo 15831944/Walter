@@ -48,9 +48,6 @@
     <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.cpp">
       <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Access\AccessDatabase.cpp">
-      <Filter>Common\Access</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Excel\CExcel.cpp">
       <Filter>Common\Excel</Filter>
     </ClCompile>
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.h">
       <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Access\AccessDatabase.h">
-      <Filter>Common\Access</Filter>
     </ClInclude>
     <ClInclude Include="Common\Excel\CApplication.h">
       <Filter>Common\Excel</Filter>
@@ -199,9 +193,6 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{cd77ccbf-6816-4b01-bc8b-7f1a95779258}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Access">
-      <UniqueIdentifier>{d5bec76f-09b5-429b-a6dd-a51a7b12f7bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common\Excel">
       <UniqueIdentifier>{7d2eae31-ab49-41ca-a21f-5d530065120a}</UniqueIdentifier>

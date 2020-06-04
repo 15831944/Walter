@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "../../../stdafx.h"
+#include "stdafx.h"
 #include "GridCellGroup.h"
 #include "../GridCtrl.h"
 

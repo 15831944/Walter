@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "../../../stdafx.h"
+#include "stdafx.h"
 #include "GridCellButton.h"
 
 #ifdef _DEBUG

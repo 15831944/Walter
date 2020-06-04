@@ -117,7 +117,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "../stdafx.h"
+#include "stdafx.h"
 #include "MemDC.h"
 //#include <afxcontrolbarutil.h>
 #include "GridCtrl.h"

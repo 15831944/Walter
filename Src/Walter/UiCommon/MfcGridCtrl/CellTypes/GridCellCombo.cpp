@@ -34,7 +34,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "../../../stdafx.h"
+#include "stdafx.h"
 #include "../GridCell.h"
 #include "../GridCtrl.h"
 

@@ -1,4 +1,4 @@
-#include "../../StdAfx.h"
+#include "StdAfx.h"
 #include "CExcel.h"
 
 static WCHAR* CharToWchar(const char * pchar)

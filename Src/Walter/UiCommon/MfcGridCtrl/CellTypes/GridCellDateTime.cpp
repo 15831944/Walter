@@ -13,7 +13,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "../../../stdafx.h"
+#include "stdafx.h"
 #include "../GridCtrl.h"
 #include "../GridCell.h"
 #include "GridCellDateTime.h"

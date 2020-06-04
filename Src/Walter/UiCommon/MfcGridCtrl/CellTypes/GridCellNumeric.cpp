@@ -4,7 +4,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "../../../stdafx.h"
+#include "stdafx.h"
 #include "GridCellNumeric.h"
 #include "../inplaceedit.h"
 #include "../GridCtrl.h"

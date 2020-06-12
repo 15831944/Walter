@@ -283,19 +283,26 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 			//图框的插入坐标值
 			AcGePoint3d pnt1(pnt.x+Py*A1_wide,pnt.y-Px*A1_height,pnt.z);
 			//插入图框
-			cutterTools[i].m_tkId = CBlockUtil::InsertDwgAsBlockRef(tuKuangFileName, L"A1", ACDB_MODEL_SPACE, pnt1, 0, 1);
-
-		
+			bool isExistTK = CCommonUtil::IsFileExist(tuKuangFileName);
+			if (!isExistTK)
+			{
+				acutPrintf(L"File Name:" + tuKuangFileName + " not exist\n");
+			}
+			else
+			{
+				cutterTools[i].m_tkId = CBlockUtil::InsertDwgAsBlockRef(tuKuangFileName, L"A1", ACDB_MODEL_SPACE, pnt1, 0, 1);
+			}
+			
 			for (int j = 0; j < cutterTools[i].toType.size(); j++)
 				{
 					//获取图纸
 					int zPx=j/2;
 					int zPy=i%2;
-					CString tzFilename=cadPath + "\\Support\\Walter\\刀具型号\\"+cutterTools[i].toType[j]+".dwg";
+					CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
 					bool isExist = CCommonUtil::IsFileExist(tzFilename);
 					if (!isExist)
 					{
-						acutPrintf(L"文件名:"+tzFilename+"不存在");
+						acutPrintf(L"File Name:"+tzFilename+"not exist\n");
 						continue;
 					}
 
@@ -309,7 +316,13 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 		{
 			AcGePoint3d pnt1(pnt.x+Py*A2_wide,pnt.y-Px*A2_height,pnt.z);
 			//插入图框
-			cutterTools[i].m_tkId = CBlockUtil::InsertDwgAsBlockRef(tuKuangFileName, L"A2", ACDB_MODEL_SPACE, pnt1, 0, 1);
+			bool isExistTK = CCommonUtil::IsFileExist(tuKuangFileName);
+			if (!isExistTK)
+			{
+				acutPrintf(L"File Name:" + tuKuangFileName + "not exist\n");
+			}
+			else
+			    cutterTools[i].m_tkId = CBlockUtil::InsertDwgAsBlockRef(tuKuangFileName, L"A2", ACDB_MODEL_SPACE, pnt1, 0, 1);
 
 			
 			for (int j = 0; j < cutterTools[i].toType.size(); j++)
@@ -317,11 +330,11 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				//获取图纸
 				int zPx=j/2;
 				int zPy=i%2;
-				CString tzFilename=cadPath + "\\Support\\Walter\\刀具型号\\"+cutterTools[i].toType[j]+".dwg";
+				CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
-					acutPrintf(L"文件名:"+tzFilename+"不存在");
+					acutPrintf(L"File Name:"+tzFilename+"not exist\n");
 					continue;
 				}
 
@@ -335,6 +348,12 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 		{
 			AcGePoint3d pnt1(pnt.x+Py*A3_wide,pnt.y-Px*A3_height,pnt.z);
 			//插入图框
+			bool isExistTK = CCommonUtil::IsFileExist(tuKuangFileName);
+			if (!isExistTK)
+			{
+				acutPrintf(L"File Name:" + tuKuangFileName + "not exist\n");
+			}
+			else
 			cutterTools[i].m_tkId = CBlockUtil::InsertDwgAsBlockRef(tuKuangFileName, L"A3", ACDB_MODEL_SPACE, pnt1, 0, 1);
 
 			for (int j = 0; j < cutterTools[i].toType.size(); j++)
@@ -342,11 +361,11 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				//获取图纸
 				int zPx=j/2;
 				int zPy=i%2;
-				CString tzFilename=cadPath + "\\Support\\Walter\\刀具型号\\"+cutterTools[i].toType[j]+".dwg";
+				CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
-					acutPrintf(L"文件名:"+tzFilename+"不存在");
+					acutPrintf(L"File Name:"+tzFilename+"not exist\n");
 					continue;
 				}
 
@@ -381,9 +400,10 @@ void WalterDialog::OnBnClickedDraw()
 	//第三步：根据读取的excel数据插入对应的图框
 	//获取图框文件名
 	//获取CAD安装那个路径
-	CString cadPath =COpenExcelDialog::HS_GetAppPath();
+	CString cadPath = L"C:\\Users\\nv4390\\Desktop\\20200612";  //COpenExcelDialog::HS_GetAppPath();
+	
 	//获取图纸框
-	CString tkFilename= cadPath + "\\Support\\Walter\\图框\\"+DrawFrame+".dwg";
+	CString tkFilename= cadPath + "\\Walter\\TuKuang\\"+DrawFrame+".dwg";
 
 	TUKuangType type;
 	if (DrawFrame == L"A1")

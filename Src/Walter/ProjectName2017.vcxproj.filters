@@ -48,9 +48,6 @@
     <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.cpp">
       <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Access\AccessDatabase.cpp">
-      <Filter>Common\Access</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Excel\CExcel.cpp">
       <Filter>Common\Excel</Filter>
     </ClCompile>
@@ -65,6 +62,15 @@
     </ClCompile>
     <ClCompile Include="UI\DialogFileName.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CutterTool.cpp">
+      <Filter>WalterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenExcelDialog.cpp">
+      <Filter>WalterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="WalterDialog.cpp">
+      <Filter>WalterUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +128,6 @@
     <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.h">
       <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Access\AccessDatabase.h">
-      <Filter>Common\Access</Filter>
-    </ClInclude>
     <ClInclude Include="Common\Excel\CApplication.h">
       <Filter>Common\Excel</Filter>
     </ClInclude>
@@ -174,6 +177,15 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="res\resource.h" />
+    <ClInclude Include="CutterTool.h">
+      <Filter>WalterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenExcelDialog.h">
+      <Filter>WalterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="WalterDialog.h">
+      <Filter>WalterUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -211,6 +223,9 @@
     </Filter>
     <Filter Include="Common\Databse">
       <UniqueIdentifier>{529dc176-be6a-46a5-8409-f86ba144deaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WalterUI">
+      <UniqueIdentifier>{72f080ee-cec6-46d6-bc5a-4a4d23d73f9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

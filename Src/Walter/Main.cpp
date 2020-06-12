@@ -42,7 +42,7 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-extern "C" HWND adsw_acadMainWnd();
+//extern "C" HWND adsw_acadMainWnd();
 
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.

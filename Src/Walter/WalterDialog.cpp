@@ -409,9 +409,6 @@ void WalterDialog::OnBnClickedDraw()
 		cutterTools[i].m_tkType = type;
 		AcDbObjectId eId = cutterTools[i].SetTable();
 		
-
-		//设置块属性
-		AcDbEntity *pEt=CObjectUtil::GetObjectPointer(cutterTools[i].m_tkId);
 		//输入实体ID得到指针
 		int result=SetBlockAttribute(cutterTools[i].m_tkId);
 

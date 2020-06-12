@@ -11,7 +11,7 @@
 //
 
 
-#include "resource.h"  // main symbols
+#include "res/resource.h"  // main symbols
 
 
 #define PI  3.14159265359

@@ -66,8 +66,6 @@ BEGIN_MESSAGE_MAP(AsdkAcUiDialogSample, CAcUiDialog)
 	ON_EN_KILLFOCUS(IDC_EDIT_XPT, OnKillfocusEditXpt)
 	ON_EN_KILLFOCUS(IDC_EDIT_YPT, OnKillfocusEditYpt)
 	ON_EN_KILLFOCUS(IDC_EDIT_ZPT, OnKillfocusEditZpt)
-	//}}AFX_MSG_MAP
-	ON_BN_CLICKED(IDC_BUTTON1, &AsdkAcUiDialogSample::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -374,4 +372,10 @@ BOOL AsdkAcUiDialogSample::OnInitDialog()
 void AsdkAcUiDialogSample::OnBnClickedButton1()
 {
 	CPolylineUtil::CreateRectangle(AcGePoint2d(0, 0), AcGePoint2d(100, 200), 1);
+}
+
+
+void AsdkAcUiDialogSample::OnBnClickedButton5()
+{
+	// TODO: 在此添加控件通知处理程序代码
 }

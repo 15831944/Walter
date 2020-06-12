@@ -33,6 +33,32 @@ BEGIN
     PUSHBUTTON      "取消",IDCANCEL,252,156,50,14
 END
 
+IDD_Walter DIALOGEX 0, 0, 226, 140
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "批量导入标准图纸"
+FONT 10, "微软雅黑", 400, 0, 0x86
+BEGIN
+    EDITTEXT        IDC_FilePath,42,7,138,14,ES_AUTOHSCROLL
+    LTEXT           "导入清单：",IDC_STATIC,5,10,33,8
+    PUSHBUTTON      "浏览",IDC_BROWSE,182,7,41,14
+    LTEXT           "图框选择：",IDC_STATIC,4,30,34,8
+    COMBOBOX        IDC_COMBO1,39,29,59,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "项目图纸号：",IDC_STATIC,122,30,41,8
+    EDITTEXT        IDC_EDIT2,163,28,59,12,ES_AUTOHSCROLL
+    LTEXT           "设计人员：",IDC_STATIC,4,51,34,8
+    EDITTEXT        IDC_EDIT3,39,48,59,12,ES_AUTOHSCROLL
+    LTEXT           "设计日期：",IDC_STATIC,123,51,34,8
+    EDITTEXT        IDC_EDIT4,163,49,59,12,ES_AUTOHSCROLL
+    LTEXT           "审核人员：",IDC_STATIC,4,71,34,8
+    EDITTEXT        IDC_EDIT5,39,68,59,12,ES_AUTOHSCROLL
+    LTEXT           "审核日期：",IDC_STATIC,123,71,34,8
+    EDITTEXT        IDC_EDIT6,162,69,60,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "更新审核人员和日期",IDC_UpdateCheckDateAndName,145,94,77,14
+    PUSHBUTTON      "更新设计人员和日期",IDC_UpdateDesDateAndName,8,94,77,14
+    PUSHBUTTON      "更新Bom明细表",IDC_UpdateBomExcel,8,117,77,14
+    PUSHBUTTON      "生成图纸",IDC_DRAW,145,117,77,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -42,12 +68,18 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
-    IDD_DIALOG2, DIALOG
+    "IDD_DIALOG2", DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 302
         TOPMARGIN, 7
         BOTTOMMARGIN, 170
+    END
+
+    IDD_Walter, DIALOG
+    BEGIN
+        RIGHTMARGIN, 224
+        TOPMARGIN, 1
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -58,8 +90,30 @@ END
 // AFX_DIALOG_LAYOUT
 //
 
-IDD_DIALOG2 AFX_DIALOG_LAYOUT
+IDD_DIALOG2 AFX_DIALOG_LAYOUT 
 BEGIN
+    0x0000
+END
+
+IDD_Walter AFX_DIALOG_LAYOUT 
+BEGIN
+    0x0000
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_Walter DLGINIT
+BEGIN
+    IDC_COMBO1, 0x403, 3, 0
+0x3141, "\000" 
+    IDC_COMBO1, 0x403, 3, 0
+0x3241, "\000" 
+    IDC_COMBO1, 0x403, 3, 0
+0x3341, "\000" 
     0
 END
 

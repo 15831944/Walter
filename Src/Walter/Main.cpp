@@ -34,6 +34,8 @@
 #include "VBA/VBA_Inc.h"
 #include "Common/CommonUtil.h"
 
+#include "WalterDialog.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,14 +54,30 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
 void dialogCreate()
 {
-	AcDbObjectId id = CLineUtil::CreateLine(AcGePoint3d(0,0,0), AcGePoint3d(100, 0, 0));
+	
+	/*WalterDialog g_Walter;
+	g_Walter.DoModal();*/
 
-	//CCommonUtil::IsFileExist(L"");
-	// Modal
-	AsdkAcUiDialogSample dlg(CWnd::FromHandle(adsw_acadMainWnd()));
-	INT_PTR nReturnValue = dlg.DoModal();
+	g_Walter = new WalterDialog(acedGetAcadFrame());
+	g_Walter->Create(IDD_Walter);
+	g_Walter->ShowWindow(SW_SHOW);
 
+
+	
 }
+//更新设计人员
+void updateAttr()
+{
+	g_Walter->UpdateDesignerAttr();
+}
+
+//更新审核人员
+void UpadeAtuAttr()
+ {
+	 g_Walter->UpdateAtuAttr();
+
+ }
+
 
 static void initApp()
 {
@@ -67,19 +85,31 @@ static void initApp()
 	CAcModuleResourceOverride resOverride;
 
 	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("ASDKACUISAMPLE"),
-		_T("ACUISAMPLE"),
+		_T("GYZ1"),
+		_T("GYZ1"),
 		ACRX_CMD_MODAL,
 		dialogCreate,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("gx"),
+		_T("gx"),
+		ACRX_CMD_MODAL,
+		updateAttr,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 
-	//自定义对象的初始化工作
-	//ZffDwgScale::rxInit();
-	//acrxBuildClassHierarchy();
-	//acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE));
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("setCheck"),
+		_T("setCheck"),
+		ACRX_CMD_MODAL,
+		UpadeAtuAttr,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 
 	//删除双击事件
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
@@ -140,7 +170,7 @@ void menu()
 	CAcadMenuGroup IMenuGroup(IMenuGroups.Item(index));
 	CAcadPopupMenus IPopUpMenus(IMenuGroup.get_Menus());
 
-	CString cstrMenuName = _T("图源工具");//自定义主菜单
+	CString cstrMenuName = _T("瓦尔特工具");//自定义主菜单
 
 	VariantInit(&index);
 	V_VT(&index) = VT_BSTR;
@@ -157,23 +187,13 @@ void menu()
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
-		CAcadPopupMenu IPop1(IPopUpMenu.AddSubMenu(index, _T("&示例1")));//子菜单
+		IPopUpMenu.AddMenuItem(index, _T("&批量导入标准图纸"),_T("_GYZ1 "));
 
 
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
-		IPop1.AddMenuItem(index, _T("&主菜单1"), _T("_ZT1 "));//子菜单
-
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPop1.AddMenuItem(index, _T("&子菜单示例2"), _T("_ZT2 "));//子菜单
-
-
-
-		IPopUpMenu.AddMenuItem(index, _T("&主菜单2"), _T("_GYT1 "));//子菜单
-
+		IPopUpMenu.AddMenuItem(index, _T("&参数化设计非标刀具"),_T("_GYZ2 "));
 
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();

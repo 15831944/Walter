@@ -17,7 +17,7 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-#include "..\resource.h"
+#include "..\res\resource.h"
 #include <dbsymtb.h>
 #include <dbapserv.h>
 #include <adslib.h>
@@ -88,6 +88,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton5();
 };
 
 //{{AFX_INSERT_LOCATION}}

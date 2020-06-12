@@ -161,7 +161,9 @@
     <ClCompile Include="Common\MarkupXml\Markup.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="OpenExcelDialog.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -214,6 +216,7 @@
     <ClCompile Include="UI\DialogFileName.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="WalterDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Com.h" />
@@ -231,7 +234,9 @@
     <ClInclude Include="Common\Excel\CWorksheets.h" />
     <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="Common\MarkupXml\Markup.h" />
+    <ClInclude Include="CutterTool.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="OpenExcelDialog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
@@ -253,6 +258,7 @@
     <ClInclude Include="UiCommon\MfcGridCtrl\MemDC.h" />
     <ClInclude Include="UiCommon\MfcGridCtrl\TitleTip.h" />
     <ClInclude Include="UI\DialogFileName.h" />
+    <ClInclude Include="WalterDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -267,7 +273,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="AsdkAcUiSample.rc" />
+      <UserProperties RESOURCE_FILE="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

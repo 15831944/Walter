@@ -148,6 +148,7 @@
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>CadCommon2014.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>C:\Program Files\Autodesk\AutoCAD 2014\Support\walter.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

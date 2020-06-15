@@ -87,3 +87,20 @@ vCString COpenExcelDialog::TYCOM_GetFilesFromDialog( int maxFileNumber)
 
 	return files;
 }
+CString COpenExcelDialog::HS_GetAppPath()
+{
+	WCHAR lpFileName[MAX_PATH];
+	GetModuleFileName(AfxGetInstanceHandle(), lpFileName, MAX_PATH);
+	CString strFileName = lpFileName;
+	int nIndex = strFileName.ReverseFind('\\');
+	CString strPath;
+	if (nIndex > 0)
+	{
+		strPath = strFileName.Left(nIndex);
+	}
+	else
+	{
+		strPath = "";
+	}
+	return strPath;
+}

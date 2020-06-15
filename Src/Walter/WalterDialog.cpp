@@ -308,25 +308,38 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 
 			for (int j = 0; j < cutterTools[i].toType.size(); j++)
 			{
-				//获取图纸
-				int zPx = j / 2;
-				int zPy = i % 2;
-				CString tzFilename = cadPath + "\\Walter\\DaoJuXingHao\\" + cutterTools[i].toType[j] + ".dwg";
-				bool isExist = CCommonUtil::IsFileExist(tzFilename);
-				if (!isExist)
-				{
-					acutPrintf(L"File Name:" + tzFilename + "not exist\n");
-					continue;
+					//获取图纸
+					int zPx=j/2;
+					int zPy=j%2;
+					CString tzFilename=cadPath + "\\Support\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
+					bool isExist = CCommonUtil::IsFileExist(tzFilename);
+					if (!isExist)
+					{
+						acutPrintf(L"File Name:"+tzFilename+"not exist\n");
+						continue;
+					}
+					AcDbObjectId tzId;
+					//刀具图纸插入坐标值
+					AcGePoint3d pnt2(pnt1.x+((A1_wide)/3)+zPy*350,pnt1.y+(A1_height*2/3.0)-zPx*200,pnt.z);
+					//插入刀具图纸
+				    tzId =CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+					 AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
+
+					AcDbEntityPointer pEnt(tzId, AcDb::kForWrite);
+					if (pEnt.openStatus() == Acad::eOk)
+					{
+						AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+						if (pBlkRef == NULL)
+						{
+							return -1;
+						}
+
+						AcGeMatrix3d matrix;
+						matrix.setTranslation(vect);
+						pBlkRef->transformBy(matrix);
+					}
 				}
-				//刀具图纸插入坐标值
-				AcGePoint3d pnt2(pnt1.x + ((A1_wide) / 3) + zPy * 250, pnt1.y + (A1_height * 2 / 3.0) - zPx * 100, pnt.z);
-				
-				//插入刀具图纸
-				AcDbObjectId tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
-				AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
-				CBlockUtil::SetBlockReferencePosition(tzId, AcGePoint3d(pnt2.x+vect.x, pnt2.y + vect.y, pnt2.z + vect.z));
 			}
-		}
 		else if(tktype==A2)
 		{
 			AcGePoint3d pnt1(pnt.x+Py*A2_wide,pnt.y-Px*A2_height,pnt.z);
@@ -344,8 +357,8 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 			{
 				//获取图纸
 				int zPx=j/2;
-				int zPy=i%2;
-				CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
+				int zPy=j%2;
+				CString tzFilename=cadPath + "\\Support\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
@@ -354,12 +367,25 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				}
 
 				//刀具图纸插入坐标值
-				AcGePoint3d pnt2(pnt.x+((A2_wide)/3)+zPy*250,pnt.y+(A2_height*2/3.0)-zPx*100,pnt.z);
+				AcGePoint3d pnt2(pnt1.x+((A2_wide)/3)+zPy*200,pnt1.y+(A2_height*2/3.0)-zPx*150,pnt.z);
+				AcDbObjectId tzId;
 				//插入刀具图纸
-				AcDbObjectId tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
-
+				tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
 				AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
-				CBlockUtil::SetBlockReferencePosition(tzId, AcGePoint3d(vect.x, vect.y, vect.z));
+
+				AcDbEntityPointer pEnt(tzId, AcDb::kForWrite);
+				if (pEnt.openStatus() == Acad::eOk)
+				{
+					AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+					if (pBlkRef == NULL)
+					{
+						return -1;
+					}
+
+					AcGeMatrix3d matrix;
+					matrix.setTranslation(vect);
+					pBlkRef->transformBy(matrix);
+				}
 			}
 		}
 		else
@@ -377,9 +403,9 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 			for (int j = 0; j < cutterTools[i].toType.size(); j++)
 			{
 				//获取图纸
-				int zPx=j/2;
-				int zPy=i%2;
-				CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
+				int zPx = j/2;
+				int zPy = j%2;
+				CString tzFilename=cadPath + "\\Support\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
@@ -388,12 +414,26 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				}
 
 				//刀具图纸插入坐标值
-				AcGePoint3d pnt2(pnt.x+((A3_wide)/3)+zPy*250,pnt.y+(A3_height*2/3.0)-zPx*100,pnt.z);
+				AcGePoint3d pnt2(pnt1.x+((A3_wide)/3)+zPy*100,pnt1.y+(A3_height*2/3.0)-zPx*100,pnt.z);
 				//插入刀具图纸
-				AcDbObjectId tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
-
+				AcDbObjectId tzId;
+				//插入刀具图纸
+				tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
 				AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
-				CBlockUtil::SetBlockReferencePosition(tzId, AcGePoint3d(vect.x, vect.y, vect.z));
+
+				AcDbEntityPointer pEnt(tzId, AcDb::kForWrite);
+				if (pEnt.openStatus() == Acad::eOk)
+				{
+					AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+					if (pBlkRef == NULL)
+					{
+						return -1;
+					}
+
+					AcGeMatrix3d matrix;
+					matrix.setTranslation(vect);
+					pBlkRef->transformBy(matrix);
+				}
 			}
 		}
 	}
@@ -403,7 +443,7 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 //生成图纸
 void WalterDialog::OnBnClickedDraw()
 {
-	
+	CDocLock lock;
 	UpdateData();
 	g_filePath = FilePath;
 	g_frame = DrawFrame;

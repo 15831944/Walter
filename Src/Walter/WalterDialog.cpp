@@ -428,7 +428,7 @@ void WalterDialog::OnBnClickedDraw()
 	//第三步：根据读取的excel数据插入对应的图框
 	//获取图框文件名
 	//获取CAD安装那个路径
-	CString cadPath = COpenExcelDialog::HS_GetAppPath();
+	CString cadPath = TY_GetAppPath();
 	
 	//获取图纸框
 	CString tkFilename= cadPath + "\\Walter\\TuKuang\\"+DrawFrame+".dwg";
@@ -456,8 +456,9 @@ void WalterDialog::OnBnClickedDraw()
 	{
 
 		cutterTools[i].m_tkType = type;
-		AcDbObjectId eId = cutterTools[i].SetTable();
-		
+		AcDbObjectId tableId = cutterTools[i].CreateTable();
+		CXDataUtil::AddEntityInfo(tableId, L"BOM_TABLE", cutterTools[i].toolNumber);
+
 		//输入实体ID得到指针
 		int result=SetBlockAttribute(cutterTools[i].m_tkId);
 
@@ -624,9 +625,8 @@ void WalterDialog::UpdateBomExcel()
 	for (int i = 0; i < tableIds.size(); i++)
 	{
 		CString value;
-		CXDataUtil::ReadEntityInfo(tableIds[i], L"BOM_TABLE", value);
-		if(value == L"1")
-		CObjectUtil::DeleteObject(tableIds[i]);
+		if(CXDataUtil::ReadEntityInfo(tableIds[i], L"BOM_TABLE", value) == 0)
+		    CObjectUtil::DeleteObject(tableIds[i]);
 	}
 	
 	//第三步 给每个图框建立新表
@@ -658,7 +658,8 @@ void WalterDialog::UpdateBomExcel()
 	{
 		cutterTools[i].m_tkId=blockIds[i];
 		cutterTools[i].m_tkType = type;
-	    cutterTools[i].SetTable();
+	    AcDbObjectId tableId = cutterTools[i].CreateTable();
+		CXDataUtil::AddEntityInfo(tableId, L"BOM_TABLE", cutterTools[i].toolNumber);
 	}
 	UpdateData(FALSE);
 }

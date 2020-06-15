@@ -15,7 +15,7 @@ CCutterTool::~CCutterTool(void)
 {
 }
 //绘制表格
-AcDbObjectId CCutterTool::SetTable()
+AcDbObjectId CCutterTool::CreateTable()
 {
 	CDocLock lock;
 	AcGePoint3d pnt(0,0,0);
@@ -83,8 +83,6 @@ AcDbObjectId CCutterTool::SetTable()
 	}
 	pTable->setPosition(insertPos);
 	AcDbObjectId tableId = CDwgDatabaseUtil::PostToModelSpace(pTable);
-
-
 	return tableId;
 }
 //操作excel表格

@@ -7,7 +7,7 @@ class CCutterTool
 public:
 	CCutterTool(void);
 	~CCutterTool(void);
-	AcDbObjectId SetTable();
+	AcDbObjectId CreateTable();
 public:
 	 CString toolNumber;//µ¶¾ßºÅ
 	 vCString proContent;//µ¶¾ßÄÚÈÝ

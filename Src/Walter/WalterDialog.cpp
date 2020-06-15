@@ -10,8 +10,18 @@
 #include "Com.h"
 #include "../Inc/Entity/BlockUtil.h"
 #include "../Inc/Interaction/GetInputUtil.h"
+#include "Others/ToolingUtil.h"
+#include "Others/XDataUtil.h"
+#include "Entity/ObjectUtil.h"
 
 WalterDialog* g_Walter = NULL;
+CString g_filePath;
+CString g_frame;
+CString g_draw;
+CString g_designer;
+CString g_desDate;
+CString g_checker;
+CString g_checkDate;
 
 // WalterDialog 对话框
 
@@ -132,8 +142,8 @@ int WalterDialog::InputCheckDesDateOrName()
 		MessageBox(L"设计日期不能为空，请输入！");
 		return 1;
 	 }
-	return 0;
 	UpdateData(FALSE);
+	return 0;
 }
 
 //判断审核人员以及日期输入框是否为空
@@ -150,8 +160,8 @@ int WalterDialog::InputCheckAtuDateOrName()
 		MessageBox(L"审核日期不能为空，请输入！");
 		return 1;
 	}
-	return 0;
 	UpdateData(FALSE);
+	return 0;
 }
 
 //设置块默认属性
@@ -164,6 +174,8 @@ int WalterDialog::SetBlockAttribute(AcDbObjectId blkId)
 		AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
 		if (pBlkRef == NULL)
 		{
+			if(pEnt != NULL)
+				pEnt->close();
 			return -1;
 		}
 
@@ -305,11 +317,26 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 						acutPrintf(L"File Name:"+tzFilename+"not exist\n");
 						continue;
 					}
-
+					AcDbObjectId tzId;
 					//刀具图纸插入坐标值
 					AcGePoint3d pnt2(pnt1.x+((A1_wide)/3)+zPy*250,pnt1.y+(A1_height*2/3.0)-zPx*100,pnt.z);
 					//插入刀具图纸
-					CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+				    tzId =CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+					 AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
+
+					AcDbEntityPointer pEnt(tzId, AcDb::kForWrite);
+					if (pEnt.openStatus() == Acad::eOk)
+					{
+						AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+						if (pBlkRef == NULL)
+						{
+							return -1;
+						}
+
+						AcGeMatrix3d matrix;
+						matrix.setTranslation(vect);
+						pBlkRef->transformBy(matrix);
+					}
 				}
 			}
 		else if(tktype==A2)
@@ -384,6 +411,13 @@ void WalterDialog::OnBnClickedDraw()
 {
 	CDocLock lock;
 	UpdateData();
+	g_filePath = FilePath;
+	g_frame = DrawFrame;
+	g_draw = DrawNumber;
+	g_designer = Designer;
+	g_desDate = DesDate;
+	g_checker = AuditStaff;
+	g_checkDate = AudDate;
 	//第一步：参数检测
 	if(InputCheck() != 0)
 	{
@@ -452,17 +486,37 @@ void WalterDialog::OnCbnSelchangeCombo1()
 //初始化下拉框
 BOOL WalterDialog::OnInitDialog()
 {
+	int initNum=0;
 	CDialogEx::OnInitDialog();
+	if(g_frame==L""||g_frame==L"A1")
+	{
+		((CComboBox *)GetDlgItem(IDC_COMBO1))->SetCurSel(0);
+	}
+	else if(g_frame==L"A2")
+	{
+		((CComboBox *)GetDlgItem(IDC_COMBO1))->SetCurSel(1);
+	}
+	else
+	{
+		((CComboBox *)GetDlgItem(IDC_COMBO1))->SetCurSel(2);
+	}
+	UpdateData(TRUE);
 	//初始化下拉框
-	((CComboBox *)GetDlgItem(IDC_COMBO1))->SetCurSel(0);
+	FilePath = g_filePath;
+	DrawNumber = g_draw;
+	Designer = g_designer;
+	DesDate = g_desDate;
+	AuditStaff = g_checker;
+	AudDate = g_checkDate;
 	//下拉框对应的变量.SetCurSel(0);
-
+	UpdateData(FALSE);
 	return true;
 }
 
 //获取刀具图框的ID
 vAcDbObjectId WalterDialog::GetToolsObjectId()
 {
+	CDocLock lock;
 	vAcDbObjectId blockIds;
 	vAcDbObjectId vids;
 	CString blockName;
@@ -493,13 +547,20 @@ vAcDbObjectId WalterDialog::GetToolsObjectId()
 void WalterDialog::OnBnClickedUpdatedesdateandname()
 {
 	//WalterDialog::OnOK();
+	UpdateData();
+	g_designer = Designer;
+	g_desDate = DesDate;
+	UpdateData(FALSE);
 	CGetInputUtil::SendCommandToCad(L"gx ");
 }
 
 void WalterDialog::UpdateDesignerAttr()
 {
 	//第一步：检查输入是否为空
-     InputCheckDesDateOrName();
+    if(InputCheckDesDateOrName()!=0) 
+	{
+		return ;
+	}
 
 	//第二步：获取所有图块
 	 vAcDbObjectId blockId = GetToolsObjectId();
@@ -520,13 +581,20 @@ void WalterDialog::UpdateDesignerAttr()
 
 void WalterDialog::OnBnClickedUpdatecheckdateandname()
 {
+	UpdateData(TRUE);
+	g_checker = AuditStaff;
+	g_checkDate = AudDate;
+	UpdateData(FALSE);
 	//第一步：检测输入是否为空
 	CGetInputUtil::SendCommandToCad(L"setCheck ");
 }
 
 void WalterDialog::UpdateAtuAttr()
 {
-	InputCheckAtuDateOrName();
+	if(InputCheckAtuDateOrName()!=0)
+	{
+		return;
+	}
 	//第二步：获取图块ID
 	vAcDbObjectId blockId = GetToolsObjectId();
 
@@ -551,8 +619,51 @@ void WalterDialog::OnBnClickedUpdatebomexcel()
 
 void WalterDialog::UpdateBomExcel()
 {
+	CDocLock lock;
 	UpdateData();
-	
-	
+	//第一步：找到所有的table
+	vAcDbObjectId tableIds;
+	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_TABLE,tableIds);
 
+	//第二步：删除所有的table
+	for (int i = 0; i < tableIds.size(); i++)
+	{
+		CString value;
+		CXDataUtil::ReadEntityInfo(tableIds[i], L"BOM_TABLE", value);
+		if(value == L"1")
+		CObjectUtil::DeleteObject(tableIds[i]);
+	}
+	
+	//第三步 给每个图框建立新表
+	CString blkName;
+	vAcDbObjectId blockIds = GetToolsObjectId(); 
+	if(blockIds.empty())
+	{
+		return;
+	}
+	CBlockUtil::GetBlockNameByBlockRef(blockIds[0],blkName);
+	//3.1 读取excel
+	std::vector<CCutterTool> cutterTools;
+	TY_ReadCutterToolsFromExcel(FilePath, cutterTools);
+	//3.2 重新插入表即可
+	TUKuangType type;
+	if (blkName == L"A1")
+	{
+		type = A1;
+	}
+	else if(blkName == L"A2")
+	{
+		type=A2;
+	}
+	else
+	{
+		type=A3;
+	}
+	for (int i = 0; i < cutterTools.size(); i++)
+	{
+		cutterTools[i].m_tkId=blockIds[i];
+		cutterTools[i].m_tkType = type;
+	    cutterTools[i].SetTable();
+	}
+	UpdateData(FALSE);
 }

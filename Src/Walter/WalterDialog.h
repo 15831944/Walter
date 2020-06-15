@@ -40,12 +40,13 @@ public:
 	int SetDesBlockAttribute(AcDbObjectId blkId);
 	int SetAutBlockAttribute(AcDbObjectId blkId);
 	int InputCheck();
-	virtual BOOL OnInitDialog();
     void UpdateDesignerAttr();
 	void UpdateAtuAttr();
 	void UpdateBomExcel();
 	void PostCommandToCAD(CString p_cmd);
 	vAcDbObjectId  GetToolsObjectId();
+	virtual BOOL OnInitDialog();
+	int DeleteObject(AcDbObjectId id);
 
 
 

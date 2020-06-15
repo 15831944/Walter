@@ -17,7 +17,7 @@ CCutterTool::~CCutterTool(void)
 //ªÊ÷∆±Ì∏Ò
 AcDbObjectId CCutterTool::SetTable()
 {
-	
+	CDocLock lock;
 	AcGePoint3d pnt(0,0,0);
 	 AcGePoint3d insertPos;
 	CBlockUtil::GetBlockReferenceInsertPoint(m_tkId, pnt);

@@ -73,10 +73,15 @@ void updateAttr()
 
 //更新审核人员
 void UpadeAtuAttr()
- {
-	 g_Walter->UpdateAtuAttr();
+{
+	g_Walter->UpdateAtuAttr();
+}
 
- }
+void UpadenewBomExcel()
+{
+	g_Walter->UpdateBomExcel();
+
+}
 
 
 static void initApp()
@@ -110,7 +115,14 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
-
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("setBom"),
+		_T("setBom"),
+		ACRX_CMD_MODAL,
+		UpadenewBomExcel,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 	//删除双击事件
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
 }

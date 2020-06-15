@@ -140,7 +140,7 @@
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARX_2017;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>

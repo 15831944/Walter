@@ -57,6 +57,8 @@ void dialogCreate()
 	
 	/*WalterDialog g_Walter;
 	g_Walter.DoModal();*/
+	//vAcDbObjectId ids;
+	//CSelectUtil::SelectMany(ids);
 
 	g_Walter = new WalterDialog(acedGetAcadFrame());
 	g_Walter->Create(IDD_Walter);

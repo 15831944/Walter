@@ -89,7 +89,8 @@ vCString COpenExcelDialog::TYCOM_GetFilesFromDialog( int maxFileNumber)
 }
 CString COpenExcelDialog::HS_GetAppPath()
 {
-	WCHAR lpFileName[MAX_PATH];
+	return L"C:\\Users\\nv4390\\Desktop\\20200612";
+	/*WCHAR lpFileName[MAX_PATH];
 	GetModuleFileName(AfxGetInstanceHandle(), lpFileName, MAX_PATH);
 	CString strFileName = lpFileName;
 	int nIndex = strFileName.ReverseFind('\\');
@@ -102,5 +103,5 @@ CString COpenExcelDialog::HS_GetAppPath()
 	{
 		strPath = "";
 	}
-	return strPath;
+	return strPath;*/
 }

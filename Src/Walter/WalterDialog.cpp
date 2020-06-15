@@ -367,8 +367,24 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 
 				//µ¶¾ßÍ¼Ö½²åÈë×ø±êÖµ
 				AcGePoint3d pnt2(pnt.x+((A2_wide)/3)+zPy*250,pnt.y+(A2_height*2/3.0)-zPx*100,pnt.z);
+				AcDbObjectId tzId;
 				//²åÈëµ¶¾ßÍ¼Ö½
-				CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+				tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+				AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
+
+				AcDbEntityPointer pEnt(tzId, AcDb::kForWrite);
+				if (pEnt.openStatus() == Acad::eOk)
+				{
+					AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+					if (pBlkRef == NULL)
+					{
+						return -1;
+					}
+
+					AcGeMatrix3d matrix;
+					matrix.setTranslation(vect);
+					pBlkRef->transformBy(matrix);
+				}
 			}
 		}
 		else
@@ -399,7 +415,24 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				//µ¶¾ßÍ¼Ö½²åÈë×ø±êÖµ
 				AcGePoint3d pnt2(pnt.x+((A3_wide)/3)+zPy*250,pnt.y+(A3_height*2/3.0)-zPx*100,pnt.z);
 				//²åÈëµ¶¾ßÍ¼Ö½
-				CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+				AcDbObjectId tzId;
+				//²åÈëµ¶¾ßÍ¼Ö½
+				tzId = CBlockUtil::InsertDwgAsBlockRef(tzFilename, NULL, ACDB_MODEL_SPACE, pnt2, 0, 1);
+				AcGeVector3d vect = CBlockUtil::GetBlkVectorFromMiddlePointToOri(tzId);
+
+				AcDbEntityPointer pEnt(tzId, AcDb::kForWrite);
+				if (pEnt.openStatus() == Acad::eOk)
+				{
+					AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+					if (pBlkRef == NULL)
+					{
+						return -1;
+					}
+
+					AcGeMatrix3d matrix;
+					matrix.setTranslation(vect);
+					pBlkRef->transformBy(matrix);
+				}
 			}
 		}
 	}

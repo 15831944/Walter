@@ -1,2 +1,0 @@
-1. 把acad.rx walter.arx 和 Walter 拷贝到 AutoCAD2017安装目录下的 Support文件夹中.
-2.然后重启autocad2017即可

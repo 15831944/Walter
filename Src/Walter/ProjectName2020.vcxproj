@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc-win32;..\..\..\CadCommon\CadCommon\TYCom\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc-win32;..\..\..\CadCommon\TYCom\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
@@ -97,7 +97,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-win32;..\..\..\CadCommon\CadCommon\TYCom\lib\x86\release;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-win32;..\..\..\CadCommon\TYCom\lib\x86\release;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <AdditionalDependencies>CadCommon2020.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\CadCommon\TYCom\lib\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>CadCommon2020.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -126,12 +126,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc-win32;..\..\..\CadCommon\CadCommon\TYCom\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc-win32;..\..\..\CadCommon\TYCom\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-win32;..\..\..\CadCommon\CadCommon\TYCom\lib\x86\release;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-win32;..\..\..\CadCommon\TYCom\lib\x86\release;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <AdditionalDependencies>CadCommon2020.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -139,12 +139,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\utils\brep\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2020_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>CadCommon2020.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>

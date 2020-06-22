@@ -33,7 +33,7 @@ public:
 	afx_msg void OnBnClickedUpdatedesdateandname();
 
 	void Draw(vCString toolDill,const AcGePoint3d& point,const CString filename);
-	int InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKuangFileName, TUKuangType tktype, std::vector<CCutterTool> &cutterTools);
+	int InsertDwgsAccordingToCutterTools(CString tuKuangFileName, TUKuangType tktype, std::vector<CCutterTool> &cutterTools);
 	int InputCheckDesDateOrName();
 	int InputCheckAtuDateOrName();
 	int SetBlockAttribute(AcDbObjectId blkId);

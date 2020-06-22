@@ -60,17 +60,14 @@
     <ClCompile Include="Common\Com.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="UI\DialogFileName.cpp">
+    <ClCompile Include="WalterDialog.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="WalterDialog.cpp">
-      <Filter>WalterUI</Filter>
-    </ClCompile>
     <ClCompile Include="OpenExcelDialog.cpp">
-      <Filter>WalterUI</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="CutterTool.cpp">
-      <Filter>WalterUI</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,20 +167,17 @@
     <ClInclude Include="Common\Com.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="UI\DialogFileName.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="res\resource.h">
       <Filter>res</Filter>
     </ClInclude>
     <ClInclude Include="WalterDialog.h">
-      <Filter>WalterUI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="OpenExcelDialog.h">
-      <Filter>WalterUI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="CutterTool.h">
-      <Filter>WalterUI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Common\Excel\CApplication.h" />
   </ItemGroup>
@@ -209,9 +203,6 @@
     <Filter Include="UiCommon\MfcGridCtrl\CellTypes">
       <UniqueIdentifier>{5fbfb570-06a3-4d77-bd65-66bd686c6204}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{cd77ccbf-6816-4b01-bc8b-7f1a95779258}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Excel">
       <UniqueIdentifier>{7d2eae31-ab49-41ca-a21f-5d530065120a}</UniqueIdentifier>
     </Filter>
@@ -221,11 +212,11 @@
     <Filter Include="Common\Databse">
       <UniqueIdentifier>{529dc176-be6a-46a5-8409-f86ba144deaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WalterUI">
-      <UniqueIdentifier>{d224b87f-4682-4af0-8f16-fb4265ad1ea7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="res">
       <UniqueIdentifier>{809dce8e-02bc-4d08-9f63-d742f0007df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{d224b87f-4682-4af0-8f16-fb4265ad1ea7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,6 @@
 
 #include "Main.h"
 
-#include "DialogFileName.h"
 #include "AcExtensionModule.h"
 #include <rxmfcapi.h>
 #include <dbobjptr.h>
@@ -29,10 +28,12 @@
 
 #include "Entity/LineUtil.h"
 #include "Common/CommonUtil.h"
+#include "Document/DwgDatabaseUtil.h"
 #include "Others/XDataUtil.h"
 #include "Entity/ObjectUtil.h"
 #include "VBA/VBA_Inc.h"
-#include "Common/CommonUtil.h"
+//#include "TYProgress.h"
+#include "Head.h"
 
 #include "WalterDialog.h"
 
@@ -63,10 +64,8 @@ void dialogCreate()
 	g_Walter = new WalterDialog(acedGetAcadFrame());
 	g_Walter->Create(IDD_Walter);
 	g_Walter->ShowWindow(SW_SHOW);
-
-
-	
 }
+
 //更新设计人员
 void updateAttr()
 {
@@ -82,9 +81,51 @@ void UpadeAtuAttr()
 void UpadenewBomExcel()
 {
 	g_Walter->UpdateBomExcel();
-
 }
 
+void RepairDwgs()
+{
+	CString dir = CCommonUtil::GetFolderFromDialog(L"请选择需要修复的dwg文件夹");
+	if (dir.GetLength() == 0)
+	{
+		acutPrintf(L"\n没有选择dwg文件夹\n",0);
+		return;
+	}
+
+	CString dirOut = CCommonUtil::GetFolderFromDialog(L"请选择新存储的文件夹");
+	if (dirOut.GetLength() == 0)
+	{
+		acutPrintf(L"\n没有选择dwg文件夹\n", 0);
+		return;
+	}
+
+	if (dirOut == dir)
+	{
+		acutPrintf(L"\n不能选择两个相同的文件夹\n", 0);
+		return;
+	}
+
+	vector<CString> allDwgFilesToRepair;
+	CCommonUtil::FindAllFile(dir, allDwgFilesToRepair, _T("*.dwg"));
+
+	CDocLock lock;
+	//TYProgress pro;
+	CString info;
+	for (int i = 0; i < allDwgFilesToRepair.size(); i++)
+	{
+		//pro.SetInfo(allDwgFilesToRepair.size(), i + 1, 0);
+		info.Format(L"一共%d个文件，正在处理第%d个\n", allDwgFilesToRepair.size(), i + 1);
+		acutPrintf(info);
+		//预先测试一下dwg版本 否则oDocs.Open会直接崩溃
+		AcDbDatabase* pDb = new AcDbDatabase(false);
+		Acad::ErrorStatus es = pDb->readDwgFile(dir + L"\\" + allDwgFilesToRepair[i], AcDbDatabase::kForReadAndAllShare);
+		if (es == Acad::eOk)
+			es = es = pDb->saveAs(dirOut + L"\\" + allDwgFilesToRepair[i],false);
+		delete pDb;
+		pDb = 0;
+	}
+	//CDwgDatabaseUtil::OpenDocument(L"E:\\CAD出错图纸\\B3230.C8.290-360.Z1.CC06.dwg",true);
+}
 
 static void initApp()
 {
@@ -117,11 +158,21 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
 	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
 		_T("setBom"),
 		_T("setBom"),
 		ACRX_CMD_MODAL,
 		UpadenewBomExcel,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("WRepair"),
+		_T("WRepair"),
+		ACRX_CMD_MODAL,
+		RepairDwgs,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -208,6 +259,11 @@ void menu()
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&参数化设计非标刀具"),_T("_GYZ2 "));
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&瓦尔特图纸修复"), _T("_WREPAIR "));
 
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();

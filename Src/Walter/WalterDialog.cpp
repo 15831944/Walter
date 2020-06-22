@@ -274,7 +274,7 @@ int WalterDialog::SetAutBlockAttribute(AcDbObjectId blkId)
 
 
 //插入图框与图纸
-int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKuangFileName, TUKuangType tktype, std::vector<CCutterTool> &cutterTools)
+int WalterDialog::InsertDwgsAccordingToCutterTools(CString tuKuangFileName, TUKuangType tktype, std::vector<CCutterTool> &cutterTools)
 {
 	CDocLock lock;
 
@@ -314,7 +314,7 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				//获取图纸
 				int zPx = j / 2;
 					int zPy=j%2;
-				CString tzFilename = cadPath + "\\Walter\\DaoJuXingHao\\" + cutterTools[i].toType[j] + ".dwg";
+				CString tzFilename = TY_GetDwgFolder() + cutterTools[i].toType[j] + ".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
@@ -348,7 +348,7 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				//获取图纸
 				int zPx=j/2;
 				int zPy=j%2;
-				CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
+				CString tzFilename= TY_GetDwgFolder() +cutterTools[i].toType[j]+".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
@@ -382,7 +382,7 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString  cadPath,CString tuKu
 				//获取图纸
 				int zPx=j/2;
 				int zPy=j%2;
-				CString tzFilename=cadPath + "\\Walter\\DaoJuXingHao\\"+cutterTools[i].toType[j]+".dwg";
+				CString tzFilename= TY_GetDwgFolder() + cutterTools[i].toType[j]+".dwg";
 				bool isExist = CCommonUtil::IsFileExist(tzFilename);
 				if (!isExist)
 				{
@@ -435,10 +435,9 @@ void WalterDialog::OnBnClickedDraw()
 	//第三步：根据读取的excel数据插入对应的图框
 	//获取图框文件名
 	//获取CAD安装那个路径
-	CString cadPath = TY_GetAppPath();
 	
 	//获取图纸框
-	CString tkFilename= cadPath + "\\Walter\\TuKuang\\"+DrawFrame+".dwg";
+	CString tkFilename= TY_GetFrameFolder() +DrawFrame+".dwg";
 
 	TUKuangType type;
 	if (DrawFrame == L"A1")
@@ -454,7 +453,7 @@ void WalterDialog::OnBnClickedDraw()
 		type=A3;
 	}
 	//第四步插入图框以及图纸
-	InsertDwgsAccordingToCutterTools(cadPath,tkFilename, type, cutterTools);
+	InsertDwgsAccordingToCutterTools(tkFilename, type, cutterTools);
 
 	
 	//4.1 写入图框属性

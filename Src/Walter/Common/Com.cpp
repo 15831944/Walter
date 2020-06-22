@@ -22,3 +22,23 @@ CString TY_GetAppPath()
 	return L"C:\\Users\\nv4390\\Desktop\\20200612";
 #endif // DEV_TEST_ENV
 }
+
+//µ¶¾ß¿â´æ´¢Ä¿Â¼
+CString TY_GetDwgFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath()+ "\\Walter\\DaoJuXingHao\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+#endif // DEV_TEST_ENV
+}
+
+//µÃµ½Í¼¿ò´æ´¢Â·¾¶
+CString TY_GetFrameFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath()+ "\\Walter\\TuKuang\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+#endif // DEV_TEST_ENV
+}

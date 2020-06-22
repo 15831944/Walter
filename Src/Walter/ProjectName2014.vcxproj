@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\CTYTool\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -117,10 +117,10 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;..\..\..\CadCommon\CTYTool\Lib\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>CadCommon2014.lib;acdbmgd.lib;CTYTool.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CadCommon2014.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>C:\Program Files\Autodesk\AutoCAD 2014\Support\walter.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -140,16 +140,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\CTYTool\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\CTYTool\Lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>CadCommon2014.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CadCommon2014.lib;acdbmgd.lib;TYTool.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>C:\Program Files\Autodesk\AutoCAD 2014\Support\walter.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -216,9 +216,6 @@
     <ClCompile Include="UiCommon\MfcGridCtrl\TitleTip.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="UI\DialogFileName.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
     <ClCompile Include="WalterDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -260,7 +257,6 @@
     <ClInclude Include="UiCommon\MfcGridCtrl\InPlaceEdit.h" />
     <ClInclude Include="UiCommon\MfcGridCtrl\MemDC.h" />
     <ClInclude Include="UiCommon\MfcGridCtrl\TitleTip.h" />
-    <ClInclude Include="UI\DialogFileName.h" />
     <ClInclude Include="WalterDialog.h" />
   </ItemGroup>
   <ItemGroup>

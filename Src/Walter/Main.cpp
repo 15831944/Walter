@@ -37,6 +37,7 @@
 
 #include "WalterDialog.h"
 
+HINSTANCE g_tytoolInst = 0;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -109,11 +110,11 @@ void RepairDwgs()
 	CCommonUtil::FindAllFile(dir, allDwgFilesToRepair, _T("*.dwg"));
 
 	CDocLock lock;
-	//TYProgress pro;
 	CString info;
+	TY_Progress_Init();
 	for (int i = 0; i < allDwgFilesToRepair.size(); i++)
 	{
-		//pro.SetInfo(allDwgFilesToRepair.size(), i + 1, 0);
+		TY_SetProgress(allDwgFilesToRepair.size(), i + 1);
 		info.Format(L"一共%d个文件，正在处理第%d个\n", allDwgFilesToRepair.size(), i + 1);
 		acutPrintf(info);
 		//预先测试一下dwg版本 否则oDocs.Open会直接崩溃
@@ -124,6 +125,7 @@ void RepairDwgs()
 		delete pDb;
 		pDb = 0;
 	}
+	TY_Progress_Close();
 	//CDwgDatabaseUtil::OpenDocument(L"E:\\CAD出错图纸\\B3230.C8.290-360.Z1.CC06.dwg",true);
 }
 
@@ -178,12 +180,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 	//删除双击事件
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
+	TY_LoadTyTool();
+
+	
 }
 
 
 static void unloadApp()
 {
-
+	TY_FreeTyTool();
 	// Do other cleanup tasks here  
 	acedRegCmds->removeGroup(_T("ASDK_ACUI_SAMPLE"));
 	//delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE));

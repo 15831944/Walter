@@ -53,10 +53,10 @@ BEGIN
     EDITTEXT        IDC_EDIT5,39,68,59,12,ES_AUTOHSCROLL
     LTEXT           "审核日期：",IDC_STATIC,123,71,34,8
     EDITTEXT        IDC_EDIT6,162,69,60,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "更新审核人员和日期",IDC_UpdateCheckDateAndName,145,94,77,14
-    PUSHBUTTON      "更新设计人员和日期",IDC_UpdateDesDateAndName,8,94,77,14
-    PUSHBUTTON      "更新Bom明细表",IDC_UpdateBomExcel,8,117,77,14
-    PUSHBUTTON      "生成图纸",IDC_DRAW,145,117,77,14
+    PUSHBUTTON      "更新审核人员和日期",IDC_UpdateCheckDateAndName,90,125,40,11,NOT WS_VISIBLE
+    PUSHBUTTON      "更新人员和日期",IDC_UpdateDesDateAndName,137,91,77,20
+    PUSHBUTTON      "更新Bom明细表",IDC_UpdateBomExcel,4,91,77,20
+    PUSHBUTTON      "生成图纸",IDC_DRAW,4,115,77,20
 END
 
 
@@ -90,14 +90,14 @@ END
 // AFX_DIALOG_LAYOUT
 //
 
-IDD_DIALOG2 AFX_DIALOG_LAYOUT 
+IDD_DIALOG2 AFX_DIALOG_LAYOUT
 BEGIN
-    0x0000
+    0
 END
 
-IDD_Walter AFX_DIALOG_LAYOUT 
+IDD_Walter AFX_DIALOG_LAYOUT
 BEGIN
-    0x0000
+    0
 END
 
 

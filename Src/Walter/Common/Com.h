@@ -10,3 +10,14 @@ CString TY_GetAppPath();
 CString TY_GetDwgFolder();
 //µÃµ½Í¼¿ò´æ´¢Â·¾¶
 CString TY_GetFrameFolder();
+
+CString TY_GetDllFilePathName();
+
+
+
+bool TY_LoadTyTool();
+bool TY_FreeTyTool();
+int TY_SetProgress(int all, int cur);
+void TY_Progress_Close();
+void TY_Progress_Init();
+

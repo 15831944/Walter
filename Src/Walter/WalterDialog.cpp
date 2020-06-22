@@ -144,6 +144,16 @@ int WalterDialog::InputCheckDesDateOrName()
 		MessageBox(L"设计日期不能为空，请输入！");
 		return 1;
 	 }
+	else if (AuditStaff.IsEmpty())
+	{
+		MessageBox(L"审核日期不能为空，请输入！");
+		return 1;
+	}
+	else if (AudDate.IsEmpty())
+	{
+		MessageBox(L"审核日期不能为空，请输入！");
+		return 1;
+	}
 	UpdateData(FALSE);
 	return 0;
 }
@@ -217,13 +227,13 @@ int WalterDialog::SetDesBlockAttribute(AcDbObjectId blkId)
 		if(flagNum.Left(1)==L"0")
 			flagNum =flagNum.Right(1);
 
-		flag =_ttoi(flagNum);
-		flag++;
-		CString version;
+		//flag =_ttoi(flagNum);
+		//flag++;
+		//CString version;
 		CString nunner;
-		version.Format(L"0%2d",flag);
-		nunner.Format(L"REV0%d",flag);
-		CBlockUtil::SetBlockRefAttribute(pBlkRef, L"L_AE_VERSION_1",version);//第一个参数是块参照，第二个是属性标记，第三个是属性值
+		//version.Format(L"0%2d",flag);
+		//nunner.Format(L"REV0%d",flag);
+		//CBlockUtil::SetBlockRefAttribute(pBlkRef, L"L_AE_VERSION_1",version);//第一个参数是块参照，第二个是属性标记，第三个是属性值
 		CBlockUtil::SetBlockRefAttribute(pBlkRef, L"L_AE_NUMMER_1",nunner);
 		CBlockUtil::SetBlockRefAttribute(pBlkRef, L"L_AE_DATUM_1", DesDate);
 		CBlockUtil::SetBlockRefAttribute(pBlkRef, L"L_AE_NAME_1", Designer);
@@ -285,15 +295,14 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString tuKuangFileName, TUKu
 	const double A2_height=470;
 	const double A3_height=350;
 	
-	
-	//TYProgress progress;
+	TY_Progress_Init();
 	for (int i = 0; i < cutterTools.size(); i++)
 	{
 		//图框插入点
 		AcGePoint3d pnt(0, 0, 0);
 		int Px = i / 20;
 		int Py = i % 20;
-		//progress.SetInfo(cutterTools.size(), i+1);
+		TY_SetProgress(cutterTools.size(), i+1);
 		if (tktype == A1)
 		{
 			//图框的插入坐标值
@@ -400,6 +409,7 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString tuKuangFileName, TUKu
 			}
 		}
 	}
+	TY_Progress_Close();
 	return 0;
 }
 
@@ -549,22 +559,37 @@ vAcDbObjectId WalterDialog::GetToolsObjectId()
 void WalterDialog::OnBnClickedUpdatedesdateandname()
 {
 	//WalterDialog::OnOK();
+	//第一步：检查输入是否为空
+	if (InputCheckDesDateOrName() != 0)
+	{
+		return;
+	}
+
 	UpdateData();
 	g_designer = Designer;
 	g_desDate = DesDate;
+	g_checker = AuditStaff;
+	g_checkDate = AudDate;
+
 	UpdateData(FALSE);
 	CGetInputUtil::SendCommandToCad(L"gx ");
 }
 
+//更新审核人员以及日期
+void WalterDialog::OnBnClickedUpdatecheckdateandname()
+{
+	UpdateData(TRUE);
+	g_checker = AuditStaff;
+	g_checkDate = AudDate;
+	UpdateData(FALSE);
+	//第一步：检测输入是否为空
+	CGetInputUtil::SendCommandToCad(L"setCheck ");
+}
+
+//更新设计和审核日期
 void WalterDialog::UpdateDesignerAttr()
 {
-	//第一步：检查输入是否为空
-    if(InputCheckDesDateOrName()!=0) 
-	{
-		return ;
-	}
-
-	//第二步：获取所有图块
+	//第一步：获取所有图块
 	 vAcDbObjectId blockId = GetToolsObjectId();
 
 	for (int i=0;i<blockId.size();i++)
@@ -576,19 +601,15 @@ void WalterDialog::UpdateDesignerAttr()
 			acutPrintf(L"设置块属性值失败！");
 			continue;
 		}	
+
+		result = SetAutBlockAttribute(blockId[i]);
+
+		if (result == -1)
+		{
+			acutPrintf(L"设置块属性值失败！");
+			continue;
+		}
 	}
-}
-
-//更新审核人员以及日期
-
-void WalterDialog::OnBnClickedUpdatecheckdateandname()
-{
-	UpdateData(TRUE);
-	g_checker = AuditStaff;
-	g_checkDate = AudDate;
-	UpdateData(FALSE);
-	//第一步：检测输入是否为空
-	CGetInputUtil::SendCommandToCad(L"setCheck ");
 }
 
 void WalterDialog::UpdateAtuAttr()

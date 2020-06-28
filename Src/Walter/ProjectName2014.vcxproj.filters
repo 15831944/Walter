@@ -3,51 +3,6 @@
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCell.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCellBase.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrl.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrlUtil.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridDropTarget.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\InPlaceEdit.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\TitleTip.cpp">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.cpp">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Excel\CExcel.cpp">
       <Filter>Common\Excel</Filter>
     </ClCompile>
@@ -69,62 +24,53 @@
     <ClCompile Include="CutterTool.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellCheckEx.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrlEx.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\slidectrl1.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCell.cpp">
+      <Filter>GridCtrl\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCellBase.cpp">
+      <Filter>GridCtrl\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCtrl.cpp">
+      <Filter>GridCtrl\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>GridCtrl\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>GridCtrl\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\TitleTip.cpp">
+      <Filter>GridCtrl\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCheck.cpp">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCombo.cpp">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgPcdJD.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Main.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellRange.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCell.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCellBase.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrl.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrlUtil.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridDropTarget.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\InPlaceEdit.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\MemDC.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\TitleTip.h">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.h">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </ClInclude>
     <ClInclude Include="Common\Excel\CBorder.h">
       <Filter>Common\Excel</Filter>
     </ClInclude>
@@ -180,28 +126,62 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Common\Excel\CApplication.h" />
+    <ClInclude Include="GridCtrl\GridCellCheckEx.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrlEx.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\slidectrl1.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\CellRange.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCell.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCellBase.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCtrl.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridDropTarget.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\InPlaceEdit.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\MemDC.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\TitleTip.h">
+      <Filter>GridCtrl\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCheck.h">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCombo.h">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellDateTime.h">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellNumeric.h">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.h">
+      <Filter>GridCtrl\Src\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgPcdJD.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="UiCommon\MfcGridCtrl\vssver2.scc">
-      <Filter>UiCommon\MfcGridCtrl</Filter>
-    </None>
-    <None Include="UiCommon\MfcGridCtrl\CellTypes\vssver2.scc">
-      <Filter>UiCommon\MfcGridCtrl\CellTypes</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
       <UniqueIdentifier>{487bca54-755e-4466-a224-dca2e2ee2e2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UiCommon">
-      <UniqueIdentifier>{f4849d74-cc70-4b6c-872a-45615a58b6ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UiCommon\MfcGridCtrl">
-      <UniqueIdentifier>{73c3778e-3f61-4b42-9ab2-e902a8256c39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UiCommon\MfcGridCtrl\CellTypes">
-      <UniqueIdentifier>{5fbfb570-06a3-4d77-bd65-66bd686c6204}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common\Excel">
       <UniqueIdentifier>{7d2eae31-ab49-41ca-a21f-5d530065120a}</UniqueIdentifier>
@@ -217,6 +197,15 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{d224b87f-4682-4af0-8f16-fb4265ad1ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GridCtrl">
+      <UniqueIdentifier>{ce3aeb71-44af-4763-b7b8-4b6005c56e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GridCtrl\Src">
+      <UniqueIdentifier>{6bd44c6a-2090-49aa-b054-826975dbc027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GridCtrl\Src\Src">
+      <UniqueIdentifier>{06d8e0a1-f682-4b97-b870-db5f02f66c03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

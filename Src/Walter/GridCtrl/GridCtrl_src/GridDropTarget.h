@@ -48,7 +48,6 @@ public:
     CGridCtrl* m_pGridCtrl;
     BOOL       m_bRegistered;
 
-
 // Operations
 public:
     BOOL Register(CGridCtrl *pGridCtrl);

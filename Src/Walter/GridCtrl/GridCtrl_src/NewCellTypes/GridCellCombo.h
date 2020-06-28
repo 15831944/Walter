@@ -32,13 +32,8 @@
 
 #include "../GridCell.h"
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
 
-class ZFGK_DLLIMPEXP CGridCellCombo : public CGridCell
+class CGridCellCombo : public CGridCell
 {
     friend class CGridCtrl;
     DECLARE_DYNCREATE(CGridCellCombo)
@@ -60,13 +55,16 @@ public:
 public:
     void  SetOptions(const CStringArray& ar);
     void  SetStyle(DWORD dwStyle)           { m_dwStyle = dwStyle; }
+	void SetCurSel(int nSel);
     DWORD GetStyle()                        { return m_dwStyle;    }
+	int GetCurSel() { return m_iSel; }
 
 protected:
     virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
 
     CStringArray m_Strings;
     DWORD        m_dwStyle;
+	int m_iSel;
 };
 
 
@@ -159,7 +157,6 @@ protected:
 	afx_msg void OnDropdown();
 	afx_msg UINT OnGetDlgCode();
 	afx_msg HBRUSH CtlColor(CDC* pDC, UINT nCtlColor);
-	afx_msg void OnSelchange();
 	//}}AFX_MSG
 	//afx_msg void OnSelendOK();
 

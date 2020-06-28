@@ -71,17 +71,10 @@ CGridCellBase::~CGridCellBase()
 
 void CGridCellBase::Reset()
 {
-	//Used for merge cells
     m_nState  = 0;
-	m_Hide=false;
-	m_MergeRange.Set();
-	m_IsMergeWithOthers=false;
-	m_MergeCellID.row=-1;
-	m_MergeCellID.col=-1;
 }
 
-// Used for merge cells, remove const
-void CGridCellBase::operator=(CGridCellBase& cell)
+void CGridCellBase::operator=(const CGridCellBase& cell)
 {
 	if (this == &cell) return;
 
@@ -96,11 +89,6 @@ void CGridCellBase::operator=(CGridCellBase& cell)
     SetBackClr(cell.GetBackClr());
     SetFont(cell.IsDefaultFont()? NULL : cell.GetFont());
     SetMargin(cell.GetMargin());
-
-	//Used for merge cells
-	SetMergeCellID(cell.GetMergeCellID());
-	SetMergeRange(cell.GetMergeRange());
-	Show(cell.IsShow());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -126,12 +114,6 @@ BOOL CGridCellBase::Draw(CDC* pDC, int nRow, int nCol, CRect rect,  BOOL bEraseB
 {
     // Note - all through this function we totally brutalise 'rect'. Do not
     // depend on it's value being that which was passed in.
-
-	// Used for merge cells
-	if(	m_Hide && !IsMerged())
-	{
-		return TRUE;
-	}
 
     CGridCtrl* pGrid = GetGrid();
     ASSERT(pGrid);
@@ -306,7 +288,7 @@ BOOL CGridCellBase::Draw(CDC* pDC, int nRow, int nCol, CRect rect,  BOOL bEraseB
         if (pGrid->GetImageList()->GetImageInfo(GetImage(), &Info))
         {
             //  would like to use a clipping region but seems to have issue
-            //  working with CMemDC directly.  Instead, don't display image
+            //  working with CMyMemDC directly.  Instead, don't display image
             //  if any part of it cut-off
             //
             // CRgn rgn;
@@ -628,12 +610,6 @@ CSize CGridCellBase::GetCellExtent(CDC* pDC)
 // printed correctly.
 BOOL CGridCellBase::PrintCell(CDC* pDC, int /*nRow*/, int /*nCol*/, CRect rect)
 {
-	// Used for merge cells
-	if(	m_Hide && !IsMerged())
-	{
-		return TRUE;
-	}
-
 #if defined(_WIN32_WCE_NO_PRINTING) || defined(GRIDCONTROL_NO_PRINTING)
     return FALSE;
 #else
@@ -651,10 +627,6 @@ BOOL CGridCellBase::PrintCell(CDC* pDC, int /*nRow*/, int /*nCol*/, CRect rect)
     int nSavedDC = pDC->SaveDC();
 
     pDC->SetBkMode(TRANSPARENT);
-	// Used for merge cells
-	rect.InflateRect(1,1);
-	pDC->Rectangle(rect);
-	rect.DeflateRect(1,1);
 
     if (pGrid->GetShadedPrintOut())
     {
@@ -798,66 +770,4 @@ LRESULT CGridCellBase::SendMessageToParent(int nRow, int nCol, int nMessage)
         return pGrid->SendMessageToParent(nRow, nCol, nMessage);
     else
         return 0;
-}
-
-//Used for merge cells
-void CGridCellBase::UnMerge()
-{
-	m_Hide=false;
-	m_MergeRange.Set();
-	m_IsMergeWithOthers=false;
-	m_MergeCellID.row=-1;
-	m_MergeCellID.col=-1;
-}
-
-//Used for merge cells
-bool CGridCellBase::IsShow()
-{
-	return !m_Hide;
-}
-
-//Used for merge cells
-CCellRange CGridCellBase::GetMergeRange()
-{
-	return m_MergeRange;
-}
-
-//Used for merge cells
-bool CGridCellBase::IsMergeWithOthers()
-{
-	return m_IsMergeWithOthers;
-}
-
-//Used for merge cells
-CCellID CGridCellBase::GetMergeCellID()
-{
-	return m_MergeCellID;
-}
-
-//Used for merge cells
-void CGridCellBase::SetMergeCellID( CCellID cell )
-{
-	m_MergeCellID=cell;
-	if(cell.row!=-1)
-		m_IsMergeWithOthers=true;
-	else
-		m_IsMergeWithOthers=false;
-}
-
-//Used for merge cells
-bool CGridCellBase::IsMerged()
-{
-	return m_MergeRange.Count() > 1;
-}
-
-//Used for merge cells
-void CGridCellBase::SetMergeRange( CCellRange range )
-{
-	m_MergeRange=range;
-}
-
-//Used for merge cells
-void CGridCellBase::Show( bool IsShow )
-{
-	m_Hide=!IsShow;
 }

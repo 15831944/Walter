@@ -203,7 +203,7 @@ void CInPlaceDateTime::EndEdit()
 
 	// Close this window (PostNcDestroy will delete this)
 	if (::IsWindow(m_hWnd)) {
-		PostMessage(WM_CLOSE, 0, 0);
+		SendMessage(WM_CLOSE, 0, 0);
 	}
 }
 

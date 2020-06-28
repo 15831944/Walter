@@ -1,4 +1,3 @@
-#include "CellRange.h"
 /////////////////////////////////////////////////////////////////////////////
 // GridCellBase.h : header file
 //
@@ -75,13 +74,7 @@ typedef struct _GV_ITEM {
 // will usually have acces to them in other ways, and they are an extra 8 bytes per
 // cell that is probably unnecessary.
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
-class ZFGK_DLLIMPEXP CGridCellBase : public CObject
+class CGridCellBase : public CObject
 {
     friend class CGridCtrl;
     DECLARE_DYNAMIC(CGridCellBase)
@@ -134,13 +127,10 @@ public:
 
 // Operators
 public:
-    virtual void operator=(CGridCellBase& cell);
+    virtual void operator=(const CGridCellBase& cell);
 
 // Operations
 public:
-	bool IsMerged();
-	void SetMergeRange(CCellRange range);
-	void Show(bool IsShow);
     virtual void Reset();
 
     virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
@@ -172,22 +162,8 @@ protected:
     virtual void OnDblClick( CPoint PointCellRelative);
     virtual BOOL OnSetCursor();
 
-public:
-	void UnMerge();
-	virtual bool IsShow() ;
-	virtual CCellRange GetMergeRange();
-	virtual bool IsMergeWithOthers();
-	virtual CCellID GetMergeCellID();
-	virtual void SetMergeCellID(CCellID cell);
-
 protected:
     DWORD    m_nState;      // Cell state (selected/focus etc)
-	
-private:
-	CCellRange m_MergeRange;
-	bool m_IsMergeWithOthers;
-	CCellID m_MergeCellID;
-	bool m_Hide;
 };
 
 //{{AFX_INSERT_LOCATION}}

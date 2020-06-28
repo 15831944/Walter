@@ -36,6 +36,7 @@
 #include "Head.h"
 
 #include "WalterDialog.h"
+#include "DlgPcdJD.h"
 
 HINSTANCE g_tytoolInst = 0;
 
@@ -65,6 +66,14 @@ void dialogCreate()
 	g_Walter = new WalterDialog(acedGetAcadFrame());
 	g_Walter->Create(IDD_Walter);
 	g_Walter->ShowWindow(SW_SHOW);
+}
+
+DlgPcdJD* g_dlgPcdJd1 = NULL;
+void CMD_PCDJD1()
+{
+	g_dlgPcdJd1 = new DlgPcdJD(acedGetAcadFrame());
+	g_dlgPcdJd1->Create(IDD_DIALOG_PCD_JD);
+	g_dlgPcdJd1->ShowWindow(SW_SHOW);
 }
 
 //更新设计人员
@@ -175,6 +184,15 @@ static void initApp()
 		_T("WRepair"),
 		ACRX_CMD_MODAL,
 		RepairDwgs,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("PCDJD1"),
+		_T("PCDJD1"),
+		ACRX_CMD_MODAL,
+		CMD_PCDJD1,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

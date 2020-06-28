@@ -56,4 +56,5 @@ public:
 	BOOL OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint point);
 protected:
 	UINT m_dFormat;
+
 };

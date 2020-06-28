@@ -57,12 +57,6 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
 void dialogCreate()
 {
-	
-	/*WalterDialog g_Walter;
-	g_Walter.DoModal();*/
-	//vAcDbObjectId ids;
-	//CSelectUtil::SelectMany(ids);
-
 	g_Walter = new WalterDialog(acedGetAcadFrame());
 	g_Walter->Create(IDD_Walter);
 	g_Walter->ShowWindow(SW_SHOW);
@@ -71,6 +65,7 @@ void dialogCreate()
 DlgPcdJD* g_dlgPcdJd1 = NULL;
 void CMD_PCDJD1()
 {
+	CAcModuleResourceOverride resOverride;
 	g_dlgPcdJd1 = new DlgPcdJD(acedGetAcadFrame());
 	g_dlgPcdJd1->Create(IDD_DIALOG_PCD_JD);
 	g_dlgPcdJd1->ShowWindow(SW_SHOW);
@@ -123,7 +118,7 @@ void RepairDwgs()
 	TY_Progress_Init();
 	for (int i = 0; i < allDwgFilesToRepair.size(); i++)
 	{
-		TY_SetProgress(allDwgFilesToRepair.size(), i + 1);
+		TY_SetProgress((int)allDwgFilesToRepair.size(), i + 1);
 		info.Format(L"一共%d个文件，正在处理第%d个\n", allDwgFilesToRepair.size(), i + 1);
 		acutPrintf(info);
 		//预先测试一下dwg版本 否则oDocs.Open会直接崩溃

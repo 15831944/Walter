@@ -66,7 +66,9 @@
     <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
       <Filter>GridCtrl\Src\Src</Filter>
     </ClCompile>
-    <ClCompile Include="DlgPcdJD.cpp" />
+    <ClCompile Include="DlgPcdJD.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h" />
@@ -174,7 +176,9 @@
     <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.h">
       <Filter>GridCtrl\Src\Src</Filter>
     </ClInclude>
-    <ClInclude Include="DlgPcdJD.h" />
+    <ClInclude Include="DlgPcdJD.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

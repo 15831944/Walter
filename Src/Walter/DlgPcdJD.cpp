@@ -75,12 +75,11 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.AddString(L"HSK-A80");
 	m_ui_hiltChoose.AddString(L"HSK-A100");
 
-	//m_gridCtrl.LoadDefaltSettings();
-	//m_gridCtrl.SetEditable(FALSE);
-	//m_gridCtrl.SetRowCount((int)m_allListData.size() + 1);
-	//m_gridCtrl.SetHeaderText(L"½×ÌÝÊý;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;Â¥ÌÝÖ÷Æ«½ÇA/¡ã");
-	//m_gridCtrl.SetHeaderWidth(L"25;25;25;25");
-	
+	int defaultValue1 = 0, defaultValue2 = 2;
+	int tableColumnCount = 3;
+	m_ui_hiltChoose.SetCurSel(defaultValue1);
+	m_ui_stepNum.SetCurSel(defaultValue2);
+	m_allListData = FillDefaultData(defaultValue2, tableColumnCount);
 	
 	InitGridCtrl();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -113,25 +112,37 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 
 void DlgPcdJD::OnCbnSelchangeComboStepNum()
 {
+	int tableColumnCount = 3;
 	int index;
 	index = ((CComboBox*)GetDlgItem(IDC_COMBO_STEP_NUM))->GetCurSel();
 	m_gridCtrl.SetEditable(TRUE);
-	if (index == 0)
+
+	switch (index)
 	{
-		m_gridCtrl.SetRowCount(2);
+	case 0:
+		m_gridCtrl.SetRowCount(index + 2);
+		m_allListData = FillDefaultData(index, tableColumnCount);
+		m_gridCtrl.FillTable(m_allListData);
+		break;
+	case 1:
+		m_gridCtrl.SetRowCount(index + 2);
+		m_allListData = FillDefaultData(index, tableColumnCount);
+		m_gridCtrl.FillTable(m_allListData);
+		break;
+	case 2:
+		m_gridCtrl.SetRowCount(index + 2);
+		m_allListData = FillDefaultData(index, tableColumnCount);
+		m_gridCtrl.FillTable(m_allListData);
+		break;
+	case 3:
+		m_gridCtrl.SetRowCount(index + 2);
+		m_allListData = FillDefaultData(index, tableColumnCount);
+		m_gridCtrl.FillTable(m_allListData);
+		break;
+	default:
+		break;
 	}
-	if (index == 1)
-	{
-		m_gridCtrl.SetRowCount(3);
-	}
-	if (index == 2)
-	{
-		m_gridCtrl.SetRowCount(4);
-	}
-	if (index == 3)
-	{
-		m_gridCtrl.SetRowCount(5);
-	}
+
 	m_gridCtrl.Refresh();
 }
 
@@ -140,7 +151,7 @@ void DlgPcdJD::InitGridCtrl()
 	m_gridCtrl.LoadDefaltSettings();
 	m_gridCtrl.SetEditable(TRUE);
 	m_gridCtrl.SetRowCount((int)m_allListData.size() + 1);
-	m_gridCtrl.SetHeaderText(L"½×ÌÝÊý;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;Â¥ÌÝÖ÷Æ«½ÇA/¡ã");
+	m_gridCtrl.SetHeaderText(L"½×ÌÝÊý;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;½×ÌÝÖ÷Æ«½ÇA/¡ã");
 	m_gridCtrl.SetHeaderWidth(L"25;25;25;25");
 	m_gridCtrl.SetFixedRowCount(1);
 
@@ -154,7 +165,7 @@ void DlgPcdJD::InitGridCtrl()
 MultiRowData DlgPcdJD::GetTable()
 {
 	MultiRowText vec;
-	for (UINT i = 0; i < m_gridCtrl.GetContentRowCount(); i++)
+	for (UINT i = 0; i < (int)m_gridCtrl.GetContentRowCount(); i++)
 	{
 		OneRowText oneRowText;
 		for (UINT j = 0; j < 3;j++)
@@ -162,6 +173,39 @@ MultiRowData DlgPcdJD::GetTable()
 			oneRowText.push_back(m_gridCtrl.GetContentItemText(i, j));
 		}
 		vec.push_back(oneRowText);
+	}
+	return vec;
+}
+
+MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
+{
+	MultiRowData vec;
+	for (int i = 0; i <= rowCount; i++)
+	{
+		OneRowText defaultText;
+		CString str;
+		for (int j = 0; j <= columnCount; j++)
+		{
+			switch (j)
+			{
+			case 0:
+				str.Format(_T("%d"), i+1);
+				defaultText.push_back(str);
+				break;
+			case 1:
+				defaultText.push_back(L"10");
+				break;
+			case 2:
+				defaultText.push_back(L"20");
+				break;
+			case 3:
+				defaultText.push_back(L"3");
+				break;
+			default:
+				break;
+			}
+		}
+		vec.push_back(defaultText);
 	}
 	return vec;
 }

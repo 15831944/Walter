@@ -47,4 +47,5 @@ public:
 	void InitGridCtrl();
 	void FillTable(MultiRowText data);
 	MultiRowData GetTable();
+	MultiRowData FillDefaultData(int rowCount, int tableColumn);
 };

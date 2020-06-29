@@ -50,7 +50,7 @@ BEGIN
     PUSHBUTTON      "生成图纸",IDC_DRAW,4,115,77,20
 END
 
-IDD_DIALOG_PCD_JD DIALOGEX 0, 0, 290, 184
+IDD_DIALOG_PCD_JD DIALOGEX 0, 0, 291, 233
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "PCD铰刀参数化"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
@@ -60,7 +60,8 @@ BEGIN
     PUSHBUTTON      "生成图纸",IDC_BUTTON_GENERATE_DWG,225,8,50,14
     LTEXT           "刀柄选择：",IDC_STATIC,7,14,44,8
     COMBOBOX        IDC_COMBO_HILT_CHOOSE,52,10,48,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Custom1",IDC_CUSTOM1,"MFCGridCtrl",WS_TABSTOP,0,29,290,77
+    CONTROL         "Custom1",IDC_CUSTOM1,"MFCGridCtrl",WS_TABSTOP,0,29,290,85
+	CONTROL         IDB_BITMAP3, IDC_STATIC, "Static", SS_BITMAP, 30, 123, 229, 97, NOT WS_GROUP
 END
 
 
@@ -81,9 +82,9 @@ BEGIN
     IDD_DIALOG_PCD_JD, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 283
+        RIGHTMARGIN, 284
         TOPMARGIN, 7
-        BOTTOMMARGIN, 177
+        BOTTOMMARGIN, 226
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -121,6 +122,13 @@ BEGIN
     0
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP3             BITMAP                  "11.BMP"
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

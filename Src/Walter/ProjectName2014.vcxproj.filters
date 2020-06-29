@@ -182,6 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="..\..\..\1.bmp" />
+    <None Include="..\..\..\11.BMP" />
+    <None Include="11.BMP" />
+    <None Include="res\11.BMP" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

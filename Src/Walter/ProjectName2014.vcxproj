@@ -231,7 +231,11 @@
     <ClInclude Include="WalterDialog.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\1.bmp" />
+    <None Include="..\..\..\11.BMP" />
+    <None Include="11.BMP" />
     <None Include="ReadMe.txt" />
+    <None Include="res\11.BMP" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\ProjectName.rc" />

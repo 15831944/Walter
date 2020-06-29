@@ -151,7 +151,7 @@ void DlgPcdJD::InitGridCtrl()
 	m_gridCtrl.LoadDefaltSettings();
 	m_gridCtrl.SetEditable(TRUE);
 	m_gridCtrl.SetRowCount((int)m_allListData.size() + 1);
-	m_gridCtrl.SetHeaderText(L"½×ÌÝÊý;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;½×ÌÝÖ÷Æ«½ÇA/¡ã");
+	m_gridCtrl.SetHeaderText(L"½×ÌÝºÅ;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;½×ÌÝÖ÷Æ«½ÇA/¡ã");
 	m_gridCtrl.SetHeaderWidth(L"25;25;25;25");
 	m_gridCtrl.SetFixedRowCount(1);
 

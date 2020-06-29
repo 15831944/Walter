@@ -48,6 +48,8 @@ BOOL DlgPcdJD::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	m_gridCtrl.SetDefaultFormat(1);
+
 	m_ui_stepNum.AddString(L"1");
 	m_ui_stepNum.AddString(L"2");
 	m_ui_stepNum.AddString(L"3");

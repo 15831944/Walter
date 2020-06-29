@@ -60,9 +60,6 @@
     <ClCompile Include="Common\Com.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="UI\DialogFileName.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="CutterTool.cpp">
       <Filter>WalterUI</Filter>
     </ClCompile>
@@ -172,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="Common\Com.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\DialogFileName.h">
-      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="CutterTool.h">

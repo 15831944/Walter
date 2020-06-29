@@ -36,13 +36,7 @@ class CGridCtrl;
 // will usually have acces to them in other ways, and they are an extra 8 bytes per
 // cell that is probably unnecessary.
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
-class ZFGK_DLLIMPEXP CGridCell : public CGridCellBase
+class CGridCell : public CGridCellBase
 {
     friend class CGridCtrl;
     DECLARE_DYNCREATE(CGridCell)
@@ -54,7 +48,7 @@ public:
 
 // Attributes
 public:
-    void operator=(CGridCell& cell);
+    void operator=(const CGridCell& cell);
 
     virtual void  SetText(LPCTSTR szText)        { m_strText = szText;  }                       
     virtual void  SetImage(int nImage)           { m_nImage = nImage;   }                        

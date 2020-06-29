@@ -34,13 +34,7 @@
 //      mailto:chinajoe@aol.com
 //      http://users.aol.com/chinajoe
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
-class ZFGK_DLLIMPEXP CCellID
+class CCellID
 {    
 // Attributes
 public:
@@ -55,7 +49,7 @@ public:
     int operator!=(const CCellID& rhs) const { return !operator==(rhs); }
 };
 
-class ZFGK_DLLIMPEXP CCellRange
+class CCellRange
 { 
 public:
     

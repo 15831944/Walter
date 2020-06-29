@@ -4,6 +4,7 @@
 //
 #define IDD_DIALOG1                     129
 #define IDD_Walter                      132
+#define IDD_DIALOG_PCD_JD               134
 #define IDC_EDIT_XPT                    1000
 #define IDC_EDIT_ANGLE                  1001
 #define IDC_BUTTON_POINT                1002
@@ -35,14 +36,19 @@
 #define IDC_BUTTON5                     1030
 #define IDC_DRAW                        1030
 #define IDC_BROWSE                      1031
+#define IDC_CUSTOM1                     1032
+#define IDC_COMBO_HILT_CHOOSE           1033
+#define IDC_COMBO_STEP_CHOOSE           1034
+#define IDC_COMBO_STEP_NUM              1034
+#define IDC_BUTTON_GENERATE_DWG         1036
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        134
+#define _APS_NEXT_RESOURCE_VALUE        135
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1032
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

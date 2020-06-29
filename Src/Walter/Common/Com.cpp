@@ -44,7 +44,7 @@ CString TY_GetFrameFolder()
 CString TY_GetDllFilePathName()
 {
 #ifdef DEV_TEST_ENV
-	return "E:\\Projects\\ÎÞÎýµ¶¾ß\\TYTool.dll";
+	return "C:\\TYTool.dll";
 #else
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
 #endif // DEV_TEST_ENV

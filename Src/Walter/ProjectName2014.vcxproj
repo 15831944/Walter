@@ -121,7 +121,7 @@
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>CadCommon2014.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>C:\Program Files\Autodesk\AutoCAD 2014\Support\walter.arx</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,6 +165,21 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="CutterTool.cpp" />
+    <ClCompile Include="DlgPcdJD.cpp" />
+    <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrlEx.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCell.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCellBase.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCtrl.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridDropTarget.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\InPlaceEdit.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\TitleTip.cpp" />
+    <ClCompile Include="GridCtrl\slidectrl1.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenExcelDialog.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -172,49 +187,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCell.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCellBase.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrl.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrlUtil.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridDropTarget.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\InPlaceEdit.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\TitleTip.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="WalterDialog.cpp" />
   </ItemGroup>
@@ -235,34 +207,31 @@
     <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="Common\MarkupXml\Markup.h" />
     <ClInclude Include="CutterTool.h" />
+    <ClInclude Include="DlgPcdJD.h" />
+    <ClInclude Include="GridCtrl\GridCellCheckEx.h" />
+    <ClInclude Include="GridCtrl\GridCtrlEx.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\CellRange.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCell.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCellBase.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCtrl.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridDropTarget.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\InPlaceEdit.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\MemDC.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCheck.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCombo.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellDateTime.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellNumeric.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\TitleTip.h" />
+    <ClInclude Include="GridCtrl\slidectrl1.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="OpenExcelDialog.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellRange.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCell.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCellBase.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrl.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrlUtil.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridDropTarget.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\InPlaceEdit.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\MemDC.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\TitleTip.h" />
     <ClInclude Include="WalterDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="UiCommon\MfcGridCtrl\CellTypes\vssver2.scc" />
-    <None Include="UiCommon\MfcGridCtrl\vssver2.scc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\ProjectName.rc" />

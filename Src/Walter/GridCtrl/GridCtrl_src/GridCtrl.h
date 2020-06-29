@@ -183,13 +183,7 @@ class CGridCtrl;
 
 typedef bool (*PVIRTUALCOMPARE)(int, int);
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
-class ZFGK_DLLIMPEXP CGridCtrl : public CWnd
+class CGridCtrl : public CWnd
 {
     DECLARE_DYNCREATE(CGridCtrl)
     friend class CGridCell;
@@ -288,7 +282,6 @@ public:
     // ***************************************************************************** //
 
     int GetSelectedCount() const                  { return (int)m_SelectedCellMap.GetCount(); }
-	bool IsRowSelected(unsigned int nRow) const;	// vvu添加
 
     CCellID SetFocusCell(CCellID cell);
     CCellID SetFocusCell(int nRow, int nCol);
@@ -367,7 +360,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////
 public:
     CGridCellBase* GetCell(int nRow, int nCol) const;   // Get the actual cell!
-	
+
     void SetModified(BOOL bModified = TRUE, int nRow = -1, int nCol = -1);
     BOOL GetModified(int nRow = -1, int nCol = -1);
     BOOL IsCellFixed(int nRow, int nCol);
@@ -441,14 +434,6 @@ public:
     BOOL IsCellEditable(CCellID &cell) const;
     BOOL IsCellSelected(int nRow, int nCol) const;
     BOOL IsCellSelected(CCellID &cell) const;
-
-	//////////////////////////////////////////////////////////////////////////
-	// 张帆添加的方法
-	// 设置某一行是否可见（有问题）
-	void SetColumnVisible(int nCol, BOOL bVisible = true);		// 张帆添加
-	// 设置某一行被选中
-	void SetRowSelected( int rowIndex );
-	//////////////////////////////////////////////////////////////////////////
 
     // SetRedraw stops/starts redraws on things like changing the # rows/columns
     // and autosizing, but not for user-intervention such as resizes
@@ -549,19 +534,6 @@ public:
     virtual void OnEndPrinting(CDC *pDC, CPrintInfo *pInfo);
 
 #endif // #if !defined(_WIN32_WCE_NO_PRINTING) && !defined(GRIDCONTROL_NO_PRINTING)
-
-public:
-	// Merge Cells
-	CGridCellBase* GetCell(CCellID cell);
-	CCellID GetMergeCellID(CCellID cell);
-	void UnMergeSelectedCells();
-	void MergeSelectedCells();
-	void UnMergeCells(int nStartRow, int nStartCol, int nEndRow, int nEndCol);
-	void MergeCells(int nStartRow, int nStartCol, int nEndRow, int nEndCol);
-	int  GetMergeCellWidth(CCellID cell);
-	int  GetMergeCellHeight(CCellID cell);
-	BOOL GetCellOriginNoMerge(int nRow, int nCol, LPPOINT p);
-	BOOL GetCellOriginNoMerge(const CCellID& cell, LPPOINT p);
 
 // Implementation
 public:
@@ -768,11 +740,7 @@ protected:
     afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
     afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
     afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-#ifdef _WIN64
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
-#else
     afx_msg void OnTimer(UINT nIDEvent);
-#endif
     afx_msg UINT OnGetDlgCode();
     afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);

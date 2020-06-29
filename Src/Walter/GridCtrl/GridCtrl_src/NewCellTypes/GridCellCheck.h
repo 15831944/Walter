@@ -32,20 +32,14 @@
 
 #include "../GridCell.h"
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
 
-class ZFGK_DLLIMPEXP CGridCellCheck : public CGridCell
+class CGridCellCheck : public CGridCell
 {
     friend class CGridCtrl;
     DECLARE_DYNCREATE(CGridCellCheck)
 
 public:
     CGridCellCheck();
-	~CGridCellCheck();
 
 public:
 	BOOL SetCheck(BOOL bChecked = TRUE);
@@ -57,7 +51,7 @@ public:
     virtual BOOL GetTextRect( LPRECT pRect);
 
 protected:
-	CRect GetCheckPlacement();
+	virtual CRect GetCheckPlacement();
 
     virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
 

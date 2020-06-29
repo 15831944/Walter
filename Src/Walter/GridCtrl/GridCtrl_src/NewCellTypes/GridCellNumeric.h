@@ -13,13 +13,7 @@
 
 #include "../GridCell.h"
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
-class ZFGK_DLLIMPEXP CGridCellNumeric : public CGridCell  
+class CGridCellNumeric : public CGridCell  
 {
     DECLARE_DYNCREATE(CGridCellNumeric)
 

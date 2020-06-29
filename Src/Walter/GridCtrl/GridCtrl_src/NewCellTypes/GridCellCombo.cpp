@@ -241,7 +241,7 @@ void CInPlaceList::EndEdit()
  
     // Close this window (PostNcDestroy will delete this)
     if (::IsWindow(m_hWnd))
-        PostMessage(WM_CLOSE, 0, 0);
+        SendMessage(WM_CLOSE, 0, 0);
 }
 
 int CInPlaceList::GetCorrectDropWidth()
@@ -309,7 +309,6 @@ BEGIN_MESSAGE_MAP(CInPlaceList, CComboBox)
 	ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
 	ON_WM_GETDLGCODE()
 	ON_WM_CTLCOLOR_REFLECT()
-	ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
 	//}}AFX_MSG_MAP
 	//ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendOK)
 END_MESSAGE_MAP()
@@ -444,7 +443,7 @@ BOOL CGridCellCombo::Draw(CDC* pDC, int nRow, int nCol, CRect rect,  BOOL bErase
 #else
     // Cell selected?
     //if ( !IsFixed() && IsFocused())
-    if (GetGrid()->IsCellEditable(nRow, nCol) && !IsEditing())
+    /*if (GetGrid()->IsCellEditable(nRow, nCol) && !IsEditing())
     {
         // Get the size of the scroll box
         CSize sizeScroll(GetSystemMetrics(SM_CXVSCROLL), GetSystemMetrics(SM_CYHSCROLL));
@@ -458,12 +457,12 @@ BOOL CGridCellCombo::Draw(CDC* pDC, int nRow, int nCol, CRect rect,  BOOL bErase
             ScrollRect.bottom = rect.top + sizeScroll.cy;
 
             // Do the draw 
-            pDC->DrawFrameControl(ScrollRect, DFC_SCROLL, DFCS_SCROLLDOWN);
+            pDC->DrawFrameControl(ScrollRect, DFC_SCROLL, DFCS_SCROLLCOMBOBOX | DFCS_FLAT);
 
             // Adjust the remaining space in the cell
             rect.right = ScrollRect.left;
         }
-    }
+    }*/
 
     CString strTempText = GetText();
     if (IsEditing())
@@ -486,7 +485,19 @@ void CGridCellCombo::SetOptions(const CStringArray& ar)
     for (int i = 0; i < ar.GetSize(); i++)
         m_Strings.Add(ar[i]);
 }
-void CInPlaceList::OnSelchange() 
+
+void CGridCellCombo::SetCurSel(int nSel)
 {
-	EndEdit();
+	if (nSel >= m_Strings.GetSize())
+		return;
+	if (nSel < 0)
+	{
+		m_iSel = -1;
+		SetText(_T(""));
+	}
+	else
+	{
+		m_iSel = nSel;
+		SetText(m_Strings[nSel]);
+	}
 }

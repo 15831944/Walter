@@ -60,8 +60,8 @@ CGridCell::~CGridCell()
 
 /////////////////////////////////////////////////////////////////////////////
 // GridCell Attributes
-// Used for Merge Cells, remove const
-void CGridCell::operator=(CGridCell& cell)
+
+void CGridCell::operator=(const CGridCell& cell)
 {
     if (this != &cell) CGridCellBase::operator=(cell);
 }
@@ -169,11 +169,20 @@ UINT CGridCell::GetMargin() const
 
 BOOL CGridCell::Edit(int nRow, int nCol, CRect rect, CPoint /* point */, UINT nID, UINT nChar)
 {
-    if ( m_bEditing )
-	{      
-        if (m_pEditWnd)
-		    m_pEditWnd->SendMessage ( WM_CHAR, nChar );    
-    }  
+	if ( m_bEditing )
+	{ 
+		if (m_pEditWnd)
+		{
+			if(nChar < 0x80)
+			{
+				m_pEditWnd->SendMessage ( WM_CHAR, nChar ); 
+			}
+			else
+			{
+				m_pEditWnd->SendMessage (WM_IME_CHAR, nChar);
+			}
+		}
+	}
 	else  
 	{   
 		DWORD dwStyle = ES_LEFT;
@@ -223,9 +232,28 @@ CGridDefaultCell::CGridDefaultCell()
     GetObject(GetStockObject(SYSTEM_FONT), sizeof(LOGFONT), &lf);
     SetFont(&lf);
 #else // not CE
+
     NONCLIENTMETRICS ncm;
-    ncm.cbSize = sizeof(NONCLIENTMETRICS);
+#if defined(_MSC_VER) && (_MSC_VER < 1300)
+    ncm.cbSize = sizeof(NONCLIENTMETRICS); // NONCLIENTMETRICS has an extra element after VC6
+#else
+    // Check the operating system's version
+    OSVERSIONINFOEX osvi;
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    if( !GetVersionEx((OSVERSIONINFO *) &osvi))
+    {
+    	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);	
+        GetVersionEx ((OSVERSIONINFO *)&osvi);
+    }
+    
+    if (osvi.dwMajorVersion > 5)
+    	ncm.cbSize = sizeof(NONCLIENTMETRICS);
+    else
+	    ncm.cbSize = sizeof(NONCLIENTMETRICS) - sizeof(ncm.iPaddedBorderWidth);
+#endif
     VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(NONCLIENTMETRICS), &ncm, 0));
+
     SetFont(&(ncm.lfMessageFont));
 #endif
 }

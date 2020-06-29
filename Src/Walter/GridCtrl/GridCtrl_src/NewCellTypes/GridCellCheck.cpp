@@ -53,11 +53,6 @@ CGridCellCheck::CGridCellCheck() : CGridCell()
     //m_Rect.IsRectNull();
 }
 
-CGridCellCheck::~CGridCellCheck()
-{
-	
-}
-
 CSize CGridCellCheck::GetCellExtent(CDC* pDC)
 {
     // Using SM_CXHSCROLL as a guide to the size of the checkbox

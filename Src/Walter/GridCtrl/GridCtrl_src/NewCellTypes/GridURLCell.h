@@ -11,18 +11,14 @@
 
 #include "../GridCell.h"
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
 typedef struct {
     LPCTSTR szURLPrefix;
     size_t  nLength;
 } URLStruct;
 
-class ZFGK_DLLIMPEXP CGridURLCell : public CGridCell  
+
+
+class CGridURLCell : public CGridCell  
 {
     DECLARE_DYNCREATE(CGridURLCell)
 

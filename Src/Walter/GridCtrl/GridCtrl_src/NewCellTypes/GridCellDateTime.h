@@ -17,13 +17,7 @@
 #include "../GridCell.h"
 #include "afxdtctl.h"	// for CDateTimeCtrl
 
-#if defined (_ZFGKCOMMONLIB_)
-#define ZFGK_DLLIMPEXP __declspec(dllexport)
-#else
-#define ZFGK_DLLIMPEXP 
-#endif
-
-class ZFGK_DLLIMPEXP CGridCellDateTime : public CGridCell  
+class CGridCellDateTime : public CGridCell  
 {
   friend class CGridCtrl;
   DECLARE_DYNCREATE(CGridCellDateTime)

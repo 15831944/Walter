@@ -37,7 +37,7 @@ CString TY_GetFrameFolder()
 #ifdef DEV_TEST_ENV
 	return TY_GetAppPath()+ "\\Support\\Walter\\TuKuang\\";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\";
 #endif // DEV_TEST_ENV
 }
 
@@ -46,7 +46,7 @@ CString TY_GetDllFilePathName()
 #ifdef DEV_TEST_ENV
 	return "C:\\TYTool.dll";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
 #endif // DEV_TEST_ENV
 }
 

@@ -156,6 +156,7 @@
     <ClCompile Include="Common\Excel\Excel.cpp" />
     <ClCompile Include="Common\MarkupXml\Markup.cpp" />
     <ClCompile Include="CutterTool.cpp" />
+    <ClCompile Include="DlgPcdJD.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenExcelDialog.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -198,6 +199,7 @@
     <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="Common\MarkupXml\Markup.h" />
     <ClInclude Include="CutterTool.h" />
+    <ClInclude Include="DlgPcdJD.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="OpenExcelDialog.h" />
     <ClInclude Include="Resource.h" />

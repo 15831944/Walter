@@ -103,3 +103,15 @@ void TY_Progress_Close()
 		Func();
 	}
 }
+
+int SPCDJDData::Draw()
+{
+	//第一步：用户选择一个输入点
+
+	//第二步 插入刀具主体动态块
+
+	//第三步：定位和插入刀柄
+
+	//第四步：设置8个数据
+	return 0;
+}

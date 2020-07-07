@@ -107,6 +107,12 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 	jdData.m_uiData_stepNumChoose = indexText;
 
 	jdData.m_uiData_allListData = GetTable();
+
+	//×ª±äjdData µ½ SPCDJDData
+
+
+	//
+	m_data.Draw();
 	return;
 }
 

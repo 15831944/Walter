@@ -3,7 +3,7 @@
 #include "GridCtrl/GridCtrlEx.h"
 #include "res/resource.h"
 #include "afxwin.h"
-
+#include "Com.h"
 
 typedef vector<CString> OneRowData;
 typedef vector<OneRowData> MultiRowData;
@@ -49,4 +49,6 @@ public:
 	MultiRowData GetTable();
 	MultiRowData FillDefaultData(int rowCount, int tableColumn);
 	void SetCellHeight();
+
+	SPCDJDData m_data;
 };

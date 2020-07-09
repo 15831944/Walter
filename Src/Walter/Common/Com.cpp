@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Com.h"
-
+#include "Entity/DynamicBlockUtil.h"
+#include "DlgPcdJD.h"
 static HINSTANCE s_gTyToolInst = 0;
 
 CString TY_GetAppPath()
@@ -25,7 +26,7 @@ CString TY_GetAppPath()
 CString TY_GetDwgFolder()
 {
 #ifdef DEV_TEST_ENV
-	return TY_GetAppPath()+ "\\Support\\Walter\\DaoJuXingHao\\";
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoJuXingHao\\";
 #else
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
 #endif // DEV_TEST_ENV
@@ -35,7 +36,7 @@ CString TY_GetDwgFolder()
 CString TY_GetFrameFolder()
 {
 #ifdef DEV_TEST_ENV
-	return TY_GetAppPath()+ "\\Support\\Walter\\TuKuang\\";
+	return TY_GetAppPath() + "\\Support\\Walter\\TuKuang\\";
 #else
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\";
 #endif // DEV_TEST_ENV
@@ -107,11 +108,58 @@ void TY_Progress_Close()
 int SPCDJDData::Draw()
 {
 	//第一步：用户选择一个输入点
+	AcGePoint3d pnt;
+	CGetInputUtil::GetPoint(L"请选择一个插入点:", pnt);
+	CDocLock lock;	//如果读取文件失败，可能是因为之前没有加锁
 
-	//第二步 插入刀具主体动态块
+	//插入对应的刀身
+	CString daoShenFilePath = TY_GetDwgFolder();
+	CString str;
+	str.Format(L"%d", m_stepNum);
+	daoShenFilePath.Append(L"DaoShen\\PCD铰刀模板X" + str + L".dwg");
+	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 
-	//第三步：定位和插入刀柄
+	//插入对应的刀柄,并设置参数
+	CString daoBingFilePath = TY_GetDwgFolder();
+	daoBingFilePath.Append(L"DaoBing\\" + m_daoBing + L".dwg");
+	double MaxLLen;
+	CDynamicBlockUtil::GetDynamicBlockData(daoShenID, L"L", MaxLLen);
+	AcGePoint3d insertPiont(pnt.x - MaxLLen, pnt.y, 0);
+	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, insertPiont, 0, 1);
+	switch (m_stepNum)
+	{
+	case 1:
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[m_stepNum - 1].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[m_stepNum - 1].m_stepLength);
+		break;
+	case 2:
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[m_stepNum - 2].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[m_stepNum - 2].m_stepLength);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[m_stepNum - 1].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[m_stepNum - 1].m_stepLength);
+		break;
+	case 3:
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[m_stepNum - 3].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[m_stepNum - 3].m_stepLength);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[m_stepNum - 2].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[m_stepNum - 2].m_stepLength);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[m_stepNum - 1].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[m_stepNum - 1].m_stepLength);
+		break;
+	case 4:
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[m_stepNum - 4].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[m_stepNum - 4].m_stepLength);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[m_stepNum - 3].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[m_stepNum - 3].m_stepLength);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[m_stepNum - 2].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[m_stepNum - 2].m_stepLength);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D4", m_stepDatas[m_stepNum - 1].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L", m_stepDatas[m_stepNum - 1].m_stepLength);
+		break;
+	default:
+		break;
+	}
 
-	//第四步：设置8个数据
+	CViewUtil::ZoomExtent();
 	return 0;
 }

@@ -240,6 +240,10 @@
   <ItemGroup>
     <ResourceCompile Include="res\ProjectName.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="12.BMP" />
+    <Image Include="res\12.BMP" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

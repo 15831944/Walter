@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(DlgPcdJD, CDialogEx)
 
 DlgPcdJD::DlgPcdJD(CWnd* pParent /*=NULL*/)
-	: CDialogEx(DlgPcdJD::IDD, pParent)
+: CDialogEx(DlgPcdJD::IDD, pParent)
 {
 
 }
@@ -77,12 +77,12 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.AddString(L"HSK-A80");
 	m_ui_hiltChoose.AddString(L"HSK-A100");
 
-	int defaultValue1 = 0, defaultValue2 = 2;
+	int defaultValue1 = 0, defaultValue2 = 3;
 	int tableColumnCount = 3;
 	m_ui_hiltChoose.SetCurSel(defaultValue1);
 	m_ui_stepNum.SetCurSel(defaultValue2);
 	m_allListData = FillDefaultData(defaultValue2, tableColumnCount);
-	
+
 	InitGridCtrl();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常:  OCX 属性页应返回 FALSE
@@ -109,9 +109,19 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 	jdData.m_uiData_allListData = GetTable();
 
 	//转变jdData 到 SPCDJDData
+	m_data.m_daoBing = jdData.m_uiData_hiltChoose;
+	m_data.m_stepNum = _ttoi(jdData.m_uiData_stepNumChoose);
 
-
-	//
+	for (int i = 0; i < jdData.m_uiData_allListData.size(); i++)
+	{
+		PCDJDStepData temp;
+		temp.index = _ttoi(jdData.m_uiData_allListData[i][0]);
+		temp.m_diameter = _ttof(jdData.m_uiData_allListData[i][1]);
+		temp.m_stepLength = _ttoi(jdData.m_uiData_allListData[i][2]);
+		temp.m_angle = _ttof(jdData.m_uiData_allListData[i][3]);
+		m_data.m_stepDatas.push_back(temp);
+	}
+	ShowWindow(SW_HIDE);	//不能把这个写到下面的draw()函数里，直接再这里隐藏即可
 	m_data.Draw();
 	return;
 }
@@ -181,7 +191,7 @@ MultiRowData DlgPcdJD::GetTable()
 	for (UINT i = 0; i < (int)m_gridCtrl.GetContentRowCount(); i++)
 	{
 		OneRowText oneRowText;
-		for (UINT j = 0; j < 3;j++)
+		for (UINT j = 0; j < 4; j++)
 		{
 			oneRowText.push_back(m_gridCtrl.GetContentItemText(i, j));
 		}
@@ -192,33 +202,127 @@ MultiRowData DlgPcdJD::GetTable()
 
 MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 {
+	OneRowText defaultText;
 	MultiRowData vec;
-	for (int i = 0; i <= rowCount; i++)
+	CString str;
+	switch (rowCount)
 	{
-		OneRowText defaultText;
-		CString str;
-		for (int j = 0; j <= columnCount; j++)
-		{
-			switch (j)
-			{
-			case 0:
-				str.Format(_T("%d"), i+1);
-				defaultText.push_back(str);
-				break;
-			case 1:
-				defaultText.push_back(L"10");
-				break;
-			case 2:
-				defaultText.push_back(L"20");
-				break;
-			case 3:
-				defaultText.push_back(L"3");
-				break;
-			default:
-				break;
-			}
-		}
+	case 0:
+		defaultText.clear();
+		str.Format(L"1");
+		defaultText.push_back(str);
+		str.Format(L"10");
+		defaultText.push_back(str);
+		str.Format(L"30");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
 		vec.push_back(defaultText);
+		break;
+	case 1:
+		defaultText.clear();
+		str.Format(L"1");
+		defaultText.push_back(str);
+		str.Format(L"10");
+		defaultText.push_back(str);
+		str.Format(L"30");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+
+		defaultText.clear();
+		str.Format(L"2");
+		defaultText.push_back(str);
+		str.Format(L"20");
+		defaultText.push_back(str);
+		str.Format(L"60");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+		break;
+	case 2:
+		defaultText.clear();
+		str.Format(L"1");
+		defaultText.push_back(str);
+		str.Format(L"10");
+		defaultText.push_back(str);
+		str.Format(L"30");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+
+		defaultText.clear();
+		str.Format(L"2");
+		defaultText.push_back(str);
+		str.Format(L"20");
+		defaultText.push_back(str);
+		str.Format(L"60");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+
+		defaultText.clear();
+		str.Format(L"3");
+		defaultText.push_back(str);
+		str.Format(L"30");
+		defaultText.push_back(str);
+		str.Format(L"90");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+		break;
+	case 3:
+		defaultText.clear();
+		str.Format(L"1");
+		defaultText.push_back(str);
+		str.Format(L"10");
+		defaultText.push_back(str);
+		str.Format(L"30");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+
+		defaultText.clear();
+		str.Format(L"2");
+		defaultText.push_back(str);
+		str.Format(L"20");
+		defaultText.push_back(str);
+		str.Format(L"60");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+
+		defaultText.clear();
+		str.Format(L"3");
+		defaultText.push_back(str);
+		str.Format(L"30");
+		defaultText.push_back(str);
+		str.Format(L"90");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+
+		defaultText.clear();
+		str.Format(L"4");
+		defaultText.push_back(str);
+		str.Format(L"40");
+		defaultText.push_back(str);
+		str.Format(L"120");
+		defaultText.push_back(str);
+		str.Format(L"75");
+		defaultText.push_back(str);
+		vec.push_back(defaultText);
+		break;
+	default:
+		break;
 	}
 	return vec;
 }

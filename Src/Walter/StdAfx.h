@@ -70,3 +70,4 @@
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_STDAFX_H__5A964FB5_3201_11D2_8C8D_0040054247F9__INCLUDED_)
+#include "res/resource.h"

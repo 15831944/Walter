@@ -272,16 +272,16 @@ void menu()
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&批量导入标准图纸"),_T("_GYZ1 "));
 
-
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&参数化设计非标刀具"),_T("_GYZ2 "));
-
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&瓦尔特图纸修复"), _T("_WREPAIR "));
+
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&PCD铰刀设计"), _T("PCDJD1 "));
 
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();

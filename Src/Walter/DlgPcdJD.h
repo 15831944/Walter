@@ -11,9 +11,9 @@ typedef vector<OneRowData> MultiRowData;
 
 typedef struct JDData
 {
-	CString m_uiData_hiltChoose;
-	CString m_uiData_stepNumChoose;
-	MultiRowData m_uiData_allListData;
+	CString m_uiData_hiltChoose;	//ui界面——刀柄选择
+	CString m_uiData_stepNumChoose;		//ui界面——阶梯数量选择
+	MultiRowData m_uiData_allListData;	//点击接替数量后自动生成的表数据
 }s_JDData;
 
 
@@ -39,8 +39,8 @@ public:
 	CGridCtrlEx m_gridCtrl;
 	MultiRowData m_allListData;
 	virtual BOOL OnInitDialog();
-	CComboBox m_ui_stepNum;
-	CComboBox m_ui_hiltChoose;
+	CComboBox m_ui_stepNum;		//阶梯选择的下拉框
+	CComboBox m_ui_hiltChoose;		//刀柄选择的下拉框
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedButtonGenerateDwg();
 	afx_msg void OnCbnSelchangeComboStepNum();

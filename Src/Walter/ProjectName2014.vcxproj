@@ -164,6 +164,7 @@
     <ClCompile Include="Common\MarkupXml\Markup.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Common\PCDJDData.cpp" />
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Common\Excel\CWorksheets.h" />
     <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="Common\MarkupXml\Markup.h" />
+    <ClInclude Include="Common\PCDJDData.h" />
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
     <ClInclude Include="GridCtrl\GridCellCheckEx.h" />

@@ -3,7 +3,7 @@
 #include "GridCtrl/GridCtrlEx.h"
 #include "res/resource.h"
 #include "afxwin.h"
-#include "Com.h"
+#include "PCDJDData.h"
 
 typedef vector<CString> OneRowData;
 typedef vector<OneRowData> MultiRowData;

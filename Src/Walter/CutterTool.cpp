@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CutterTool.h"
-#include "resource.h"
+#include "res/resource.h"
 #include "../Common/Excel/Excel.h"
 #include "../Inc/Entity/TextUtil.h"
 #include <dbtable.h>

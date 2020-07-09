@@ -107,11 +107,12 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ARX_2017;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -155,8 +156,22 @@
     <ClCompile Include="Common\Excel\CExcel.cpp" />
     <ClCompile Include="Common\Excel\Excel.cpp" />
     <ClCompile Include="Common\MarkupXml\Markup.cpp" />
+    <ClCompile Include="Common\PCDJDData.cpp" />
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
+    <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrlEx.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCell.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCellBase.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridCtrl.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\GridDropTarget.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\InPlaceEdit.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenExcelDialog.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -165,21 +180,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCell.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCellBase.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrl.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridCtrlUtil.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\GridDropTarget.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\InPlaceEdit.cpp" />
-    <ClCompile Include="UiCommon\MfcGridCtrl\TitleTip.cpp" />
     <ClCompile Include="WalterDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,36 +198,33 @@
     <ClInclude Include="Common\Excel\CWorksheets.h" />
     <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="Common\MarkupXml\Markup.h" />
+    <ClInclude Include="Common\PCDJDData.h" />
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
+    <ClInclude Include="GridCtrl\GridCellCheckEx.h" />
+    <ClInclude Include="GridCtrl\GridCtrlEx.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\CellRange.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCell.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCellBase.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridCtrl.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\GridDropTarget.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\InPlaceEdit.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\MemDC.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCheck.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellCombo.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellDateTime.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridCellNumeric.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.h" />
+    <ClInclude Include="GridCtrl\GridCtrl_src\TitleTip.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="OpenExcelDialog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellRange.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellButton.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCheck.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellCombo.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellDateTime.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellGroup.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellNumeric.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridCellTerminal.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\CellTypes\GridURLCell.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCell.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCellBase.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrl.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridCtrlUtil.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\GridDropTarget.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\InPlaceEdit.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\MemDC.h" />
-    <ClInclude Include="UiCommon\MfcGridCtrl\TitleTip.h" />
     <ClInclude Include="WalterDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="UiCommon\MfcGridCtrl\CellTypes\vssver2.scc" />
-    <None Include="UiCommon\MfcGridCtrl\vssver2.scc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\ProjectName.rc" />

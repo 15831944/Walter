@@ -32,6 +32,62 @@ CString TY_GetDwgFolder()
 #endif // DEV_TEST_ENV
 }
 
+//刀具库存储目录
+CString TY_GetDynamicBlockFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DynamicBlocks\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+#endif // DEV_TEST_ENV
+}
+//根据刀尖获取 lf2的值
+double GetLf2ByDiameter(double diameter)
+{
+	double Lf2 = 2.5f; //设置默认为2.5
+	if (diameter > 4 && diameter <= 6.1)
+	{
+		Lf2 = 2.5f;
+	}
+	else if (diameter > 6.1 && diameter <= 8.6)
+	{
+		Lf2 = 3.0f;
+	}
+	else if (diameter > 8.6 && diameter <= 10.6)
+	{
+		Lf2 = 3.5f;
+	}
+	else if (diameter > 10.6 && diameter <= 12.1)
+	{
+		Lf2 = 4.5f;
+	}
+	else if (diameter > 12.1 && diameter <= 15.1)
+	{
+		Lf2 = 5.0f;
+	}
+	else if (diameter > 15.1 && diameter <= 17.1)
+	{
+		Lf2 = 6.0f;
+	}
+	else if (diameter > 17.1)
+	{
+		Lf2 = 6.5f;
+	}
+	return Lf2;
+}
+
+
+//刀具库存储目录
+CString TY_GetDaoBingFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBing\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+#endif // DEV_TEST_ENV
+}
+
+
 //得到图框存储路径
 CString TY_GetFrameFolder()
 {

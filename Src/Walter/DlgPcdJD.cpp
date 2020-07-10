@@ -68,9 +68,9 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.AddString(L"BT30");
 	m_ui_hiltChoose.AddString(L"BT40");
 	m_ui_hiltChoose.AddString(L"BT50");
-	m_ui_hiltChoose.AddString(L"JT30");
-	m_ui_hiltChoose.AddString(L"JT40");
-	m_ui_hiltChoose.AddString(L"JT50");
+	m_ui_hiltChoose.AddString(L"SK30");
+	m_ui_hiltChoose.AddString(L"SK40");
+	m_ui_hiltChoose.AddString(L"SK50");
 	m_ui_hiltChoose.AddString(L"HSK-A40");
 	m_ui_hiltChoose.AddString(L"HSK-A50");
 	m_ui_hiltChoose.AddString(L"HSK-A63");

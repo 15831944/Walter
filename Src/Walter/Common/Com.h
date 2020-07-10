@@ -8,6 +8,8 @@ CString TY_GetAppPath();
 
 //根据刀具直径获取 lf2的值
 double GetLf2ByDiameter(double diameter);
+double GetRadiusByDiameter(double diameter);
+double GetWidthByDiameter(double diameter);
 //刀具库存储目录
 CString TY_GetDwgFolder();
 CString TY_GetDynamicBlockFolder();

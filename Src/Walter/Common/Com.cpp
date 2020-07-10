@@ -75,7 +75,54 @@ double GetLf2ByDiameter(double diameter)
 	}
 	return Lf2;
 }
-
+//根据刀尖直径获取刀片的宽
+double GetWidthByDiameter(double diameter)
+{
+	double width = 2.0f; //设置默认为2.5
+	if (diameter > 4 && diameter <= 6.1)
+	{
+		width = 2.0f;
+	}
+	else if (diameter > 6.1 && diameter <= 8.6)
+	{
+		width = 2.5f;
+	}
+	else if (diameter > 8.6 && diameter <= 10.6)
+	{
+		width = 3.0f;
+	}
+	else if (diameter > 10.6 && diameter <= 12.1)
+	{
+		width = 3.5f;
+	}
+	else if (diameter > 12.1 && diameter <= 15.1)
+	{
+		width = 4.0f;
+	}
+	else if (diameter > 15.1 && diameter <= 17.1)
+	{
+		width = 4.5f;
+	}
+	else if (diameter > 17.1)
+	{
+		width = 5.0f;
+	}
+	return width;
+}
+//根据刀尖直径获取刀片的半径
+double GetRadiusByDiameter(double diameter)
+{
+	double radius = 3.2f; //设置默认为2.5
+	if (diameter > 4 && diameter <= 12.1)
+	{
+		radius = 3.2f;
+	}
+	else if (diameter >12.1)
+	{
+		radius = 4.2f;
+	}
+	return radius;
+}
 
 //刀具库存储目录
 CString TY_GetDaoBingFolder()

@@ -16,5 +16,9 @@ typedef struct  SPCDJDData
 	int m_stepNum;//阶梯数量
 	std::vector<PCDJDStepData>  m_stepDatas;
 	int Draw();
+	//获取刀尖顶点
+	AcGePoint3d GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int stepIndex);
+	//插入标注
+	void InsertDDiamension(const AcGePoint3d& pnt, int step);
 }SPCDJDData;
 

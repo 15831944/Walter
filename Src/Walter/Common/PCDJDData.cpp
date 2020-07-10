@@ -90,10 +90,11 @@ int SPCDJDData::Draw()
 
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
-
+		
 		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
 		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"R", radius);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"yLen", width);
 
@@ -107,18 +108,21 @@ int SPCDJDData::Draw()
 		
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX2", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
-		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"R", radius);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"yLen", width);
-		InsertDDiamension(pnt, 0 );
-
+	
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[ 1].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX2", L"µ¶¼â_2_T", L"An", m_stepDatas[1].m_angle);
+
+
+		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX2", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"R", radius);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX1", L"µ¶¼â_1_T", L"yLen", width);
+		InsertDDiamension(pnt, 0);
+
 		radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
 		width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX2", L"µ¶¼â_2_T", L"An", m_stepDatas[1].m_angle);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX2", L"µ¶¼â_1_T", L"R", radius);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX2", L"µ¶¼â_1_T", L"yLen", width);
 		InsertDDiamension(pnt, 1);
@@ -131,27 +135,32 @@ int SPCDJDData::Draw()
 
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
-		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_1_T", L"R", radius);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_1_T", L"yLen", width);
-		InsertDDiamension(pnt, 0 );
 
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[1].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_2_T", L"An", m_stepDatas[1].m_angle);
-		radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-		width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_2_T", L"R", radius);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_2_T", L"yLen", width);
-		InsertDDiamension(pnt, 1 );
-
+		
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_3_T", L"An", m_stepDatas[2].m_angle);
+
+
+		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_1_T", L"R", radius);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_1_T", L"yLen", width);
+		InsertDDiamension(pnt, 0);
+
+
+		radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
+		width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_2_T", L"An", m_stepDatas[1].m_angle);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_2_T", L"R", radius);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_2_T", L"yLen", width);
+		InsertDDiamension(pnt, 1);
+
 		radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
 		width = GetWidthByDiameter(m_stepDatas[2].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_3_T", L"An", m_stepDatas[2].m_angle);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_3_T", L"R", radius);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX3", L"µ¶¼â_3_T", L"yLen", width);
 		InsertDDiamension(pnt, 2 );
@@ -164,36 +173,44 @@ int SPCDJDData::Draw()
 
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle); 
-		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_1_T", L"R", radius);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_1_T", L"yLen", width);
-		InsertDDiamension(pnt, 0 );
-
+		
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[1].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_2_T", L"yLen", m_stepDatas[1].m_angle);
+
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength);
+		
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D4", m_stepDatas[3].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L4", m_stepDatas[3].m_stepLength);
+		
+		
+		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_1_T", L"An", m_stepDatas[0].m_angle);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_1_T", L"R", radius);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_1_T", L"yLen", width);
+		InsertDDiamension(pnt, 0);
+
+		
 		radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
 		width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_2_T", L"yLen", m_stepDatas[1].m_angle);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_2_T", L"R", radius);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_2_T", L"yLen", width);
 		InsertDDiamension(pnt, 1);
 
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_3_T", L"An", m_stepDatas[2].m_angle);
+		
 		radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
 		width = GetWidthByDiameter(m_stepDatas[2].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_3_T", L"An", m_stepDatas[2].m_angle);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_3_T", L"R", radius);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_3_T", L"yLen", width);
-		InsertDDiamension(pnt, 2 );
-
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D4", m_stepDatas[3].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L4", m_stepDatas[3].m_stepLength);
-		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_4_T", L"An", m_stepDatas[3].m_angle);
+		InsertDDiamension(pnt, 2);
+		
+		
 		radius = GetRadiusByDiameter(m_stepDatas[3].m_diameter);
 		width = GetWidthByDiameter(m_stepDatas[3].m_diameter);
+		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_4_T", L"An", m_stepDatas[3].m_angle);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_4_T", L"R", radius);
 		CDynamicBlockUtil::SetDynamicValueInDynamicBlock(L"PCD½Âµ¶Ä£°åX4", L"µ¶¼â_4_T", L"yLen", width);
 		InsertDDiamension(pnt, 3 );

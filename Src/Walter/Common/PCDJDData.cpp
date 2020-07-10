@@ -42,17 +42,74 @@ AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int 
 }
 
 //出入直径标注
-void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int step)
+void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 {
-	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, step);
-	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, step);
+	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
+	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, stepIndex);
 	AcGePoint3d ptCenter(pnt);
 
 	//
-	ptCenter.x += 15 + step * 15;
+	ptCenter.x += 15 + stepIndex * 15;
 	
 	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, NULL);
 }
+//插入L标注
+void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
+{
+	if (stepIndex == 0)
+	{
+		return;
+	}
+	//L标注起点和终点
+	AcGePoint3d LDstart = GetDaoJianPoint(pnt, true, 0);
+	AcGePoint3d LDend = GetDaoJianPoint(pnt, true, stepIndex);
+	CString dimension;
+	dimension.Format(L"L%d", stepIndex);
+
+	AcGePoint3d center = CMathUtil::GetMidPoint(LDstart, LDend);
+	center.y = LDend.y;
+	AcDbObjectId dimId = CDimensionUtil::AddDimRotated(LDstart, LDend, center,0);
+}
+//插入Lf1标注
+void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
+{
+	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
+	AcGePoint3d LfDend = GetDaoJianPoint(pnt, true, stepIndex);
+
+	LfDend.x -= 20;
+	
+	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
+	center.y = LfDend.y;
+	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0);
+}
+//插入offset标注
+void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
+{
+	//竖直偏移
+	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, 0);
+	ptBottom.x -= 3.0;
+	AcGePoint3d ptEdge(ptBottom);
+	//偏移距离为0.5
+	ptEdge.y += 0.5;
+
+	AcGePoint3d center = CMathUtil::GetMidPoint(ptBottom, ptEdge);
+	center.x -= 5;
+	CDimensionUtil::AddDimAligned(ptBottom, ptEdge, center, NULL);
+	//平行偏移
+	double lenx1 = 0.5 / sin(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
+
+}
+//插入主偏角度标注
+void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt, int stepIndex)
+{
+
+}
+//插入60度标注
+void SPCDJDData::InsertSixtyDimension(const AcGePoint3d & pnt)
+{
+
+}
+
 int SPCDJDData::Draw()
 {
 	//第一步：用户选择一个输入点
@@ -112,6 +169,9 @@ int SPCDJDData::Draw()
 		}
 
 		InsertDDiamension(pnt, 0);
+		//插入LF1
+		InsertLf1Dimension(pnt, 0);
+		InsertOffsetDimension(pnt);
 		break;
 	}
 	case 2:
@@ -159,6 +219,10 @@ int SPCDJDData::Draw()
 
 		InsertDDiamension(pnt, 0);
 		InsertDDiamension(pnt, 1);
+
+		InsertLDiamension(pnt, 1);
+		//插入LF1
+		InsertLf1Dimension(pnt, 1);
 		break;
 	}
 	case 3:
@@ -220,6 +284,10 @@ int SPCDJDData::Draw()
 		InsertDDiamension(pnt, 0);
 		InsertDDiamension(pnt, 1);
 		InsertDDiamension(pnt, 2 );
+		InsertLDiamension(pnt, 1);
+		InsertLDiamension(pnt, 2);
+		//插入LF1
+		InsertLf1Dimension(pnt, 2);
 		break;
 	}
 	case 4:
@@ -296,6 +364,10 @@ int SPCDJDData::Draw()
 		InsertDDiamension(pnt, 1);
 		InsertDDiamension(pnt, 2);
 		InsertDDiamension(pnt, 3);
+		InsertLDiamension(pnt, 1);
+		InsertLDiamension(pnt, 2);
+		InsertLDiamension(pnt, 3);
+		InsertLf1Dimension(pnt, 3);
 		break;
 	}
 	default:

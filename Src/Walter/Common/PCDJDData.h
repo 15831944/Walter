@@ -18,7 +18,16 @@ typedef struct  SPCDJDData
 	int Draw();
 	//获取刀尖顶点
 	AcGePoint3d GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int stepIndex);
-	//插入标注
-	void InsertDDiamension(const AcGePoint3d& pnt, int step);
+	//插入直径标注
+	void InsertDDiamension(const AcGePoint3d& pnt, int stepIndex);
+	//插入L标注
+	void InsertLDiamension(const AcGePoint3d& pnt, int stepIndex);
+	void InsertLf1Dimension(const AcGePoint3d& pnt,int stepIndex);
+	//插入offset标注
+	void InsertOffsetDimension(const AcGePoint3d& pnt);
+	//插入主偏角度标注
+	void InsertAngleDimension(const AcGePoint3d& pnt, int stepIndex);
+	//插入60度标注
+	void InsertSixtyDimension(const AcGePoint3d& pnt);
 }SPCDJDData;
 

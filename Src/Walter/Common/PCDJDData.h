@@ -26,7 +26,7 @@ typedef struct  SPCDJDData
 	//插入offset标注
 	void InsertOffsetDimension(const AcGePoint3d& pnt);
 	//插入主偏角度标注
-	void InsertAngleDimension(const AcGePoint3d& pnt, int stepIndex);
+	void InsertAngleDimension(const AcGePoint3d& pnt);
 	//插入60度标注
 	void InsertSixtyDimension(const AcGePoint3d& pnt);
 }SPCDJDData;

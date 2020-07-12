@@ -81,11 +81,6 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 	center.y = LfDend.y;
 	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0);
 	//插入Lf2标注
-	double lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-	AcGePoint3d lf2ptEnd(pnt.x, LfDstart.y - lf2, 0);
-	center = CMathUtil::GetMidPoint(LfDstart, lf2ptEnd);
-	center.x += 10;
-	CDimensionUtil::AddDimRotated(LfDstart, lf2ptEnd, center, 90);
 }
 //插入offset标注
 void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)

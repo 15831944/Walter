@@ -32,15 +32,47 @@ CString TY_GetDwgFolder()
 #endif // DEV_TEST_ENV
 }
 
+
+//得到图框存储路径
+CString TY_GetFrameFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\TuKuang\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\";
+#endif // DEV_TEST_ENV
+}
+
+CString TY_GetDllFilePathName()
+{
+#ifdef DEV_TEST_ENV
+	return "C:\\TYTool.dll";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
+#endif // DEV_TEST_ENV
+}
+
+
 //刀具库存储目录
 CString TY_GetDynamicBlockFolder()
 {
 #ifdef DEV_TEST_ENV
 	return TY_GetAppPath() + "\\Support\\Walter\\DynamicBlocks\\";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DynamicBlocks\\";
 #endif // DEV_TEST_ENV
 }
+
+//刀具库存储目录
+CString TY_GetDaoBingFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBing\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBing\\";
+#endif // DEV_TEST_ENV
+}
+
 //根据刀尖获取 lf2的值
 double GetLf2ByDiameter(double diameter)
 {
@@ -122,36 +154,6 @@ double GetRadiusByDiameter(double diameter)
 		radius = 4.2f;
 	}
 	return radius;
-}
-
-//刀具库存储目录
-CString TY_GetDaoBingFolder()
-{
-#ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\DaoBing\\";
-#else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
-#endif // DEV_TEST_ENV
-}
-
-
-//得到图框存储路径
-CString TY_GetFrameFolder()
-{
-#ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\TuKuang\\";
-#else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\";
-#endif // DEV_TEST_ENV
-}
-
-CString TY_GetDllFilePathName()
-{
-#ifdef DEV_TEST_ENV
-	return "C:\\TYTool.dll";
-#else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
-#endif // DEV_TEST_ENV
 }
 
 bool TY_LoadTyTool()

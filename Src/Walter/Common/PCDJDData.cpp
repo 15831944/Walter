@@ -42,17 +42,115 @@ AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int 
 }
 
 //出入直径标注
-void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int step)
+void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 {
-	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, step);
-	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, step);
+	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
+	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, stepIndex);
 	AcGePoint3d ptCenter(pnt);
 
 	//
-	ptCenter.x += 15 + step * 15;
+	ptCenter.x += 15 + stepIndex * 15;
 	
 	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, NULL);
 }
+//插入L标注
+void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
+{
+	if (stepIndex == 0)
+	{
+		return;
+	}
+	//L标注起点和终点
+	AcGePoint3d LDstart = GetDaoJianPoint(pnt, true, 0);
+	AcGePoint3d LDend = GetDaoJianPoint(pnt, true, stepIndex);
+	CString dimension;
+	dimension.Format(L"L%d", stepIndex);
+
+	AcGePoint3d center = CMathUtil::GetMidPoint(LDstart, LDend);
+	center.y = LDend.y;
+	AcDbObjectId dimId = CDimensionUtil::AddDimRotated(LDstart, LDend, center,0);
+}
+//插入Lf1标注
+void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
+{
+	//插入Lf1标注
+	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
+	AcGePoint3d LfDend = GetDaoJianPoint(pnt, true, stepIndex);
+	LfDend.x -= 20;
+	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
+	center.y = LfDend.y;
+	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0);
+	//插入Lf2标注
+}
+//插入offset标注
+void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
+{
+	//竖直偏移
+	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, 0);
+	ptBottom.x -= 3.0;
+	AcGePoint3d ptEdge(ptBottom);
+	//偏移距离为0.5
+	ptEdge.y += 0.5;
+
+	AcGePoint3d center(0,0,0);
+	center.x = ptBottom.x - 15;
+	center.y = ptEdge.y - 15;
+	CDimensionUtil::AddDimAligned(ptBottom, ptEdge, center, NULL);
+	//平行偏移
+	ptBottom.x += 3.0;
+	//找到中点位置
+	double width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+	ptBottom.x += (width / 2.0) / tan(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
+	ptBottom.y += width / 2.0;
+	double y = 0.5 * cos(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
+	double x = 0.5 * sin(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
+	//刀尖的另外一个顶点
+	AcGePoint3d ptPoint(0, 0, 0);
+	ptPoint.x = ptBottom.x  - x;
+	ptPoint.y = ptBottom.y + y;
+	//中心向下偏移
+	center.x = ptBottom.x + 15;
+	center.y = ptBottom.y - 15;
+	CDimensionUtil::AddDimAligned(ptBottom, ptPoint,center , NULL);
+}
+//插入主偏角度标注
+void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
+{
+	for (int stepIndex = 0;stepIndex < m_stepNum;stepIndex++)
+	{
+		//角的顶点
+		AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
+		double y = GetWidthByDiameter(m_stepDatas[stepIndex].m_diameter);
+		double x = y / tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle));
+		//构成角的射线中两点
+		AcGePoint3d ptEnd1(ptTop.x + x, ptTop.y, 0);
+		AcGePoint3d ptEnd2(ptTop.x + x, ptTop.y - y, 0);
+		//标注点
+		AcGePoint3d center(0, 0, 0);
+		center.x = ptEnd1.x + 5;
+		double len = center.x - ptTop.x;
+		center.y = ptTop.y -  len*tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle / 2.0));
+		CDimensionUtil::AddDim2LineAngular(ptTop, ptEnd1, ptTop, ptEnd2, center, NULL);
+	}
+}
+//插入60度标注
+void SPCDJDData::InsertSixtyDimension(const AcGePoint3d & pnt)
+{
+	const double angle = 60.0;
+	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, 0);
+	//60度角顶点
+	AcGePoint3d ptVertx(0,0,0);
+	ptVertx.y = pnt.y;
+	ptVertx.x = ptBottom.x - (pnt.y - ptBottom.y) / tan(CMathUtil::AngleToRadian(angle));
+
+	AcGePoint3d ptArcCenter(0, 0, 0);
+	ptArcCenter.x = pnt.x + 20 ;
+	ptArcCenter.y = ptVertx.y -  (ptArcCenter.x - ptVertx.x) * tan(CMathUtil::AngleToRadian(angle / 2.0));
+
+	CDimensionUtil::AddDim2LineAngular(ptVertx,ptBottom,ptVertx,pnt,ptArcCenter,NULL);
+
+}
+
 int SPCDJDData::Draw()
 {
 	//第一步：用户选择一个输入点
@@ -112,6 +210,10 @@ int SPCDJDData::Draw()
 		}
 
 		InsertDDiamension(pnt, 0);
+		//插入LF1
+		InsertLf1Dimension(pnt, 0);
+		InsertOffsetDimension(pnt);
+		InsertSixtyDimension(pnt);
 		break;
 	}
 	case 2:
@@ -159,6 +261,12 @@ int SPCDJDData::Draw()
 
 		InsertDDiamension(pnt, 0);
 		InsertDDiamension(pnt, 1);
+
+		InsertLDiamension(pnt, 1);
+		//插入LF1
+		InsertLf1Dimension(pnt, 1);
+		InsertOffsetDimension(pnt);
+		InsertSixtyDimension(pnt);
 		break;
 	}
 	case 3:
@@ -220,6 +328,12 @@ int SPCDJDData::Draw()
 		InsertDDiamension(pnt, 0);
 		InsertDDiamension(pnt, 1);
 		InsertDDiamension(pnt, 2 );
+		InsertLDiamension(pnt, 1);
+		InsertLDiamension(pnt, 2);
+		//插入LF1
+		InsertLf1Dimension(pnt, 2);
+		InsertOffsetDimension(pnt);
+		InsertSixtyDimension(pnt);
 		break;
 	}
 	case 4:
@@ -296,12 +410,18 @@ int SPCDJDData::Draw()
 		InsertDDiamension(pnt, 1);
 		InsertDDiamension(pnt, 2);
 		InsertDDiamension(pnt, 3);
+		InsertLDiamension(pnt, 1);
+		InsertLDiamension(pnt, 2);
+		InsertLDiamension(pnt, 3);
+		InsertLf1Dimension(pnt, 3);
+		InsertOffsetDimension(pnt);
+		InsertSixtyDimension(pnt);
 		break;
 	}
 	default:
 		break;
 	}
-
+	InsertAngleDimension(pnt);
 	CViewUtil::ZoomExtent();
 	return 0;
 }

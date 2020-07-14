@@ -4,7 +4,7 @@
 #include "Entity/DynamicBlockUtil.h"
 #include "Com.h"
 #include "Interaction/UpdateUtil.h"
-#include <cmath>
+
 static HINSTANCE s_gTyToolInst = 0;
 
 AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int stepIndex)
@@ -14,7 +14,7 @@ AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int 
 		return AcGePoint3d(0,0,0);
 	}
 
-	double width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+	double width = GetHeightByDiameter(m_stepDatas[0].m_diameter);
 	double lenx2 = width / tan(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
 	double lenx1 = 0.5 / sin(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
 	double firstOffsetX = lenx2 - lenx1;
@@ -76,11 +76,19 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 	//插入Lf1标注
 	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
 	AcGePoint3d LfDend = GetDaoJianPoint(pnt, true, stepIndex);
-	LfDend.x -= 20;
+	//Lf1标注长度为L3+30
+	LfDend.x -= 30;
+
 	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
 	center.y = LfDend.y;
 	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0);
+//需要修改 有问题
 	//插入Lf2标注
+	double Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+	AcGePoint3d lf2end(pnt);
+	center.x = pnt.x + 20;
+	center.y = lf2end.y;
+	CDimensionUtil::AddDimRotated(LfDstart, lf2end, center, 90);
 }
 //插入offset标注
 void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
@@ -99,7 +107,7 @@ void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
 	//平行偏移
 	ptBottom.x += 3.0;
 	//找到中点位置
-	double width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+	double width = GetHeightByDiameter(m_stepDatas[0].m_diameter);
 	ptBottom.x += (width / 2.0) / tan(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
 	ptBottom.y += width / 2.0;
 	double y = 0.5 * cos(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
@@ -120,7 +128,7 @@ void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 	{
 		//角的顶点
 		AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
-		double y = GetWidthByDiameter(m_stepDatas[stepIndex].m_diameter);
+		double y = GetHeightByDiameter(m_stepDatas[stepIndex].m_diameter);
 		double x = y / tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle));
 		//构成角的射线中两点
 		AcGePoint3d ptEnd1(ptTop.x + x, ptTop.y, 0);
@@ -151,6 +159,29 @@ void SPCDJDData::InsertSixtyDimension(const AcGePoint3d & pnt)
 
 }
 
+void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
+{
+	//刀宽标注 默认为7.0
+	double xLen = 7.0;
+	//最后一个刀尖顶点
+	AcGePoint3d ptlastTopPoint = GetDaoJianPoint(pnt, true, m_stepNum - 1);
+	CDimensionUtil::AddDimRotated(ptlastTopPoint, AcGePoint3d(ptlastTopPoint.x - 7.0, ptlastTopPoint.y, ptlastTopPoint.z),
+		CMathUtil::GetMidPoint(ptlastTopPoint, AcGePoint3d(ptlastTopPoint.x - 7.0, ptlastTopPoint.y, ptlastTopPoint.z)), 0, NULL);
+
+	//最后一个刀尖的斜边长
+	double Height = GetHeightByDiameter(m_stepDatas[m_stepNum - 1].m_diameter);
+	AcGePoint3d ptEnd(0, 0, 0);
+	ptEnd.x = ptlastTopPoint.x + Height / tan(CMathUtil::AngleToRadian(m_stepDatas[m_stepNum-1].m_angle));
+	ptEnd.y = ptlastTopPoint.y - Height;
+	CDimensionUtil::AddDimAligned(ptlastTopPoint, ptEnd, CMathUtil::GetMidPoint(ptlastTopPoint, ptEnd), NULL);
+
+	//最后一个刀尖到上边缘的距离
+
+	CDimensionUtil::AddDimAligned(ptEnd, AcGePoint3d(ptEnd.x, ptlastTopPoint.y,ptEnd.z),
+		CMathUtil::GetMidPoint(ptEnd, AcGePoint3d(ptEnd.x, ptlastTopPoint.y, ptEnd.z)), NULL);
+
+}
+
 int SPCDJDData::Draw()
 {
 	//第一步：用户选择一个输入点
@@ -168,6 +199,7 @@ int SPCDJDData::Draw()
 	//插入对应的刀柄,并设置参数
 	CString daoBingFilePath = TY_GetDaoBingFolder();
 	daoBingFilePath.Append(m_daoBing + L".dwg");
+	//距离要修改但是缺少一个参数len没有获取
 	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength;
 	AcGePoint3d insertPiont(pnt.x - MaxLLen, pnt.y, 0);
 	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, insertPiont, 0, 1);
@@ -177,7 +209,7 @@ int SPCDJDData::Draw()
 
 	//刀片的半径和宽
 	double radius = 0;
-	double width = 0;
+	double Height = 0;
 
 	switch (m_stepNum)
 	{
@@ -193,7 +225,7 @@ int SPCDJDData::Draw()
 		CEntityUtil::ExplodeBlockToOwnSpace(daoShenID);
 
 		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-		width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+		Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
 
 		vAcDbObjectId blkRefIds;
 		CBlockUtil::CycleAllBlockReferences(blkRefIds);
@@ -205,15 +237,15 @@ int SPCDJDData::Draw()
 			{
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 		}
 
 		InsertDDiamension(pnt, 0);
 		//插入LF1
 		InsertLf1Dimension(pnt, 0);
-		InsertOffsetDimension(pnt);
-		InsertSixtyDimension(pnt);
+		//InsertOffsetDimension(pnt);
+		//InsertSixtyDimension(pnt);
 		break;
 	}
 	case 2:
@@ -240,21 +272,21 @@ int SPCDJDData::Draw()
 			if (name == L"刀尖_1_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 
 			if (name == L"刀尖_2_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 		}
 
@@ -265,8 +297,8 @@ int SPCDJDData::Draw()
 		InsertLDiamension(pnt, 1);
 		//插入LF1
 		InsertLf1Dimension(pnt, 1);
-		InsertOffsetDimension(pnt);
-		InsertSixtyDimension(pnt);
+		//InsertOffsetDimension(pnt);
+		//InsertSixtyDimension(pnt);
 		break;
 	}
 	case 3:
@@ -296,31 +328,31 @@ int SPCDJDData::Draw()
 			if (name == L"刀尖_1_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 
 			if (name == L"刀尖_2_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 
 			if (name == L"刀尖_3_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[2].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 		}
 
@@ -332,8 +364,8 @@ int SPCDJDData::Draw()
 		InsertLDiamension(pnt, 2);
 		//插入LF1
 		InsertLf1Dimension(pnt, 2);
-		InsertOffsetDimension(pnt);
-		InsertSixtyDimension(pnt);
+		//InsertOffsetDimension(pnt);
+		//InsertSixtyDimension(pnt);
 		break;
 	}
 	case 4:
@@ -367,41 +399,41 @@ int SPCDJDData::Draw()
 			if (name == L"刀尖_1_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[0].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 
 			if (name == L"刀尖_2_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[1].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 
 			if (name == L"刀尖_3_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[2].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 
 			if (name == L"刀尖_4_T")
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[3].m_diameter);
-				width = GetWidthByDiameter(m_stepDatas[3].m_diameter);
+				Height = GetHeightByDiameter(m_stepDatas[3].m_diameter);
 
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[3].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", width);
+				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 		}
 
@@ -414,14 +446,17 @@ int SPCDJDData::Draw()
 		InsertLDiamension(pnt, 2);
 		InsertLDiamension(pnt, 3);
 		InsertLf1Dimension(pnt, 3);
-		InsertOffsetDimension(pnt);
-		InsertSixtyDimension(pnt);
+		//InsertOffsetDimension(pnt);
+		//InsertSixtyDimension(pnt);
 		break;
 	}
 	default:
 		break;
 	}
+	//插入角度标注
 	InsertAngleDimension(pnt);
+	//插入其他标注
+	InsertOtherDimension(pnt);
 	CViewUtil::ZoomExtent();
 	return 0;
 }

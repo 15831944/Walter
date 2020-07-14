@@ -76,38 +76,38 @@ double GetLf2ByDiameter(double diameter)
 	return Lf2;
 }
 //根据刀尖直径获取刀片的宽
-double GetWidthByDiameter(double diameter)
+double GetHeightByDiameter(double diameter)
 {
-	double width = 2.0f; //设置默认为2.5
+	double Height = 2.0f; //设置默认为2.5
 	if (diameter > 4 && diameter <= 6.1)
 	{
-		width = 2.0f;
+		Height = 2.0f;
 	}
 	else if (diameter > 6.1 && diameter <= 8.6)
 	{
-		width = 2.5f;
+		Height = 2.5f;
 	}
 	else if (diameter > 8.6 && diameter <= 10.6)
 	{
-		width = 3.0f;
+		Height = 3.0f;
 	}
 	else if (diameter > 10.6 && diameter <= 12.1)
 	{
-		width = 3.5f;
+		Height = 3.5f;
 	}
 	else if (diameter > 12.1 && diameter <= 15.1)
 	{
-		width = 4.0f;
+		Height = 4.0f;
 	}
 	else if (diameter > 15.1 && diameter <= 17.1)
 	{
-		width = 4.5f;
+		Height = 4.5f;
 	}
 	else if (diameter > 17.1)
 	{
-		width = 5.0f;
+		Height = 5.0f;
 	}
-	return width;
+	return Height;
 }
 //根据刀尖直径获取刀片的半径
 double GetRadiusByDiameter(double diameter)

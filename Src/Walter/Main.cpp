@@ -133,10 +133,52 @@ void RepairDwgs()
 	//CDwgDatabaseUtil::OpenDocument(L"E:\\CAD³ö´íÍ¼Ö½\\B3230.C8.290-360.Z1.CC06.dwg",true);
 }
 
+static void CMD_Test()
+{
+	ads_name ename;
+	ads_point pt;
+	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
+	{
+		acutPrintf(L"\nError selecting entity.");
+		return;
+	}
+	AcDbObjectId eId;
+	acdbGetObjectId(eId, ename);
+		
+	AcDbEntity* pEnt = NULL;
+	if (acdbOpenObject(pEnt, eId, AcDb::kForRead) != Acad::eOk)
+	{
+		acutPrintf(L"\nError opening entity.");
+		if (pEnt)
+			pEnt->close();
+		return;
+	}
+	/*if (pEnt->isA() != AcDbBlockReference::desc())
+	{
+		acutPrintf(L"\nMust select a block insert.");
+		pEnt->close();
+		return;
+	}*/
+
+	AcDbDimension * pdim = AcDbDimension::cast(pEnt);
+	bool isdynmic = pdim->isDynamicDimension();
+	bool isCon = pdim->isConstraintDynamic();
+	pEnt->close();
+}
+
 static void initApp()
 {
 
 	CAcModuleResourceOverride resOverride;
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("test"),
+		_T("test"),
+		ACRX_CMD_MODAL,
+		CMD_Test,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
 		_T("GYZ1"),

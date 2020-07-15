@@ -4,6 +4,7 @@
 #include "Entity/DynamicBlockUtil.h"
 #include "Com.h"
 #include "Interaction/UpdateUtil.h"
+#include "Others/ToolingUtil.h"
 
 static HINSTANCE s_gTyToolInst = 0;
 
@@ -50,8 +51,8 @@ void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 
 	//
 	ptCenter.x += 15 + stepIndex * 15;
-	
-	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, NULL);
+	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
+	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, NULL,dimStyleId);
 }
 //插入L标注
 void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
@@ -68,7 +69,10 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LDstart, LDend);
 	center.y = LDend.y;
-	AcDbObjectId dimId = CDimensionUtil::AddDimRotated(LDstart, LDend, center,0);
+	//标注样式
+	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
+	CDimensionUtil::AddDimRotated(LDstart, LDend, center,0,NULL, dimStyleId);
+	
 }
 //插入Lf1标注
 void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
@@ -81,14 +85,15 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
 	center.y = LfDend.y;
-	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0);
+	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
+	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0,NULL, dimStyleId);
 //需要修改 有问题
 	//插入Lf2标注
 	double Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
 	AcGePoint3d lf2end(pnt);
 	center.x = pnt.x + 20;
 	center.y = lf2end.y;
-	CDimensionUtil::AddDimRotated(LfDstart, lf2end, center, 90);
+	CDimensionUtil::AddDimRotated(LfDstart, lf2end, center, 90,NULL, dimStyleId);
 }
 //插入offset标注
 void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
@@ -119,7 +124,8 @@ void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
 	//中心向下偏移
 	center.x = ptBottom.x + 15;
 	center.y = ptBottom.y - 15;
-	CDimensionUtil::AddDimAligned(ptBottom, ptPoint,center , NULL);
+	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
+	CDimensionUtil::AddDimAligned(ptBottom, ptPoint,center , NULL,dimStyleId);
 }
 //插入主偏角度标注
 void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
@@ -138,7 +144,8 @@ void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 		center.x = ptEnd1.x + 5;
 		double len = center.x - ptTop.x;
 		center.y = ptTop.y -  len*tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle / 2.0));
-		CDimensionUtil::AddDim2LineAngular(ptTop, ptEnd1, ptTop, ptEnd2, center, NULL);
+		AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
+		CDimensionUtil::AddDim2LineAngular(ptTop, ptEnd1, ptTop, ptEnd2, center, NULL,dimStyleId);
 	}
 }
 //插入60度标注
@@ -154,31 +161,34 @@ void SPCDJDData::InsertSixtyDimension(const AcGePoint3d & pnt)
 	AcGePoint3d ptArcCenter(0, 0, 0);
 	ptArcCenter.x = pnt.x + 20 ;
 	ptArcCenter.y = ptVertx.y -  (ptArcCenter.x - ptVertx.x) * tan(CMathUtil::AngleToRadian(angle / 2.0));
-
-	CDimensionUtil::AddDim2LineAngular(ptVertx,ptBottom,ptVertx,pnt,ptArcCenter,NULL);
+	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
+	CDimensionUtil::AddDim2LineAngular(ptVertx,ptBottom,ptVertx,pnt,ptArcCenter,NULL,dimStyleId);
 
 }
 
 void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
 {
+
+	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(L"BMG_MONOSPACE");
 	//刀宽标注 默认为7.0
 	double xLen = 7.0;
 	//最后一个刀尖顶点
 	AcGePoint3d ptlastTopPoint = GetDaoJianPoint(pnt, true, m_stepNum - 1);
 	CDimensionUtil::AddDimRotated(ptlastTopPoint, AcGePoint3d(ptlastTopPoint.x - 7.0, ptlastTopPoint.y, ptlastTopPoint.z),
-		CMathUtil::GetMidPoint(ptlastTopPoint, AcGePoint3d(ptlastTopPoint.x - 7.0, ptlastTopPoint.y, ptlastTopPoint.z)), 0, NULL);
+		CMathUtil::GetMidPoint(ptlastTopPoint, AcGePoint3d(ptlastTopPoint.x - 7.0, ptlastTopPoint.y, ptlastTopPoint.z)), 0, NULL,dimStyleId);
 
 	//最后一个刀尖的斜边长
 	double Height = GetHeightByDiameter(m_stepDatas[m_stepNum - 1].m_diameter);
 	AcGePoint3d ptEnd(0, 0, 0);
 	ptEnd.x = ptlastTopPoint.x + Height / tan(CMathUtil::AngleToRadian(m_stepDatas[m_stepNum-1].m_angle));
 	ptEnd.y = ptlastTopPoint.y - Height;
-	CDimensionUtil::AddDimAligned(ptlastTopPoint, ptEnd, CMathUtil::GetMidPoint(ptlastTopPoint, ptEnd), NULL);
+	AcDbObjectId dimID = CDimensionUtil::AddDimAligned(ptlastTopPoint, ptEnd, CMathUtil::GetMidPoint(ptlastTopPoint, ptEnd), NULL,dimStyleId);
+
 
 	//最后一个刀尖到上边缘的距离
 
 	CDimensionUtil::AddDimAligned(ptEnd, AcGePoint3d(ptEnd.x, ptlastTopPoint.y,ptEnd.z),
-		CMathUtil::GetMidPoint(ptEnd, AcGePoint3d(ptEnd.x, ptlastTopPoint.y, ptEnd.z)), NULL);
+		CMathUtil::GetMidPoint(ptEnd, AcGePoint3d(ptEnd.x, ptlastTopPoint.y, ptEnd.z)), NULL,dimStyleId);
 
 }
 
@@ -457,6 +467,13 @@ int SPCDJDData::Draw()
 	InsertAngleDimension(pnt);
 	//插入其他标注
 	InsertOtherDimension(pnt);
+
+	vAcDbObjectId dynamicDimsids;
+	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_DYNAMIC_DIMENTION, dynamicDimsids);
+	for (int i = 0; i < dynamicDimsids.size(); i++)
+	{
+		CEntityUtil::DeleteObject(dynamicDimsids[i]);
+	}
 	CViewUtil::ZoomExtent();
 	return 0;
 }

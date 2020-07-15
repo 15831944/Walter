@@ -5,7 +5,8 @@
 enum TUKuangType{A1 = 0, A2, A3};
 
 CString TY_GetAppPath();
-
+//根据刀柄名称获取distance
+double GetDisByDBName(CString name);
 //根据刀具直径获取 lf2的值
 double GetLf2ByDiameter(double diameter);
 double GetRadiusByDiameter(double diameter);

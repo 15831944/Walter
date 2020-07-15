@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-
+#define DIMSTYLENAME L"WALTER_1"
 //pcd铰刀阶梯数据
 typedef struct PCDJDStepData
 {
@@ -12,6 +12,7 @@ typedef struct PCDJDStepData
 
 typedef struct  SPCDJDData
 {
+	
 	CString m_daoBing;//刀柄
 	int m_stepNum;//阶梯数量
 	std::vector<PCDJDStepData>  m_stepDatas;
@@ -24,12 +25,13 @@ typedef struct  SPCDJDData
 	void InsertLDiamension(const AcGePoint3d& pnt, int stepIndex);
 	void InsertLf1Dimension(const AcGePoint3d& pnt,int stepIndex);
 	//插入offset标注
-	void InsertOffsetDimension(const AcGePoint3d& pnt);
+	//void InsertOffsetDimension(const AcGePoint3d& pnt);
 	//插入主偏角度标注
 	void InsertAngleDimension(const AcGePoint3d& pnt);
 	//插入60度标注
-	void InsertSixtyDimension(const AcGePoint3d& pnt);
+	//void InsertSixtyDimension(const AcGePoint3d& pnt);
 	//插入其他标注
 	void InsertOtherDimension(const AcGePoint3d& pnt);
+	
 }SPCDJDData;
 

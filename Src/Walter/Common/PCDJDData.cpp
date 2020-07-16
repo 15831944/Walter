@@ -215,7 +215,8 @@ int SPCDJDData::Draw()
 	CString str;
 	str.Format(L"%d", m_stepNum);
 	daoShenFilePath.Append(L"PCD铰刀模板X" + str + L".dwg");
-	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
+	CString blkName = CCommonUtil::GenStrByTime();
+	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);
 
 	//插入对应的刀柄,并设置参数
 	CString daoBingFilePath = TY_GetDaoBingFolder();

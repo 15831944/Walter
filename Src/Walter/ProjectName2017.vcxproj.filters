@@ -73,6 +73,9 @@
     <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
       <Filter>UiCommon\MfcGridCtrl</Filter>
     </ClCompile>
+    <ClCompile Include="ZTInfoDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -192,6 +195,9 @@
     <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.h">
       <Filter>UiCommon\MfcGridCtrl</Filter>
     </ClInclude>
+    <ClInclude Include="ZTInfoDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">
@@ -228,5 +234,9 @@
     <ResourceCompile Include="res\ProjectName.rc">
       <Filter>Res</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\11.BMP" />
+    <Image Include="res\12.BMP" />
   </ItemGroup>
 </Project>

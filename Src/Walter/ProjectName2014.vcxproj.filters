@@ -76,6 +76,9 @@
     <ClCompile Include="Common\PCDJDData.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="ZTInfoDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CBorder.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="Common\PCDJDData.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ZTInfoDlg.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

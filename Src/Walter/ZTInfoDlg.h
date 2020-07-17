@@ -4,8 +4,8 @@
 #include "res/resource.h"
 #include "afxwin.h"
 #include "GridCtrl/GridCtrlEx.h"
-#include "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afxwin.h"
-
+#include "afxwin.h"
+#include "ThreadData.h"
 typedef vector<CString>	OneRowData;
 typedef vector<OneRowData> MultiRowData;
 // CZTInfoDlg 对话框
@@ -26,6 +26,7 @@ private:
 	void InitDefaultPara();
 	void LoadGridData();
 	MultiRowData getDefaultGridData(int index);
+	MultiRowData getTableData();
 // 对话框数据
 #if ARX_DESIGN_TIME
 	enum { IDD = IDD_DIALOG_CWDR };
@@ -35,16 +36,21 @@ protected:
 	virtual LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
 public:
+	
+	afx_msg void OnBnClickedBtnok();
+	afx_msg void OnBnClickedBtncancle();
+	afx_msg void OnCbnSelchangeComboStepnum();
+	
+public:
 	CGridCtrlEx m_djInfoCtrl;
 	double m_TotalLength;
 	double m_VertAngle;
 	CComboBox m_StepNum;
 	CComboBox m_ui_DrNumCtrl;
-	CComboBox m_ui_DrStyleCtrl;
 	MultiRowData m_alldjInfos;
-	double m_DrNum;
 	CEdit m_TotalLenEdit;
 	CEdit m_VertexEdit;
-	afx_msg void OnBnClickedBtncancle();
-	afx_msg void OnCbnSelchangeComboStepnum();
+
+	CThreadSegData m_segdata;
+	CThreadData m_data;
 };

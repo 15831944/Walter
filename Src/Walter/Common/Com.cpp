@@ -292,24 +292,26 @@ public:
 	{
 		//----- We need the HLR engine loaded
 		if (!acrxServiceIsRegistered(AsdkHlrApiServiceName))
+#ifdef ARX_2014
 			acrxLoadModule(ACRX_T(/*NOXLATE*/"AsdkHlrApi19.dbx"), false, true);
-		//----- bump the reference count
-		acrxLoadModule(ACRX_T(/*NOXLATE*/"AsdkHlrApi19.dbx"), false, false);
+#elif ARX_2017
+		acrxLoadModule(ACRX_T(/*NOXLATE*/"AsdkHlrApi21.dbx"), false, true);
+#endif
 	}
 };
 static HLRInit instance;
 
 
 void progress1(int percent_completed) {
-	acedSetStatusBarProgressMeterPos(percent_completed);
+	//acedSetStatusBarProgressMeterPos(percent_completed);
 }
 
 void progress2(int percent_completed) {
-	acedSetStatusBarProgressMeterPos(100 + percent_completed);
+	//acedSetStatusBarProgressMeterPos(100 + percent_completed);
 }
 
 void progress3(int percent_completed) {
-	acedSetStatusBarProgressMeterPos(200 + percent_completed);
+	//acedSetStatusBarProgressMeterPos(200 + percent_completed);
 }
 
 void TY_Project3DSolidTo2D(AcDbObjectId solid3d,

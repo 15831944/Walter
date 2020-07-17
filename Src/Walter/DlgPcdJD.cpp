@@ -138,23 +138,8 @@ void DlgPcdJD::OnCbnSelchangeComboStepNum()
 	switch (index)
 	{
 	case 0:
-		m_gridCtrl.SetRowCount(index + 2);
-		m_allListData = FillDefaultData(index, tableColumnCount);
-		SetCellHeight();
-		m_gridCtrl.FillTable(m_allListData);
-		break;
 	case 1:
-		m_gridCtrl.SetRowCount(index + 2);
-		m_allListData = FillDefaultData(index, tableColumnCount);
-		SetCellHeight();
-		m_gridCtrl.FillTable(m_allListData);
-		break;
 	case 2:
-		m_gridCtrl.SetRowCount(index + 2);
-		m_allListData = FillDefaultData(index, tableColumnCount);
-		SetCellHeight();
-		m_gridCtrl.FillTable(m_allListData);
-		break;
 	case 3:
 		m_gridCtrl.SetRowCount(index + 2);
 		m_allListData = FillDefaultData(index, tableColumnCount);

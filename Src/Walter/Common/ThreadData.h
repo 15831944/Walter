@@ -252,10 +252,14 @@ public:
 
 	//钻头独有
 	CString m_sEdgeType;		//棱边---默认单棱边不用给数据
+
 	Adesk::Int32 m_cuttingEdgeCount;		//刀刃数量 默认2不用给
+
 	double m_topAngle; //顶角 默认135
+
 	double m_handleDiameter; //柄径 默认20
 	double m_handleLength; //柄长  默认50
+
 	double m_totalLength; //总长 默认160
 
 	double m_pointCenterDistance; //刀尖中心距， 只针对三尖的刀尖类型有效  默认

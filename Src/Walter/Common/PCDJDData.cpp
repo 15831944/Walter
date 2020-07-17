@@ -80,21 +80,26 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 	//插入Lf1标注
 	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
 	AcGePoint3d LfDend = GetDaoJianPoint(pnt, true, stepIndex);
-	//Lf1标注长度为L3+30
+	//Lf1标注长度为最后L+30
 	LfDend.x -= 30;
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
 	center.y = LfDend.y + stepIndex * 10 + 10;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0,NULL, dimStyleId);
-
-	//插入Lf2标注
-	double Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-	AcGePoint3d lf2end(pnt);
-	lf2end.y = LfDstart.y -  Lf2;
-	center.x = pnt.x + 10;
-	center.y = lf2end.y;
-	CDimensionUtil::AddDimAligned(AcGePoint3d(pnt.x,LfDstart.y,LfDstart.z), lf2end, center, NULL, dimStyleId);
+	//插入总长标注
+	AcGePoint3d lastpoint(LfDstart);
+	lastpoint.x -= m_stepDatas[stepIndex].m_stepLength;
+	center = CMathUtil::GetMidPoint(LfDstart, lastpoint);
+	center.y = LfDend.y + stepIndex * 10 + 5;
+	CDimensionUtil::AddDimRotated(LfDstart, lastpoint, center, 0, NULL, dimStyleId);
+	////插入Lf2标注
+	//double Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+	//AcGePoint3d lf2end(pnt);
+	//lf2end.y = LfDstart.y -  Lf2;
+	//center.x = pnt.x + 10;
+	//center.y = lf2end.y;
+	//CDimensionUtil::AddDimAligned(AcGePoint3d(pnt.x,LfDstart.y,LfDstart.z), lf2end, center, NULL, dimStyleId);
 }
 //插入offset标注
 //void SPCDJDData::InsertOffsetDimension(const AcGePoint3d & pnt)
@@ -481,7 +486,7 @@ int SPCDJDData::Draw()
 	//插入角度标注
 	InsertAngleDimension(pnt);
 	//插入其他标注
-	InsertOtherDimension(pnt);
+	//InsertOtherDimension(pnt);
 
 	vAcDbObjectId dynamicDimsids;
 	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_DYNAMIC_DIMENTION, dynamicDimsids);

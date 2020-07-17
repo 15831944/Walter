@@ -7,6 +7,7 @@
 #include <dbfcf.h>
 #include "Com.h"
 #include "Common/MathUtil.h"
+#include "3D/BrepUtil.h"
 
 #define HELIX_X_SUB (1)
 
@@ -2061,7 +2062,8 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			else
 			    rePlaceText.Format(L"%%%%C%.3f{\\H0.7x;\\S+%.3f^+%.3f;}",m_cutterSegs[i].m_diameter, m_cutterSegs[i].m_topGongCha,m_cutterSegs[i].m_lowGongCha);
 		}
-		CDimensionUtil::AddDimAligned(start, end, dim, L"%%C");
+		//直径标注解决
+		CDimensionUtil::AddDimAligned(start, end, dim,NULL);
 
 
 		if (m_cutterSegs[i].m_lengBianType != SEdgeType::E_EdgeType_不清边)

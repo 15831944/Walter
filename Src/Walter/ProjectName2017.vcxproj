@@ -182,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WalterDialog.cpp" />
+    <ClCompile Include="ZTInfoDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Com.h" />
@@ -224,12 +225,17 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="WalterDialog.h" />
+    <ClInclude Include="ZTInfoDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\ProjectName.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\11.BMP" />
+    <Image Include="res\12.BMP" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

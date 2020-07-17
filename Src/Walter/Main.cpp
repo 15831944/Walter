@@ -40,6 +40,7 @@
 #include "DlgPcdJD.h"
 #include "ThreadData.h"
 
+#include "ZTInfoDlg.h"
 HINSTANCE g_tytoolInst = 0;
 
 #ifdef _DEBUG
@@ -71,6 +72,15 @@ void CMD_PCDJD1()
 	g_dlgPcdJd1 = new DlgPcdJD(acedGetAcadFrame());
 	g_dlgPcdJd1->Create(IDD_DIALOG_PCD_JD);
 	g_dlgPcdJd1->ShowWindow(SW_SHOW);
+}
+//钻头信息
+CZTInfoDlg *g_ztInfoDlg = NULL;
+void CMD_CWDR()
+{
+	CAcModuleResourceOverride resOverride;
+	g_ztInfoDlg = new CZTInfoDlg(acedGetAcadFrame());
+	g_ztInfoDlg->Create(IDD_DIALOG_CWDR);
+	g_ztInfoDlg->ShowWindow(SW_SHOW);
 }
 
 //更新设计人员
@@ -251,6 +261,15 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("CWDR"),
+		_T("CWDR"),
+		ACRX_CMD_MODAL,
+		CMD_CWDR,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 	//删除双击事件
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
 	TY_LoadTyTool();
@@ -342,6 +361,11 @@ void menu()
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&PCD铰刀设计"), _T("PCDJD1 "));
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&钻头设计"), _T("CWDR "));
 
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();

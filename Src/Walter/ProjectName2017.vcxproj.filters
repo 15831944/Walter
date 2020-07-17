@@ -73,6 +73,9 @@
     <ClCompile Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
       <Filter>UiCommon\MfcGridCtrl</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ThreadData.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="GridCtrl\GridCtrl_src\NewCellTypes\GridURLCell.h">
       <Filter>UiCommon\MfcGridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ThreadData.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

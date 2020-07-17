@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ARX_2017;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -118,10 +118,10 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;acbr21.lib;AsdkHlrApi21.lib;acgex21.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,15 +140,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;..\..\..\CadCommon\TYCom\inc;UI;Common;..\..\..\CadCommon\TYCom\Inc-TYTool;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ARX_2017;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;acbr21.lib;AsdkHlrApi21.lib;acgex21.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -157,6 +157,7 @@
     <ClCompile Include="Common\Excel\Excel.cpp" />
     <ClCompile Include="Common\MarkupXml\Markup.cpp" />
     <ClCompile Include="Common\PCDJDData.cpp" />
+    <ClCompile Include="Common\ThreadData.cpp" />
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="Common\MarkupXml\Markup.h" />
     <ClInclude Include="Common\PCDJDData.h" />
+    <ClInclude Include="Common\ThreadData.h" />
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
     <ClInclude Include="GridCtrl\GridCellCheckEx.h" />

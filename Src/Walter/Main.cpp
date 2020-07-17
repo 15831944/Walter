@@ -34,9 +34,11 @@
 #include "VBA/VBA_Inc.h"
 //#include "TYProgress.h"
 #include "Head.h"
+#include "Others/ToolingUtil.h"
 
 #include "WalterDialog.h"
 #include "DlgPcdJD.h"
+#include "ThreadData.h"
 
 HINSTANCE g_tytoolInst = 0;
 
@@ -135,17 +137,39 @@ void RepairDwgs()
 
 static void CMD_Test()
 {
-	ads_name ename;
-	ads_point pt;
-	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
+	int a = 0;
 	{
-		acutPrintf(L"\nError selecting entity.");
-		return;
+		CThreadData threadData;
+		CThreadSegData oneSeg;
+		oneSeg.m_length = 30;
+		oneSeg.m_diameter = 12;
+		oneSeg.m_ladderAngle1 = 90;
+		threadData.AddCutterSegData(oneSeg);
+
+		oneSeg.m_diameter = 14;
+		threadData.AddCutterSegData(oneSeg);
+
+		oneSeg.m_diameter = 16;
+		threadData.AddCutterSegData(oneSeg);
+
+		threadData.SetLadderCount(3);
+
+		AcDbObjectId id;
+		threadData.CreateModel3D(AcGePoint2d(0, 0), id);
 	}
-	AcDbObjectId eId;
-	acdbGetObjectId(eId, ename);
+	
+	return;
+
+
+	
+	return;
+
+	vAcDbObjectId ids;
+	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_CURVE, ids);
+
+	
 		
-	AcDbEntity* pEnt = NULL;
+	/*AcDbEntity* pEnt = NULL;
 	if (acdbOpenObject(pEnt, eId, AcDb::kForRead) != Acad::eOk)
 	{
 		acutPrintf(L"\nError opening entity.");
@@ -153,17 +177,11 @@ static void CMD_Test()
 			pEnt->close();
 		return;
 	}
-	/*if (pEnt->isA() != AcDbBlockReference::desc())
-	{
-		acutPrintf(L"\nMust select a block insert.");
-		pEnt->close();
-		return;
-	}*/
 
 	AcDbDimension * pdim = AcDbDimension::cast(pEnt);
 	bool isdynmic = pdim->isDynamicDimension();
 	bool isCon = pdim->isConstraintDynamic();
-	pEnt->close();
+	pEnt->close();*/
 }
 
 static void initApp()

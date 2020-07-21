@@ -27,6 +27,7 @@ private:
 	void LoadGridData();
 	MultiRowData getDefaultGridData(int index);
 	MultiRowData getTableData();
+	void loadDaoBing();
 // 对话框数据
 #if ARX_DESIGN_TIME
 	enum { IDD = IDD_DIALOG_CWDR };
@@ -53,4 +54,6 @@ public:
 
 	CThreadSegData m_segdata;
 	CThreadData m_data;
+	CString m_daobing;
+	CComboBox m_DaoBingCtrl;
 };

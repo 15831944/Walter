@@ -2,7 +2,6 @@
 #include "Com.h"
 #include "Entity/DynamicBlockUtil.h"
 #include "DlgPcdJD.h"
-
 static HINSTANCE s_gTyToolInst = 0;
 
 CString TY_GetAppPath()
@@ -79,6 +78,66 @@ CString TY_GetDllFilePathName()
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
 #endif // DEV_TEST_ENV
 }
+//根据刀柄名称获取刀柄长度
+double GetHandleLengthFromDaoBing(CString daoBingName)
+{
+	double length = 36.0; //默认36.0
+	if (daoBingName.Compare(L"W06") == 0)			length = 36.0;		//BT30 22
+	else if (daoBingName.Compare(L"W08") == 0)	length = 36.0;		//BT40 27
+	else if (daoBingName.Compare(L"W10") == 0)	length = 40.0;		//BT50 38
+	else if (daoBingName.Compare(L"W12") == 0)	length = 46.0;		//HSK-A40 20
+	else if (daoBingName.Compare(L"W16") == 0)	length = 49.0;	//HSK-A50 25.95
+	else if (daoBingName.Compare(L"W18") == 0)	length = 48.0;	//HSK-A63 25.95
+	else if (daoBingName.Compare(L"W20") == 0)	length = 51.0;	//HSK-A80 25.95
+	else if (daoBingName.Compare(L"W25") == 0)	length = 57.0;	//HSK-A100 28.95
+	else if (daoBingName.Compare(L"W32") == 0)	length = 61.0;	//SK30 19.05
+	else if (daoBingName.Compare(L"WN06") == 0)	length = 36.0;	//SK40 19.05
+	else if (daoBingName.Compare(L"WN08") == 0)	length = 36.0;	//SK50 19.05
+	else if (daoBingName.Compare(L"WN10") == 0)		length =40.0;		//W16 0
+	else if (daoBingName.Compare(L"WN12") == 0)		length = 45.0;		//W20 0
+	else if (daoBingName.Compare(L"WN14") == 0)		length = 45.0;		//W25 0
+	else if (daoBingName.Compare(L"WN16") == 0)		length = 49.0;		//W32 0
+	else if (daoBingName.Compare(L"WN18") == 0)		length = 48.0;		//W40 0
+	else if (daoBingName.Compare(L"WN20") == 0)		length = 51.0;		//Z16 0
+	else if (daoBingName.Compare(L"WN25") == 0)		length = 57.0;		//Z20 0
+	else if (daoBingName.Compare(L"WN32") == 0)		length = 61.0;		//Z25 0
+	else if (daoBingName.Compare(L"Z03") == 0)		length = 28.0;		//Z32 0
+	else if (daoBingName.Compare(L"Z06") == 0)		length = 36.0;		//Z40 0
+	else if (daoBingName.Compare(L"Z08") == 0)		length = 36.0;		//W20 0
+	else if (daoBingName.Compare(L"Z10") == 0)		length = 40.0;		//W25 0
+	else if (daoBingName.Compare(L"Z12") == 0)		length = 45.0;		//W32 0
+	else if (daoBingName.Compare(L"Z14") == 0)		length = 45.0;		//W40 0
+	else if (daoBingName.Compare(L"Z16") == 0)		length = 49.0;		//Z16 0
+	else if (daoBingName.Compare(L"Z18") == 0)		length = 48.0;		//Z20 0
+	else if (daoBingName.Compare(L"Z20") == 0)		length = 51.0;		//Z25 0
+	else if (daoBingName.Compare(L"Z25") == 0)		length = 57.0;		//Z32 0
+	else if (daoBingName.Compare(L"Z32") == 0)		length = 61.0;		//Z40 0
+	return length;
+}
+//获取文件夹先的所有Dwg文件名称
+vector<CString> GetAllDwgFile(const CString& dirPath)
+{
+	vector<CString> fileLists;
+	CFileFind tempfind;
+	BOOL isfind;
+	//找寻所有dwg文件
+	isfind = tempfind.FindFile(dirPath + "*.dwg");
+	while (isfind)
+	{
+		isfind = tempfind.FindNextFile();
+		//如果是文件夹就跳过，只查找本文件目录下的dwg文件
+		if (tempfind.IsDots() || tempfind.IsDirectory())	
+			continue;
+		else
+		{
+			CString fileName = tempfind.GetFileName();
+			int pos = fileName.ReverseFind('.');
+			fileLists.push_back(fileName.Left(pos));
+		}
+	}
+	tempfind.Close();
+	return fileLists;
+}
 
 
 //刀具库存储目录
@@ -99,6 +158,15 @@ CString TY_GetDaoBingFolder()
 #else
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBing\\";
 #endif // DEV_TEST_ENV
+}
+
+CString TY_GetDaoBingSFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\dwg\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+#endif
 }
 
 //根据刀尖获取 lf2的值

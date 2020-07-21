@@ -16,7 +16,6 @@ enum E_CutterType//刀具类型
 CString ToCString(E_CutterType p_type);
 E_CutterType CutterTypeFromString(CString str);
 
-
 enum E_CutterSegLengthType
 {
 	E_CutterSegLength_刀尖到刀尖 = 0,
@@ -241,9 +240,13 @@ public:
 
 	bool operator == (const CThreadData &other);
 
-
+	void Draw(bool IsZC);
+	void SetDaoBingName(const CString& DaoBingName);
 public:
+	//刀柄位置
+	CString m_daobing;
 
+	//
 	vector<CThreadSegData> m_cutterSegs;
 
 	//20190526临时

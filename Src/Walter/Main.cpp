@@ -39,7 +39,7 @@
 #include "WalterDialog.h"
 #include "DlgPcdJD.h"
 #include "ThreadData.h"
-
+#include "ZcDjDlg.h"
 #include "ZTInfoDlg.h"
 HINSTANCE g_tytoolInst = 0;
 
@@ -82,7 +82,15 @@ void CMD_CWDR()
 	g_ztInfoDlg->Create(IDD_DIALOG_CWDR);
 	g_ztInfoDlg->ShowWindow(SW_SHOW);
 }
-
+//直槽刀具
+CZcDjDlg *gZcDjDlg = NULL;
+void CMD_ZCDJ()
+{
+	CAcModuleResourceOverride resOverride;
+	gZcDjDlg = new CZcDjDlg(acedGetAcadFrame());
+	gZcDjDlg->Create(IDD_DIALOG_DCD);
+	gZcDjDlg->ShowWindow(SW_SHOW);
+}
 //更新设计人员
 void updateAttr()
 {
@@ -270,6 +278,15 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("ZCDJ"),
+		_T("ZCDJ"),
+		ACRX_CMD_MODAL,
+		CMD_ZCDJ,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 	//删除双击事件
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
 	TY_LoadTyTool();
@@ -366,6 +383,11 @@ void menu()
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&钻头设计"), _T("CWDR "));
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&直槽刀具"), _T("ZCDJ "));
 
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();

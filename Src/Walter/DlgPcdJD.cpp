@@ -5,7 +5,7 @@
 #include "DlgPcdJD.h"
 #include "afxdialogex.h"
 
-
+#include "Com.h"
 
 // DlgPcdJD 对话框
 
@@ -46,8 +46,8 @@ LRESULT DlgPcdJD::OnAcadKeepFocus(WPARAM, LPARAM)
 
 BOOL DlgPcdJD::OnInitDialog()
 {
+	
 	CDialogEx::OnInitDialog();
-
 	m_gridCtrl.SetDefaultFormat(1);
 
 	m_ui_stepNum.AddString(L"1");
@@ -55,7 +55,7 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_stepNum.AddString(L"3");
 	m_ui_stepNum.AddString(L"4");
 
-	m_ui_hiltChoose.AddString(L"Z16");
+	/*m_ui_hiltChoose.AddString(L"Z16");
 	m_ui_hiltChoose.AddString(L"Z20");
 	m_ui_hiltChoose.AddString(L"Z25");
 	m_ui_hiltChoose.AddString(L"Z32");
@@ -75,7 +75,13 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.AddString(L"HSK-A50");
 	m_ui_hiltChoose.AddString(L"HSK-A63");
 	m_ui_hiltChoose.AddString(L"HSK-A80");
-	m_ui_hiltChoose.AddString(L"HSK-A100");
+	m_ui_hiltChoose.AddString(L"HSK-A100");*/
+
+	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingFolder());
+	for (int i=0;i < dwgfiles.size();i++)
+	{
+		m_ui_hiltChoose.AddString(dwgfiles[i]);
+	}
 
 	int defaultValue1 = 0, defaultValue2 = 3;
 	int tableColumnCount = 3;
@@ -84,6 +90,7 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_allListData = FillDefaultData(defaultValue2, tableColumnCount);
 
 	InitGridCtrl();
+	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常:  OCX 属性页应返回 FALSE
 }

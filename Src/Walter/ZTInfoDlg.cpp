@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "ZTInfoDlg.h"
 #include "afxdialogex.h"
-
+#include "Com.h"
 
 // CZTInfoDlg 对话框
 
@@ -14,6 +14,7 @@ CZTInfoDlg::CZTInfoDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG_CWDR, pParent)
 	, m_TotalLength(0)
 	, m_VertAngle(0)
+	, m_daobing(_T(""))
 {
 
 }
@@ -27,9 +28,9 @@ BOOL CZTInfoDlg::OnInitDialog()
 	InitGridCtrl();
 	//设置默认数据
 	InitDefaultPara();
-
 	LoadGridData();
-
+	//加载刀柄信息
+	loadDaoBing();
 	return 0;
 }
 //初始化GridCtrl控件
@@ -81,6 +82,7 @@ void CZTInfoDlg::InitDefaultPara()
 	m_StepNum.SetCurSel(defaultIndex);
 	UpdateData(FALSE);
 }
+//初始化刀具阶梯信息
 MultiRowData CZTInfoDlg::getDefaultGridData(int index)
 {
 	m_djInfoCtrl.SetEditable(TRUE);
@@ -204,8 +206,17 @@ MultiRowData CZTInfoDlg::getTableData()
 		vec.push_back(oneRowText);
 	}
 	return vec;
-
-	return MultiRowData();
+}
+//填充刀柄名称
+void CZTInfoDlg::loadDaoBing()
+{
+	CString dirpath = TY_GetDaoBingSFolder();
+	vector<CString> daobing = GetAllDwgFile(dirpath);
+	for (int i=0;i < daobing.size();i++)
+	{
+		m_DaoBingCtrl.AddString(daobing[i]);
+	}
+	m_DaoBingCtrl.SetCurSel(0);
 }
 //填充默认数据
 void CZTInfoDlg::LoadGridData()
@@ -225,6 +236,8 @@ void CZTInfoDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_VERTEX_ANGLE, m_VertexEdit);
 	DDX_Text(pDX, IDC_EDIT_ALLLENGTH, m_TotalLength);
 	DDX_Text(pDX, IDC_EDIT_VERTEX_ANGLE, m_VertAngle);
+	DDX_CBString(pDX, IDC_COMBO1_DJ, m_daobing);
+	DDX_Control(pDX, IDC_COMBO1_DJ, m_DaoBingCtrl);
 }
 
 LRESULT CZTInfoDlg::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -284,16 +297,11 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	CString temp;
 	m_ui_DrNumCtrl.GetLBText(CurSel, temp);
 	m_data.m_cuttingEdgeCount = _ttoi(temp);
+	m_data.SetDaoBingName(m_daobing);
+
 	//隐藏窗口
 	ShowWindow(SW_HIDE);
-	//插入点
-	AcDbObjectId id;
-	AcGePoint3d ptInsert;
-	CGetInputUtil::GetPoint(L"请选择一个插入点:", ptInsert);
-	AcGePoint2d pInt;
-	pInt.x = ptInsert.x;
-	pInt.y = ptInsert.y;
-	m_data.CreateModel3D(pInt, id);
+	m_data.Draw(false);
 	CDialogEx::OnOK();
 }
 

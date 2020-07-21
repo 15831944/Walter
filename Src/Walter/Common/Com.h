@@ -15,11 +15,16 @@ double GetHeightByDiameter(double diameter);
 CString TY_GetDwgFolder();
 CString TY_GetDynamicBlockFolder();
 CString TY_GetDaoBingFolder();
+//另外一种刀具
+CString TY_GetDaoBingSFolder();
 //得到图框存储路径
 CString TY_GetFrameFolder();
 
 CString TY_GetDllFilePathName();
-
+//根据刀柄名称获取刀柄长度
+double GetHandleLengthFromDaoBing(CString daoBingName);
+//获取文件夹下的所有dwg文件
+vector<CString> GetAllDwgFile(const CString& dirPath);
 
 
 bool TY_LoadTyTool();

@@ -86,7 +86,7 @@ CThreadData::CThreadData()
 	m_topAngle = 135; //顶角
 
 	m_handleDiameter=20; //柄径
-	m_handleLength = 50; //柄长
+	m_handleLength = 0; //柄长
 
 	m_totalLength=160; //总长 20200412本来默认160 修改为0
 
@@ -613,7 +613,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	if(ret != 0)
 	{
 		acutPrintf(L"ConvertToDxy参数错误\n");
-		return 0;
+		return ret;
 	}
 
 	acDocManager->lockDocument(curDoc());
@@ -1089,7 +1089,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	if(ret != 0)
 	{
 		acutPrintf(L"ConvertToDxy参数错误\n");
-		return 0;
+		return ret;
 	}
 
 	acDocManager->lockDocument(curDoc());
@@ -2006,7 +2006,10 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 
 	//标注一个总长
 	AcGePoint3d start2(offsetXY.x, offsetXY.y, 0);
-	AcGePoint3d end2(offsetXY.x + m_totalLength, offsetXY.y, 0);
+	//总长标注改变 需要加上刀柄的长度
+	double len = GetHandleLengthFromDaoBing(m_daobing); 
+
+	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
 	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue-12,0);
 	CDimensionUtil::AddDimAligned(start2, end2, dimpt2,L"");
 
@@ -2062,8 +2065,10 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			else
 			    rePlaceText.Format(L"%%%%C%.3f{\\H0.7x;\\S+%.3f^+%.3f;}",m_cutterSegs[i].m_diameter, m_cutterSegs[i].m_topGongCha,m_cutterSegs[i].m_lowGongCha);
 		}
+		CString temp;
+		temp.Format(L"%%%%C%.1f", m_cutterSegs[i].m_diameter);
 		//直径标注解决
-		CDimensionUtil::AddDimAligned(start, end, dim,NULL);
+		CDimensionUtil::AddDimAligned(start, end, dim,temp);
 
 
 		if (m_cutterSegs[i].m_lengBianType != SEdgeType::E_EdgeType_不清边)
@@ -2161,6 +2166,41 @@ int CThreadData::CheckLength(bool isMirror)
 			return 1;
 	}
 	return 0;
+}
+
+void CThreadData::Draw(bool IsZC)
+{
+	//插入点
+	AcDbObjectId id;
+	AcGePoint3d ptInsert;
+	CGetInputUtil::GetPoint(L"请选择一个插入点:", ptInsert);
+	AcGePoint2d pInt;
+	pInt.x = ptInsert.x;
+	pInt.y = ptInsert.y;
+	//刀柄插入点
+	ptInsert.x = pInt.x + m_totalLength ;
+	ptInsert.y = pInt.y;
+	int ret = -1;
+	//判断是否是直槽刀
+	/*double len = GetHandleLengthFromDaoBing(m_daobing);
+	m_totalLength += len;*/
+	if (IsZC)
+		ret = CreateModel3D_ZhiCao(pInt, id);
+	else
+		ret = CreateModel3D(pInt, id);
+	//插入刀柄 插入点的位置计算
+	if (ret == 0)
+	{
+		CString filePath = TY_GetDaoBingSFolder() + m_daobing + L".dwg";
+		CString blkName = CCommonUtil::GenStrByTime();
+		CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
+	}
+	
+}
+
+void CThreadData::SetDaoBingName(const CString & DaoBingName)
+{
+	m_daobing = DaoBingName;
 }
 
 bool CThreadSegData::operator == (const CThreadSegData &other)

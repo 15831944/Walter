@@ -191,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WalterDialog.cpp" />
+    <ClCompile Include="ZcDjDlg.cpp" />
     <ClCompile Include="ZTInfoDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +235,7 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="WalterDialog.h" />
+    <ClInclude Include="ZcDjDlg.h" />
     <ClInclude Include="ZTInfoDlg.h" />
   </ItemGroup>
   <ItemGroup>

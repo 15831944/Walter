@@ -2,6 +2,7 @@
 #include "GridCtrl/GridCtrlEx.h"
 #include "ThreadData.h"
 #include "afxwin.h"
+#include "res/resource.h"
 
 // CZcDjDlg ¶Ô»°¿ò
 

@@ -82,6 +82,9 @@
     <ClCompile Include="Common\ThreadData.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="ZcDjDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CBorder.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="Common\ThreadData.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ZcDjDlg.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

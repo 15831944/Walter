@@ -248,7 +248,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\11.BMP" />
-    <Image Include="res\12.BMP" />
+    <Image Include="res\12.BMP">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="res\11.BMP">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

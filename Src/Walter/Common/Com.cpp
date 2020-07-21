@@ -73,7 +73,7 @@ CString TY_GetFrameFolder()
 CString TY_GetDllFilePathName()
 {
 #ifdef DEV_TEST_ENV
-	return "C:\\TYTool.dll";
+	return L"C:\\TYTool.dll";
 #else
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
 #endif // DEV_TEST_ENV
@@ -139,6 +139,23 @@ vector<CString> GetAllDwgFile(const CString& dirPath)
 	return fileLists;
 }
 
+CString TY_GetHLRFilePathName()
+{
+#ifdef DEV_TEST_ENV
+    #ifdef ARX_2014
+	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi19.dbx";
+    #elif ARX_2017
+	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi21.dbx"
+    #endif
+#else
+    #ifdef ARX_2014
+	    return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\AsdkHlrApi19.dbx";
+    #elif ARX_2017
+	    return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\AsdkHlrApi21.dbx"
+    #endif
+#endif // DEV_TEST_ENV
+}
+
 
 //刀具库存储目录
 CString TY_GetDynamicBlockFolder()
@@ -154,18 +171,19 @@ CString TY_GetDynamicBlockFolder()
 CString TY_GetDaoBingFolder()
 {
 #ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\DaoBing\\";
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForPCDJD\\";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBing\\";
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForPCDJD\\";
 #endif // DEV_TEST_ENV
 }
 
+//得到钻头和直槽刀的刀柄路径
 CString TY_GetDaoBingSFolder()
 {
 #ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\dwg\\";
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZuanTou\\";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZuanTou\\";
 #endif
 }
 
@@ -360,11 +378,13 @@ public:
 	{
 		//----- We need the HLR engine loaded
 		if (!acrxServiceIsRegistered(AsdkHlrApiServiceName))
+		{ 
 #ifdef ARX_2014
-			acrxLoadModule(ACRX_T(/*NOXLATE*/"AsdkHlrApi19.dbx"), false, true);
+			acrxLoadModule(TY_GetHLRFilePathName(), false, true);
 #elif ARX_2017
-		acrxLoadModule(ACRX_T(/*NOXLATE*/"AsdkHlrApi21.dbx"), false, true);
+			acrxLoadModule(TY_GetHLRFilePathName(), false, true);
 #endif
+		}
 	}
 };
 static HLRInit instance;

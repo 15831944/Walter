@@ -21,6 +21,7 @@ CString TY_GetDaoBingSFolder();
 CString TY_GetFrameFolder();
 
 CString TY_GetDllFilePathName();
+CString TY_GetHLRFilePathName();
 //根据刀柄名称获取刀柄长度
 double GetHandleLengthFromDaoBing(CString daoBingName);
 //获取文件夹下的所有dwg文件

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Com.h"
 #include "Entity/DynamicBlockUtil.h"
-#include "DlgPcdJD.h"
 static HINSTANCE s_gTyToolInst = 0;
 
 CString TY_GetAppPath()
@@ -145,7 +144,7 @@ CString TY_GetHLRFilePathName()
     #ifdef ARX_2014
 	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi19.dbx";
     #elif ARX_2017
-	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi21.dbx"
+	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2017\\AsdkHlrApi21.dbx"
     #endif
 #else
     #ifdef ARX_2014

@@ -2103,11 +2103,11 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		ladderDownEnd = GetMirrorPnt(ladderUpEnd,offsetXY);
 
 		AcGePoint3d arcPnt = ladderUpStart;
-		arcPnt.x += 3;
-		arcPnt.y+=5;
+		arcPnt.x += 10;
+		arcPnt.y = offsetXY.y;
 
-		AcGePoint3d textPnt = ladderUpStart;
-		textPnt.y += 10;
+		AcGePoint3d textPnt = arcPnt;
+		textPnt.x -= 3;
 
 		CString replaceText;
 		if (m_cutterSegs[i].m_lengBianType == SEdgeType::E_EdgeType_²»Çå±ß)
@@ -2120,7 +2120,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			double angle = m_cutterSegs[i].m_ladderAngle1;
 			replaceText.Format(L"%.1f¡ã",angle);
 		}
-		MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd,  ladderDownStart, ladderDownEnd,
+		MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
 			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"³ß´çÏß");
 		
 	}

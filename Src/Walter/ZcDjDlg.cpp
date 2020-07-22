@@ -42,7 +42,6 @@ LRESULT CZcDjDlg::OnAcadKeepFocus(WPARAM, LPARAM)
 
 BEGIN_MESSAGE_MAP(CZcDjDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, &CZcDjDlg::OnAcadKeepFocus)
-	ON_BN_CLICKED(IDC_CANCLE, &CZcDjDlg::OnBnClickedCancle)
 	ON_BN_CLICKED(IDC_ZCDRAW, &CZcDjDlg::OnBnClickedZcdraw)
 	ON_CBN_SELCHANGE(IDC_COMBO2, &CZcDjDlg::OnCbnSelchangeCombo2)
 END_MESSAGE_MAP()
@@ -61,12 +60,6 @@ BOOL CZcDjDlg::OnInitDialog()
 	//加载刀柄
 	loadDaoBing();
 	return TRUE;
-}
-
-void CZcDjDlg::OnBnClickedCancle()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnCancel();
 }
 
 

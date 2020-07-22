@@ -39,7 +39,6 @@ protected:
 public:
 	
 	afx_msg void OnBnClickedBtnok();
-	afx_msg void OnBnClickedBtncancle();
 	afx_msg void OnCbnSelchangeComboStepnum();
 	
 public:

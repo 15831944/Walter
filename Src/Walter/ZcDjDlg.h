@@ -25,7 +25,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedCancle();
 	afx_msg void OnBnClickedZcdraw();
 	afx_msg void OnCbnSelchangeCombo2();
 

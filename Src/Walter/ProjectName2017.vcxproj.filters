@@ -254,5 +254,18 @@
     <Image Include="res\11.BMP">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="res\bitmap5.bmp" />
+    <Image Include="C:\Users\admin\Desktop\TIM图片20200721173743.png" />
+    <Image Include="C:\Users\admin\Desktop\1.png" />
+    <Image Include="C:\Users\admin\Desktop\gaitubao_1_bmp.bmp" />
+    <Image Include="C:\Users\admin\Desktop\gaitubao_2_bmp.bmp" />
+    <Image Include="C:\Users\admin\Pictures\TIM截图20200721174927.bmp" />
+    <Image Include="C:\Users\admin\Pictures\1.bmp" />
+    <Image Include="1.bmp" />
+    <Image Include="res\1.bmp" />
+    <Image Include="111.bmp" />
+    <Image Include="res\111.bmp" />
+    <Image Include="222.bmp" />
+    <Image Include="res\222.bmp" />
   </ItemGroup>
 </Project>

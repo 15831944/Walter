@@ -28,11 +28,11 @@ double GetDisByDBName(CString name)
 	if (name.Compare(L"BT30") == 0)			dis = 22.0;		//BT30 22
 	else if (name.Compare(L"BT40") == 0)	dis = 27.0;		//BT40 27
 	else if (name.Compare(L"BT50") == 0)	dis = 38.0;		//BT50 38
-	else if (name.Compare(L"HSK-A40")==0)	dis = 20.0;		//HSK-A40 20
-	else if (name.Compare(L"HSK-A50") == 0)	dis = 25.95;	//HSK-A50 25.95
-	else if (name.Compare(L"HSK-A63") == 0)	dis = 25.95;	//HSK-A63 25.95
-	else if (name.Compare(L"HSK-A80") == 0)	dis = 25.95;	//HSK-A80 25.95
-	else if (name.Compare(L"HSK-A100") == 0)dis = 28.95;	//HSK-A100 28.95
+	else if (name.Compare(L"HSK-A40")==0)	dis = 20.0 + 15.0;		//HSK-A40 20
+	else if (name.Compare(L"HSK-A50") == 0)	dis = 25.95 + 16.05;	//HSK-A50 25.95
+	else if (name.Compare(L"HSK-A63") == 0)	dis = 25.95 + 16.05;	//HSK-A63 25.95
+	else if (name.Compare(L"HSK-A80") == 0)	dis = 25.95 + 16.05;	//HSK-A80 25.95
+	else if (name.Compare(L"HSK-A100") == 0)dis = 28.95 + 16.05;	//HSK-A100 28.95
 	else if (name.Compare(L"SK30") == 0)	dis = 19.05;	//SK30 19.05
 	else if (name.Compare(L"SK40") == 0)	dis = 19.05;	//SK40 19.05
 	else if (name.Compare(L"SK50") == 0)	dis = 19.05;	//SK50 19.05
@@ -145,7 +145,7 @@ CString TY_GetHLRFilePathName()
     #ifdef ARX_2014
 	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi19.dbx";
     #elif ARX_2017
-	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2017\\AsdkHlrApi21.dbx"
+	return L"C:\\Program Files\\Autodesk\\AutoCAD 2017\\AsdkHlrApi21.dbx";
     #endif
 #else
     #ifdef ARX_2014

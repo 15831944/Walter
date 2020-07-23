@@ -6,6 +6,7 @@
 #include "GridCtrl/GridCtrlEx.h"
 #include "afxwin.h"
 #include "ThreadData.h"
+#include "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afxwin.h"
 typedef vector<CString>	OneRowData;
 typedef vector<OneRowData> MultiRowData;
 // CZTInfoDlg 对话框
@@ -55,4 +56,17 @@ public:
 	CThreadData m_data;
 	CString m_daobing;
 	CComboBox m_DaoBingCtrl;
+
+	//图框
+	CComboBox m_tukuang;
+	//比例
+	CComboBox m_proportion;
+	// 设计人员
+	CString m_designer;
+	// 设计日期
+	CString m_designDate;
+	// 刀具类别
+	CString m_knifeClass;
+	// SAP号
+	CString m_SapNum;
 };

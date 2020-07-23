@@ -62,6 +62,16 @@ void CZTInfoDlg::InitDefaultPara()
 	UpdateData(TRUE);
 	int defaultIndex = 0;
 	
+	//初始化图框
+	m_tukuang.AddString(L"A3");
+	m_tukuang.AddString(L"空");
+	m_tukuang.SetCurSel(defaultIndex);
+	//初始化比例
+	m_proportion.AddString(L"1:1");
+	m_proportion.AddString(L"2:1");
+	m_proportion.AddString(L"2:3");
+	m_proportion.AddString(L"空");
+	m_proportion.SetCurSel(defaultIndex);
 	//刃数
 	m_ui_DrNumCtrl.AddString(L"2");
 	m_ui_DrNumCtrl.SetCurSel(defaultIndex);

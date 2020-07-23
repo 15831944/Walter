@@ -145,7 +145,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;acbr21.lib;AsdkHlrApi21.lib;acgex21.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -236,16 +236,6 @@
     <ResourceCompile Include="res\ProjectName.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="1.bmp" />
-    <Image Include="111.bmp" />
-    <Image Include="222.bmp" />
-    <Image Include="C:\Users\admin\Desktop\1.png" />
-    <Image Include="C:\Users\admin\Desktop\gaitubao_1_bmp.bmp" />
-    <Image Include="C:\Users\admin\Desktop\gaitubao_2_bmp.bmp" />
-    <Image Include="C:\Users\admin\Desktop\TIM图片20200721173743.png" />
-    <Image Include="C:\Users\admin\Pictures\1.bmp" />
-    <Image Include="C:\Users\admin\Pictures\TIM截图20200721174927.bmp" />
-    <Image Include="res\1.bmp" />
     <Image Include="res\11.BMP" />
     <Image Include="res\111.bmp" />
     <Image Include="res\12.BMP" />

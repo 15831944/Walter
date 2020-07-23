@@ -64,12 +64,14 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 	//L标注起点和终点
 	AcGePoint3d LDstart = GetDaoJianPoint(pnt, true, 0);
 	AcGePoint3d LDend = GetDaoJianPoint(pnt, true, stepIndex);
-	CString dimension;
-	dimension.Format(L"L%d", stepIndex);
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LDstart, LDend);
 	center.y = LDend.y + 10*stepIndex;
-	//标注样式
+	//如果是最后一个标注
+	if (stepIndex == m_stepNum - 1)
+	{
+
+	}
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LDstart, LDend, center,0,NULL, dimStyleId);
 	
@@ -77,21 +79,23 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 //插入Lf1标注
 void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 {
+	double len = GetDisByDBName(m_daoBing);
 	//插入Lf1标注
 	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
-	AcGePoint3d LfDend = GetDaoJianPoint(pnt, true, stepIndex);
+	AcGePoint3d LfDend(LfDstart);
 	//Lf1标注长度为最后L+30
-	LfDend.x -= 30;
+	LfDend.x = LfDend.x - m_stepDatas[stepIndex].m_stepLength;
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
-	center.y = LfDend.y + stepIndex * 10 + 10;
+	center.y = LfDend.y + stepIndex * 10 + 20;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0,NULL, dimStyleId);
 	//插入总长标注
 	AcGePoint3d lastpoint(LfDstart);
-	lastpoint.x -= m_stepDatas[stepIndex].m_stepLength;
+	
+	lastpoint.x = lastpoint.x - m_stepDatas[stepIndex].m_stepLength - len;
 	center = CMathUtil::GetMidPoint(LfDstart, lastpoint);
-	center.y = LfDend.y + stepIndex * 10 + 5;
+	center.y = LfDend.y + stepIndex * 10 + 30;
 	CDimensionUtil::AddDimRotated(LfDstart, lastpoint, center, 0, NULL, dimStyleId);
 	////插入Lf2标注
 	//double Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
@@ -227,13 +231,15 @@ int SPCDJDData::Draw()
 	CString daoBingFilePath = TY_GetDaoBingFolder();
 	daoBingFilePath.Append(m_daoBing + L".dwg");
 	//获得上顶点的位置
-	AcGePoint3d firstTopPoin = GetDaoJianPoint(pnt, true, 0);
+	AcGePoint3d firstTopPoint = GetDaoJianPoint(pnt, true, 0);
 	//距离要修改但是缺少一个参数len没有获取
-	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoin.x;
+	double distance = 0;
+	double dis =   GetDisByDBName(m_daoBing);
+	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x + dis;
 	AcGePoint3d insertPiont(pnt.x - MaxLLen, pnt.y, 0);
 	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, insertPiont, 0, 1);
 
-	double distance = GetDisByDBName(m_daoBing);
+	
 	//Lf2
 	double Lf2;
 
@@ -415,6 +421,7 @@ int SPCDJDData::Draw()
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D4", m_stepDatas[3].m_diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L4", m_stepDatas[3].m_stepLength - distance);
 		
+	
 		
 		CUpdateUtil::UpdateDisplay();
 		CEntityUtil::ExplodeBlockToOwnSpace(daoShenID);
@@ -430,7 +437,7 @@ int SPCDJDData::Draw()
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
 				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
-
+				
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
@@ -440,7 +447,7 @@ int SPCDJDData::Draw()
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
 				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
-
+				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[1].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
@@ -450,7 +457,7 @@ int SPCDJDData::Draw()
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
 				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
-
+				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[2].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
@@ -460,14 +467,12 @@ int SPCDJDData::Draw()
 			{
 				radius = GetRadiusByDiameter(m_stepDatas[3].m_diameter);
 				Height = GetHeightByDiameter(m_stepDatas[3].m_diameter);
-
+				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[3].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[3].m_angle);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
 				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
 			}
 		}
-
-
 		InsertDDiamension(pnt, 0);
 		InsertDDiamension(pnt, 1);
 		InsertDDiamension(pnt, 2);

@@ -4,6 +4,7 @@
 #include "res/resource.h"
 #include "afxwin.h"
 #include "PCDJDData.h"
+#include "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afxwin.h"
 
 typedef vector<CString> OneRowData;
 typedef vector<OneRowData> MultiRowData;
@@ -51,4 +52,10 @@ public:
 	void SetCellHeight();
 
 	SPCDJDData m_data;
+	CComboBox m_tukuang;
+	CComboBox m_proportion;
+	CString m_designer;
+	CString m_designDate;
+	CString m_knifeClass;
+	CString m_SapNum;
 };

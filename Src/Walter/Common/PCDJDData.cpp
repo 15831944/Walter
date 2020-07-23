@@ -252,7 +252,8 @@ int SPCDJDData::Draw()
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength - distance);
 		
 		CUpdateUtil::UpdateDisplay();
-		CEntityUtil::ExplodeBlockToOwnSpace(daoShenID);
+		vAcDbObjectId explodeIds;
+		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
 
 		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
 		Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
@@ -290,7 +291,8 @@ int SPCDJDData::Draw()
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength - distance);
 
 		CUpdateUtil::UpdateDisplay();
-		CEntityUtil::ExplodeBlockToOwnSpace(daoShenID);
+		vAcDbObjectId explodeIds;
+		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
 
 		
 		vAcDbObjectId blkRefIds;
@@ -346,7 +348,8 @@ int SPCDJDData::Draw()
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength - distance);
 
 		CUpdateUtil::UpdateDisplay();
-		CEntityUtil::ExplodeBlockToOwnSpace(daoShenID);
+		vAcDbObjectId explodeIds;
+		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
 
 
 		vAcDbObjectId blkRefIds;
@@ -417,7 +420,8 @@ int SPCDJDData::Draw()
 		
 		
 		CUpdateUtil::UpdateDisplay();
-		CEntityUtil::ExplodeBlockToOwnSpace(daoShenID);
+		vAcDbObjectId explodeIds;
+		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
 
 
 		vAcDbObjectId blkRefIds;

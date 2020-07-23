@@ -254,5 +254,12 @@
     <Image Include="res\11.BMP">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="res\bitmap5.bmp" />
+    <Image Include="res\111.bmp">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="res\222.bmp">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

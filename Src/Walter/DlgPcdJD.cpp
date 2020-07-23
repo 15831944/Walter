@@ -13,6 +13,10 @@ IMPLEMENT_DYNAMIC(DlgPcdJD, CDialogEx)
 
 DlgPcdJD::DlgPcdJD(CWnd* pParent /*=NULL*/)
 : CDialogEx(DlgPcdJD::IDD, pParent)
+, m_designer(_T(""))
+, m_designDate(_T(""))
+, m_knifeClass(_T(""))
+, m_SapNum(_T(""))
 {
 
 }
@@ -27,6 +31,12 @@ void DlgPcdJD::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CUSTOM1, m_gridCtrl);
 	DDX_Control(pDX, IDC_COMBO_STEP_NUM, m_ui_stepNum);
 	DDX_Control(pDX, IDC_COMBO_HILT_CHOOSE, m_ui_hiltChoose);
+	DDX_Control(pDX, IDC_COMBO_TUKUANG, m_tukuang);
+	DDX_Control(pDX, IDC_COMBO2, m_proportion);
+	DDX_Text(pDX, IDC_EDIT3, m_designer);
+	DDX_Text(pDX, IDC_EDIT4, m_designDate);
+	DDX_Text(pDX, IDC_EDIT5, m_knifeClass);
+	DDX_Text(pDX, IDC_EDIT6, m_SapNum);
 }
 
 
@@ -76,7 +86,8 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.AddString(L"HSK-A63");
 	m_ui_hiltChoose.AddString(L"HSK-A80");
 	m_ui_hiltChoose.AddString(L"HSK-A100");*/
-
+	//初始化图框
+	
 	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingFolder());
 	for (int i=0;i < dwgfiles.size();i++)
 	{
@@ -88,7 +99,16 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.SetCurSel(defaultValue1);
 	m_ui_stepNum.SetCurSel(defaultValue2);
 	m_allListData = FillDefaultData(defaultValue2, tableColumnCount);
-
+	//初始化图框
+	m_tukuang.AddString(L"A3");
+	m_tukuang.AddString(L"空");
+	m_tukuang.SetCurSel(defaultValue1);
+	//初始化比例
+	m_proportion.AddString(L"1:1");
+	m_proportion.AddString(L"2:1");
+	m_proportion.AddString(L"2:3");
+	m_proportion.AddString(L"空");
+	m_proportion.SetCurSel(defaultValue1);
 	InitGridCtrl();
 	
 	return TRUE;  // return TRUE unless you set the focus to a control

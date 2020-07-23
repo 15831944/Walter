@@ -15,6 +15,10 @@ CZcDjDlg::CZcDjDlg(CWnd* pParent /*=NULL*/)
 	, m_DaoBingName(_T(""))
 	, m_totalLength(0)
 	, m_VertexAngle(0)
+	, m_designer(_T(""))
+	, m_degineDate(_T(""))
+	, m_knifeCLass(_T(""))
+	, m_SapNum(_T(""))
 {
 
 }
@@ -32,6 +36,12 @@ void CZcDjDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ZC_EDIT, m_totalLength);
 	DDX_Text(pDX, IDC_E, m_VertexAngle);
 	DDX_Control(pDX, IDC_COMBO2, m_StepNumCtrl);
+	DDX_Control(pDX, IDC_COMBO1, m_tukuang);
+	DDX_Control(pDX, IDC_COMBO3, m_proportion);
+	DDX_Text(pDX, IDC_EDIT3, m_designer);
+	DDX_Text(pDX, IDC_EDIT4, m_degineDate);
+	DDX_Text(pDX, IDC_EDIT5, m_knifeCLass);
+	DDX_Text(pDX, IDC_EDIT6, m_SapNum);
 }
 
 LRESULT CZcDjDlg::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -42,7 +52,6 @@ LRESULT CZcDjDlg::OnAcadKeepFocus(WPARAM, LPARAM)
 
 BEGIN_MESSAGE_MAP(CZcDjDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, &CZcDjDlg::OnAcadKeepFocus)
-	ON_BN_CLICKED(IDC_CANCLE, &CZcDjDlg::OnBnClickedCancle)
 	ON_BN_CLICKED(IDC_ZCDRAW, &CZcDjDlg::OnBnClickedZcdraw)
 	ON_CBN_SELCHANGE(IDC_COMBO2, &CZcDjDlg::OnCbnSelchangeCombo2)
 END_MESSAGE_MAP()
@@ -61,12 +70,6 @@ BOOL CZcDjDlg::OnInitDialog()
 	//加载刀柄
 	loadDaoBing();
 	return TRUE;
-}
-
-void CZcDjDlg::OnBnClickedCancle()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnCancel();
 }
 
 
@@ -105,10 +108,22 @@ void CZcDjDlg::OnBnClickedZcdraw()
 void CZcDjDlg::InitParamers()
 {
 	UpdateData(TRUE);
+
+
+	
 	int defaultIndex = 0;
 	//顶角
 	m_VertexAngle = 140.0;
-
+	//初始化图框
+	m_tukuang.AddString(L"A3");
+	m_tukuang.AddString(L"空");
+	m_tukuang.SetCurSel(defaultIndex);
+	//初始化比例
+	m_proportion.AddString(L"1:1");
+	m_proportion.AddString(L"2:1");
+	m_proportion.AddString(L"2:3");
+	m_proportion.AddString(L"空");
+	m_proportion.SetCurSel(defaultIndex);
 	//总长
 	m_totalLength = 160.0;
 

@@ -62,6 +62,16 @@ void CZTInfoDlg::InitDefaultPara()
 	UpdateData(TRUE);
 	int defaultIndex = 0;
 	
+	//初始化图框
+	m_tukuang.AddString(L"A3");
+	m_tukuang.AddString(L"空");
+	m_tukuang.SetCurSel(defaultIndex);
+	//初始化比例
+	m_proportion.AddString(L"1:1");
+	m_proportion.AddString(L"2:1");
+	m_proportion.AddString(L"2:3");
+	m_proportion.AddString(L"空");
+	m_proportion.SetCurSel(defaultIndex);
 	//刃数
 	m_ui_DrNumCtrl.AddString(L"2");
 	m_ui_DrNumCtrl.SetCurSel(defaultIndex);
@@ -248,21 +258,12 @@ LRESULT CZTInfoDlg::OnAcadKeepFocus(WPARAM, LPARAM)
 
 BEGIN_MESSAGE_MAP(CZTInfoDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, &CZTInfoDlg::OnAcadKeepFocus)
-	ON_BN_CLICKED(IDC_BTNCANCLE, &CZTInfoDlg::OnBnClickedBtncancle)
 	ON_CBN_SELCHANGE(IDC_COMBO_STEPNUM, &CZTInfoDlg::OnCbnSelchangeComboStepnum)
 	ON_BN_CLICKED(IDC_BTNOK, &CZTInfoDlg::OnBnClickedBtnok)
 END_MESSAGE_MAP()
 
 
 // CZTInfoDlg 消息处理程序
-
-
-void CZTInfoDlg::OnBnClickedBtncancle()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnCancel();
-}
-
 
 void CZTInfoDlg::OnCbnSelchangeComboStepnum()
 {

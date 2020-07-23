@@ -230,6 +230,8 @@
     <None Include="ReadMe.txt">
       <Filter>Source</Filter>
     </None>
+    <None Include="res\111.bmp" />
+    <None Include="res\222.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

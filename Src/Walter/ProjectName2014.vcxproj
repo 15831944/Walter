@@ -244,6 +244,8 @@
     <None Include="11.BMP" />
     <None Include="ReadMe.txt" />
     <None Include="res\11.BMP" />
+    <None Include="res\111.bmp" />
+    <None Include="res\222.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\ProjectName.rc" />

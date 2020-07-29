@@ -2170,6 +2170,7 @@ int CThreadData::CheckLength(bool isMirror)
 
 void CThreadData::Draw(bool IsZC)
 {
+	
 	//≤Â»Îµ„
 	AcDbObjectId id;
 	AcGePoint3d ptInsert;

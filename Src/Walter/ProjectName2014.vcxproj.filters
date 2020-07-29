@@ -86,6 +86,12 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="DlgTuKuang.cpp" />
+    <ClCompile Include="DlgZyJd.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ZYDJData.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CBorder.h">
@@ -215,6 +221,12 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="DlgTuKuang.h" />
+    <ClInclude Include="DlgZyJd.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ZYDJData.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\1.bmp">

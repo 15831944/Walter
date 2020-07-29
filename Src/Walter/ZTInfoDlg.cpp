@@ -284,8 +284,8 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	//ÈÐÊý
 	int CurSel = m_ui_DrNumCtrl.GetCurSel();
 	CString temp;
-	m_ui_DrNumCtrl.GetLBText(CurSel, temp);
-	m_data.m_cuttingEdgeCount = _ttoi(temp);
+	//m_ui_DrNumCtrl.GetLBText(CurSel, temp);
+	//m_data.m_cuttingEdgeCount = _ttoi(temp);
 	m_data.SetDaoBingName(m_daobing);
 
 	//Òþ²Ø´°¿Ú

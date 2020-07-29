@@ -128,7 +128,7 @@ BEGIN
     CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,213,23,62,15
 END
 
-IDD_DIALOG_PCD_XD DIALOGEX 0, 0, 397, 333
+IDD_DIALOG_PCD_XD DIALOGEX 0, 0, 343, 324
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "整硬刀具参数"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
@@ -138,7 +138,7 @@ BEGIN
     LTEXT           "阶梯数量",IDC_STATIC,156,7,35,8
     COMBOBOX        IDC_COMBO1,119,7,32,16,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_COMBO2,196,7,29,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Custom1",IDC_CUSTOM1_XD,"MFCGridCtrl",WS_TABSTOP,0,47,397,113
+    CONTROL         "Custom1",IDC_CUSTOM1_XD,"MFCGridCtrl",WS_TABSTOP,0,47,343,113
     LTEXT           "刀具:",IDC_STATIC,4,8,21,8
     COMBOBOX        IDC_COMBO3,29,8,64,15,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "扩孔刀参数",IDC_KKD_PAR,233,2,100,27
@@ -146,6 +146,8 @@ BEGIN
     EDITTEXT        IDC_KKD_DIA,279,13,40,14,ES_AUTOHSCROLL
     LTEXT           "悬浮长度：",IDC_STATIC,6,31,44,8
     EDITTEXT        IDC_EDIT2,54,29,50,14,ES_AUTOHSCROLL
+    CONTROL         IDB_BITMAP8,IDC_STATIC_ZY,"Static",SS_BITMAP,4,174,334,142
+    GROUPBOX        "示意图",IDC_STATIC,1,164,341,159
 END
 
 
@@ -186,7 +188,7 @@ BEGIN
 
     IDD_DIALOG_PCD_XD, DIALOG
     BEGIN
-        BOTTOMMARGIN, 332
+        BOTTOMMARGIN, 323
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -262,6 +264,10 @@ IDB_BITMAP4             BITMAP                  "12.BMP"
 IDB_BITMAP5             BITMAP                  "111.bmp"
 
 IDB_BITMAP6             BITMAP                  "222.bmp"
+
+IDB_BITMAP7             BITMAP                  "zyjd.bmp"
+
+IDB_BITMAP8             BITMAP                  "zykkd.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

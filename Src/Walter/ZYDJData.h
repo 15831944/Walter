@@ -18,7 +18,6 @@ public:
 	~CZYDJData();
 	//在模型空间中绘图
 	void Draw();
-
 	void SetStepData(vector<ZYXDStepData> const& data);
 	void SetPreDiameter(double diameter);
 	void SetDaobing(CString Daobing);
@@ -27,6 +26,18 @@ public:
 	void SetKKD(bool isKKD) { m_IsKKD = isKKD; }
 	bool GetIsKKD() const { return m_IsKKD; }
 	void SetTotalLength(double length) { m_totalLength = length; }
+
+private:
+	//获取顶点位置
+	AcGePoint3d GetVertexPoint(const AcGePoint3d& pnt,int index,bool isTop);
+	//预孔直径标注
+	void InsertPreDiaDim(const AcGePoint3d& pnt);
+	//直径标注
+	void InsertDiaDim(const AcGePoint3d& pnt);
+	//长度标注
+	void InsertLenDim(const AcGePoint3d& pnt);
+	//角度标注
+	void InsertAngleDim(const AcGePoint3d& pnt);
 private:
 	vector<ZYXDStepData> m_StepData;
 	

@@ -279,5 +279,11 @@
     <Image Include="res\222.bmp">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="res\zyjd.bmp">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="res\zykkd.bmp">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

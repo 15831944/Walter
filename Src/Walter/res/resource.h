@@ -17,6 +17,8 @@
 #define IDB_BITMAP6                     158
 #define IDD_DIALOG_TUKUANG              159
 #define IDD_DIALOG_PCD_XD               161
+#define IDB_BITMAP7                     165
+#define IDB_BITMAP8                     166
 #define IDC_EDIT_XPT                    1000
 #define IDC_EDIT_ANGLE                  1001
 #define IDC_BUTTON_POINT                1002
@@ -76,14 +78,15 @@
 #define IDC_COMBO3                      1054
 #define IDC_KKD_PAR                     1055
 #define IDC_KKD_STATIC                  1056
+#define IDC_STATIC_ZY                   1057
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        163
+#define _APS_NEXT_RESOURCE_VALUE        167
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1057
+#define _APS_NEXT_CONTROL_VALUE         1058
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

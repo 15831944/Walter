@@ -44,11 +44,15 @@ void CDlgZyJd::InitDefaultPara()
 	m_ui_LabberCtrl.SetCurSel(defaultSel);
 
 	//刀柄
-	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingSFolder());
-	for (int i = 0; i < dwgfiles.size(); i++)
-	{
-		m_ui_DbCtrl.AddString(dwgfiles[i]);
-	}
+	m_ui_DbCtrl.AddString(L"Z06");
+	m_ui_DbCtrl.AddString(L"Z08");
+	m_ui_DbCtrl.AddString(L"Z10");
+	m_ui_DbCtrl.AddString(L"Z12");
+	m_ui_DbCtrl.AddString(L"Z16");
+	m_ui_DbCtrl.AddString(L"Z18");
+	m_ui_DbCtrl.AddString(L"Z20");
+	m_ui_DbCtrl.AddString(L"Z25");
+	m_ui_DbCtrl.AddString(L"Z32");
 	m_ui_DbCtrl.SetCurSel(0);
 	//刀具设置
 	m_SelKnifeClass.AddString(L"整硬铣刀");
@@ -323,16 +327,24 @@ void CDlgZyJd::OnBnClickedButton1()
 
 void CDlgZyJd::OnCbnSelchangeCombo3()
 {
+	UpdateData(TRUE);
 	// TODO: 在此添加控件通知处理程序代码
 	int selectIndex = m_SelKnifeClass.GetCurSel();
 	CString knifeClass;
 	m_SelKnifeClass.GetLBText(selectIndex, knifeClass);
+	//实现图片的切换
+	CStatic* pstatic;
+	CBitmap cbitMap;
+	pstatic = (CStatic*)GetDlgItem(IDC_STATIC_ZY);
+	pstatic->ModifyStyle(0xF, SS_BITMAP | SS_CENTERIMAGE);
 	if (knifeClass.Compare(L"整硬扩孔刀") == 0)
 	{
 		m_ZyDjData.SetKKD(true);
 		((CStatic*)GetDlgItem(IDC_KKD_PAR))->ShowWindow(SW_SHOW);
 		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_SHOW);
 		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_SHOW);
+		cbitMap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP8));
+
 	}
 	else
 	{
@@ -341,6 +353,8 @@ void CDlgZyJd::OnCbnSelchangeCombo3()
 		((CStatic*)GetDlgItem(IDC_KKD_PAR))->ShowWindow(SW_HIDE);
 		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_HIDE);
 		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_HIDE);
+		cbitMap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP7));
 	}
-
+	pstatic->SetBitmap(cbitMap);
+	UpdateData(FALSE);
 }

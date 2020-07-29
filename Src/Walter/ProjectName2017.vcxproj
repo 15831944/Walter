@@ -247,6 +247,8 @@
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
     <Image Include="res\bitmap5.bmp" />
+    <Image Include="res\zyjd.bmp" />
+    <Image Include="res\zykkd.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,10 +15,6 @@ CZcDjDlg::CZcDjDlg(CWnd* pParent /*=NULL*/)
 	, m_DaoBingName(_T(""))
 	, m_totalLength(0)
 	, m_VertexAngle(0)
-	, m_designer(_T(""))
-	, m_degineDate(_T(""))
-	, m_knifeCLass(_T(""))
-	, m_SapNum(_T(""))
 {
 
 }
@@ -36,12 +32,7 @@ void CZcDjDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ZC_EDIT, m_totalLength);
 	DDX_Text(pDX, IDC_E, m_VertexAngle);
 	DDX_Control(pDX, IDC_COMBO2, m_StepNumCtrl);
-	DDX_Control(pDX, IDC_COMBO1, m_tukuang);
-	DDX_Control(pDX, IDC_COMBO3, m_proportion);
-	DDX_Text(pDX, IDC_EDIT3, m_designer);
-	DDX_Text(pDX, IDC_EDIT4, m_degineDate);
-	DDX_Text(pDX, IDC_EDIT5, m_knifeCLass);
-	DDX_Text(pDX, IDC_EDIT6, m_SapNum);
+
 }
 
 LRESULT CZcDjDlg::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -86,10 +77,11 @@ void CZcDjDlg::OnBnClickedZcdraw()
 		m_segdata.m_diameter = _ttof(RowData[0]); //ÈÐ¾¶
 		m_segdata.m_length = _ttof(RowData[1]); //ÈÐ¶Î³¤¶È
 		m_segdata.m_ladderAngle1 = _ttof(RowData[2]); //½×ÌÝ½Ç
+	
 		m_data.AddCutterSegData(m_segdata);
 	}
 	//½×ÌÝÊýÁ¿
-	m_data.SetLadderCount(m_allStepData.size() - 1);
+	m_data.SetLadderCount((int)m_allStepData.size() - 1);
 	//¶¥½Ç
 	m_data.m_topAngle = m_VertexAngle;
 	//×Ü³¤
@@ -114,16 +106,16 @@ void CZcDjDlg::InitParamers()
 	int defaultIndex = 0;
 	//¶¥½Ç
 	m_VertexAngle = 140.0;
-	//³õÊ¼»¯Í¼¿ò
-	m_tukuang.AddString(L"A3");
-	m_tukuang.AddString(L"¿Õ");
-	m_tukuang.SetCurSel(defaultIndex);
-	//³õÊ¼»¯±ÈÀý
-	m_proportion.AddString(L"1:1");
-	m_proportion.AddString(L"2:1");
-	m_proportion.AddString(L"2:3");
-	m_proportion.AddString(L"¿Õ");
-	m_proportion.SetCurSel(defaultIndex);
+	////³õÊ¼»¯Í¼¿ò
+	//m_tukuang.AddString(L"A3");
+	//m_tukuang.AddString(L"¿Õ");
+	//m_tukuang.SetCurSel(defaultIndex);
+	////³õÊ¼»¯±ÈÀý
+	//m_proportion.AddString(L"1:1");
+	//m_proportion.AddString(L"2:1");
+	//m_proportion.AddString(L"2:3");
+	//m_proportion.AddString(L"¿Õ");
+	//m_proportion.SetCurSel(defaultIndex);
 	//×Ü³¤
 	m_totalLength = 160.0;
 
@@ -141,7 +133,7 @@ void CZcDjDlg::InitGridCtrl()
 {
 	m_ZcDjJTInfoCtrl.LoadDefaltSettings();
 	m_ZcDjJTInfoCtrl.SetEditable(TRUE);
-	m_ZcDjJTInfoCtrl.SetRowCount(m_allStepData.size() + 1);
+	m_ZcDjJTInfoCtrl.SetRowCount((int)m_allStepData.size() + 1);
 	m_ZcDjJTInfoCtrl.SetHeaderText(L"ÈÐ¾¶;ÈÐ¶Î³¤¶È;½×ÌÝ½Ç1");
 	m_ZcDjJTInfoCtrl.SetHeaderWidth(L"33;33;34");
 	m_ZcDjJTInfoCtrl.SetFixedRowCount(1);
@@ -280,10 +272,10 @@ MultiRowText CZcDjDlg::getDefaultGridData(int index)
 MultiRowText CZcDjDlg::getTableData()
 {
 	MultiRowText vec;
-	for (UINT i = 0; i < m_ZcDjJTInfoCtrl.GetContentRowCount(); i++)
+	for (int i = 0; i < m_ZcDjJTInfoCtrl.GetContentRowCount(); i++)
 	{
 		OneRowText oneRowText;
-		for (UINT j = 0; j < m_ZcDjJTInfoCtrl.GetColumnCount(); j++)
+		for (int j = 0; j < m_ZcDjJTInfoCtrl.GetColumnCount(); j++)
 		{
 			oneRowText.push_back(m_ZcDjJTInfoCtrl.GetContentItemText(i, j));
 		}

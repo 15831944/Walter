@@ -41,6 +41,8 @@
 #include "ThreadData.h"
 #include "ZcDjDlg.h"
 #include "ZTInfoDlg.h"
+#include "DlgTuKuang.h"
+#include "DlgZyJd.h"
 HINSTANCE g_tytoolInst = 0;
 
 #ifdef _DEBUG
@@ -90,6 +92,24 @@ void CMD_ZCDJ()
 	gZcDjDlg = new CZcDjDlg(acedGetAcadFrame());
 	gZcDjDlg->Create(IDD_DIALOG_DCD);
 	gZcDjDlg->ShowWindow(SW_SHOW);
+}
+//整硬铣刀
+CDlgZyJd *gZyXd = NULL;
+void CMD_ZYXD()
+{
+	CAcModuleResourceOverride resOverride;
+	gZyXd = new CDlgZyJd(acedGetAcadFrame());
+	gZyXd->Create(IDD_DIALOG_PCD_XD);
+	gZyXd->ShowWindow(SW_SHOW);
+}
+//图框
+CDlgTuKuang *gTuKuang = NULL;
+void CMD_INTK()
+{
+	CAcModuleResourceOverride resOverride;
+	gTuKuang = new CDlgTuKuang(acedGetAcadFrame());
+	gTuKuang->Create(IDD_DIALOG_TUKUANG);
+	gTuKuang->ShowWindow(SW_SHOW);
 }
 //更新设计人员
 void updateAttr()
@@ -287,6 +307,24 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("ZYDJ"),
+		_T("ZYDJ"),
+		ACRX_CMD_MODAL,
+		CMD_ZYXD,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("INTK"),
+		_T("INTK"),
+		ACRX_CMD_MODAL,
+		CMD_INTK,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 	//删除双击事件
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
 	TY_LoadTyTool();
@@ -388,6 +426,16 @@ void menu()
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&直槽刀具"), _T("ZCDJ "));
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&整硬刀具"), _T("ZYDJ "));
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&插入图框"), _T("INTK "));
 
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();

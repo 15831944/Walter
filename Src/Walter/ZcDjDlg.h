@@ -3,7 +3,7 @@
 #include "ThreadData.h"
 #include "afxwin.h"
 #include "res/resource.h"
-#include "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afxwin.h"
+#include "afxwin.h"
 
 // CZcDjDlg 对话框
 
@@ -52,11 +52,5 @@ public:
 	CGridCtrlEx m_ZcDjJTInfoCtrl;
 
 	CThreadSegData m_segdata;
-	
-	CComboBox m_tukuang;		//图框
-	CComboBox m_proportion;		//比例
-	CString m_designer;			//设计人员
-	CString m_degineDate;		//设计日期
-	CString m_knifeCLass;		//刀具类别
-	CString m_SapNum;			//SAP号
+
 };

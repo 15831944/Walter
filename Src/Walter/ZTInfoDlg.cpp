@@ -38,7 +38,7 @@ void CZTInfoDlg::InitGridCtrl()
 {
 	m_djInfoCtrl.LoadDefaltSettings();
 	m_djInfoCtrl.SetEditable(TRUE);
-	m_djInfoCtrl.SetRowCount(m_alldjInfos.size() + 1);
+	m_djInfoCtrl.SetRowCount((int)m_alldjInfos.size() + 1);
 	m_djInfoCtrl.SetHeaderText(L"ÈÐ¾¶;ÈÐ¶Î³¤¶È;½×ÌÝ½Ç1");
 	m_djInfoCtrl.SetHeaderWidth(L"33;33;34");
 	m_djInfoCtrl.SetFixedRowCount(1);
@@ -62,19 +62,7 @@ void CZTInfoDlg::InitDefaultPara()
 	UpdateData(TRUE);
 	int defaultIndex = 0;
 	
-	//³õÊ¼»¯Í¼¿ò
-	m_tukuang.AddString(L"A3");
-	m_tukuang.AddString(L"¿Õ");
-	m_tukuang.SetCurSel(defaultIndex);
-	//³õÊ¼»¯±ÈÀý
-	m_proportion.AddString(L"1:1");
-	m_proportion.AddString(L"2:1");
-	m_proportion.AddString(L"2:3");
-	m_proportion.AddString(L"¿Õ");
-	m_proportion.SetCurSel(defaultIndex);
-	//ÈÐÊý
-	m_ui_DrNumCtrl.AddString(L"2");
-	m_ui_DrNumCtrl.SetCurSel(defaultIndex);
+	
 	//¶¥½Ç
 	m_VertAngle = 140.0;
 	//temp.Format(L"%.1f", m_VertAngle);
@@ -206,10 +194,10 @@ MultiRowData CZTInfoDlg::getDefaultGridData(int index)
 MultiRowData CZTInfoDlg::getTableData()
 {
 	MultiRowText vec;
-	for (UINT i = 0; i < (int)m_djInfoCtrl.GetContentRowCount(); i++)
+	for (int i = 0; i < (int)m_djInfoCtrl.GetContentRowCount(); i++)
 	{
 		OneRowText oneRowText;
-		for (UINT j = 0; j < m_djInfoCtrl.GetColumnCount(); j++)
+		for (int j = 0; j < m_djInfoCtrl.GetColumnCount(); j++)
 		{
 			oneRowText.push_back(m_djInfoCtrl.GetContentItemText(i, j));
 		}
@@ -288,7 +276,7 @@ void CZTInfoDlg::OnBnClickedBtnok()
 		m_data.AddCutterSegData(m_segdata);
 	}
 	//½×ÌÝÊýÁ¿
-	m_data.SetLadderCount(m_alldjInfos.size() - 1);
+	m_data.SetLadderCount((int)m_alldjInfos.size() - 1);
 	//¶¥½Ç
 	m_data.m_topAngle = m_VertAngle;
 	//×Ü³¤

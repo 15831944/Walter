@@ -168,6 +168,7 @@
     <ClCompile Include="Common\ThreadData.cpp" />
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
+    <ClCompile Include="DlgTuKuang.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
     <ClCompile Include="GridCtrl\GridCtrlEx.cpp" />
     <ClCompile Include="GridCtrl\GridCtrl_src\GridCell.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Common\ThreadData.h" />
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
+    <ClInclude Include="DlgTuKuang.h" />
     <ClInclude Include="GridCtrl\GridCellCheckEx.h" />
     <ClInclude Include="GridCtrl\GridCtrlEx.h" />
     <ClInclude Include="GridCtrl\GridCtrl_src\CellRange.h" />

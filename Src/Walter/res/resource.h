@@ -15,6 +15,8 @@
 #define IDB_PNG2                        145
 #define IDB_BITMAP5                     155
 #define IDB_BITMAP6                     158
+#define IDD_DIALOG_TUKUANG              159
+#define IDD_DIALOG_PCD_XD               161
 #define IDC_EDIT_XPT                    1000
 #define IDC_EDIT_ANGLE                  1001
 #define IDC_BUTTON_POINT                1002
@@ -33,6 +35,7 @@
 #define IDC_FilePath                    1020
 #define IDC_EDIT_ALLLENGTH              1020
 #define IDC_ZC_EDIT                     1020
+#define IDC_KKD_DIA                     1020
 #define IDC_COMBO1                      1021
 #define IDC_EDIT2                       1022
 #define IDC_EDIT3                       1023
@@ -51,6 +54,7 @@
 #define IDC_DRAW                        1030
 #define IDC_BROWSE                      1031
 #define IDC_CUSTOM1                     1032
+#define IDC_CUSTOM1_JD                  1032
 #define IDC_COMBO_HILT_CHOOSE           1033
 #define IDC_COMBO_STEP_CHOOSE           1034
 #define IDC_COMBO_STEP_NUM              1034
@@ -67,16 +71,19 @@
 #define IDC_E                           1048
 #define IDC_ZCDRAW                      1049
 #define IDC_COMBO2                      1050
-#define IDC_COMBO3                      1051
-#define IDC_COMBO_TUKUANG               1051
+#define IDC_DATETIMEPICKER1             1052
+#define IDC_CUSTOM1_XD                  1053
+#define IDC_COMBO3                      1054
+#define IDC_KKD_PAR                     1055
+#define IDC_KKD_STATIC                  1056
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        159
+#define _APS_NEXT_RESOURCE_VALUE        163
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1052
+#define _APS_NEXT_CONTROL_VALUE         1057
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

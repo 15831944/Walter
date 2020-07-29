@@ -85,6 +85,7 @@
     <ClCompile Include="ZcDjDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="DlgTuKuang.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CBorder.h">
@@ -213,6 +214,7 @@
     <ClInclude Include="ZcDjDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="DlgTuKuang.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\1.bmp">

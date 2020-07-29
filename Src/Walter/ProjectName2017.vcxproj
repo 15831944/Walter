@@ -160,6 +160,8 @@
     <ClCompile Include="Common\ThreadData.cpp" />
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
+    <ClCompile Include="DlgTuKuang.cpp" />
+    <ClCompile Include="DlgZyJd.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
     <ClCompile Include="GridCtrl\GridCtrlEx.cpp" />
     <ClCompile Include="GridCtrl\GridCtrl_src\GridCell.cpp" />
@@ -184,6 +186,7 @@
     <ClCompile Include="WalterDialog.cpp" />
     <ClCompile Include="ZcDjDlg.cpp" />
     <ClCompile Include="ZTInfoDlg.cpp" />
+    <ClCompile Include="ZYDJData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Com.h" />
@@ -205,6 +208,8 @@
     <ClInclude Include="Common\ThreadData.h" />
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
+    <ClInclude Include="DlgTuKuang.h" />
+    <ClInclude Include="DlgZyJd.h" />
     <ClInclude Include="GridCtrl\GridCellCheckEx.h" />
     <ClInclude Include="GridCtrl\GridCtrlEx.h" />
     <ClInclude Include="GridCtrl\GridCtrl_src\CellRange.h" />
@@ -228,6 +233,7 @@
     <ClInclude Include="WalterDialog.h" />
     <ClInclude Include="ZcDjDlg.h" />
     <ClInclude Include="ZTInfoDlg.h" />
+    <ClInclude Include="ZYDJData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

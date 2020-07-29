@@ -224,8 +224,8 @@ int SPCDJDData::Draw()
 	CString str;
 	str.Format(L"%d", m_stepNum);
 	daoShenFilePath.Append(L"PCD铰刀模板X" + str + L".dwg");
-	CString blkName = CCommonUtil::GenStrByTime();
-	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);
+	/*CString blkName = CCommonUtil::GenStrByTime();
+	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);*/
 
 	//插入对应的刀柄,并设置参数
 	CString daoBingFilePath = TY_GetDaoBingFolder();
@@ -236,10 +236,14 @@ int SPCDJDData::Draw()
 	double distance = 0;
 	double dis =   GetDisByDBName(m_daoBing);
 	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x + dis;
-	AcGePoint3d insertPiont(pnt.x - MaxLLen, pnt.y, 0);
-	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, insertPiont, 0, 1);
+	AcGePoint3d insertPiont(pnt.x+  MaxLLen, pnt.y, 0);
+	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 
-	
+	//先插入刀柄，在插入刀身
+	CString blkName = CCommonUtil::GenStrByTime();
+	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, insertPiont, 0, 1); 
+
+	pnt = insertPiont;
 	//Lf2
 	double Lf2;
 
@@ -428,8 +432,7 @@ int SPCDJDData::Draw()
 		
 		CUpdateUtil::UpdateDisplay();
 		vAcDbObjectId explodeIds;
-		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
-
+		CEntityUtil::ExplodeAndAppend(daoShenID,explodeIds);
 
 		vAcDbObjectId blkRefIds;
 		CBlockUtil::CycleAllBlockReferences(blkRefIds);

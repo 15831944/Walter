@@ -376,6 +376,8 @@ class HLRInit
 public:
 	HLRInit()
 	{
+		return;
+
 		//----- We need the HLR engine loaded
 		if (!acrxServiceIsRegistered(AsdkHlrApiServiceName))
 		{ 

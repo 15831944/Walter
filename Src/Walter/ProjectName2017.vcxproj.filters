@@ -82,6 +82,15 @@
     <ClCompile Include="ZcDjDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="DlgTuKuang.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgZyJd.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ZYDJData.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -209,6 +218,15 @@
     </ClInclude>
     <ClInclude Include="ZcDjDlg.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTuKuang.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgZyJd.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ZYDJData.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

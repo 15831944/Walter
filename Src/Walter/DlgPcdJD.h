@@ -52,10 +52,5 @@ public:
 	void SetCellHeight();
 
 	SPCDJDData m_data;
-	CComboBox m_tukuang;
-	CComboBox m_proportion;
-	CString m_designer;
-	CString m_designDate;
-	CString m_knifeClass;
-	CString m_SapNum;
+
 };

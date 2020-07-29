@@ -302,7 +302,7 @@ int WalterDialog::InsertDwgsAccordingToCutterTools(CString tuKuangFileName, TUKu
 		AcGePoint3d pnt(0, 0, 0);
 		int Px = i / 20;
 		int Py = i % 20;
-		TY_SetProgress(cutterTools.size(), i+1);
+		TY_SetProgress((int)cutterTools.size(), i+1);
 		if (tktype == A1)
 		{
 			//图框的插入坐标值

@@ -106,9 +106,6 @@ void CZYDJData::Draw()
 	InsertDiaDim(ptInsert);
 	InsertAngleDim(ptInsert);
 	InsertLenDim(ptInsert);
-
-
-	CViewUtil::ZoomExtent();
 }
 
 void CZYDJData::SetStepData(vector<ZYXDStepData> const& data)
@@ -161,6 +158,7 @@ AcGePoint3d CZYDJData::GetVertexPoint(const AcGePoint3d & pnt,int index,bool isT
 //插入预孔直径标注
 void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 {
+	CLayerSwitch layer(L"2");
 	AcGePoint3d pt1(pnt);
 	pt1.y = pnt.y + m_Prediameter / 2.0;
 	AcGePoint3d pt2(pnt);
@@ -172,19 +170,22 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 //插入直径标注
 void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 {
+	CLayerSwitch layer(L"2");
 	for (size_t i = 0; i < m_DjLabberCount; i++)
 	{
 		AcGePoint3d TopPoint = GetVertexPoint(pnt, i, TRUE);
 		AcGePoint3d BottomPoint = GetVertexPoint(pnt, i, FALSE);
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
-		centerPoint.x = pnt.x + 10 * i + 12;
-		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint,NULL);
+		centerPoint.x = pnt.x + 5 * i + 12;
+		CString temp;
+		temp.Format(L"%%%%C%.f", m_StepData[i].m_diameter);
+		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint,temp);
 	}
 }
 //插入长度标注
 void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 {
-	
+	CLayerSwitch layer(L"2");
 	for (size_t i = 0; i < m_DjLabberCount; i++)
 	{
 		AcGePoint3d TopPoint;
@@ -193,13 +194,25 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 		AcGePoint3d ptend(pnt);
 		ptend.y = TopPoint.y;
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, ptend);
-		centerPoint.y = centerPoint.y + 10 * i + 5;
+		centerPoint.y = centerPoint.y + 5 * i + 5;
 		CDimensionUtil::AddDimRotated(TopPoint, ptend, centerPoint,0, NULL);
 	}
+	// 插入总长标注
+	double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
+	AcGePoint3d ptInsert(pnt);
+	ptInsert.y = pnt.y + m_StepData[0].m_diameter / 2.0;
+	
+	AcGePoint3d lastPoint(pnt);
+	lastPoint.x = pnt.x - m_totalLength;
+	lastPoint.y = pnt.y + m_StepData[m_DjLabberCount - 1].m_diameter / 2.0;
+	AcGePoint3d centerPoint = CMathUtil::GetMidPoint(ptInsert, lastPoint);
+	centerPoint.y = centerPoint.y + 30;
+	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
 }
 //插入角度标注
 void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
 {
+	CLayerSwitch layer(L"2");
 	for (size_t i = 1; i < m_DjLabberCount; i++)
 	{
 		

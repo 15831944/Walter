@@ -78,6 +78,53 @@ CString TY_GetDllFilePathName()
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\TYTool.dll";
 #endif // DEV_TEST_ENV
 }
+CString TY_GetHLRFilePathName()
+{
+#ifdef DEV_TEST_ENV
+#ifdef ARX_2014
+	return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi19.dbx";
+#elif ARX_2017
+	return L"C:\\Program Files\\Autodesk\\AutoCAD 2017\\AsdkHlrApi21.dbx";
+#endif
+#else
+#ifdef ARX_2014
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\AsdkHlrApi19.dbx";
+#elif ARX_2017
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\AsdkHlrApi21.dbx";
+#endif
+#endif // DEV_TEST_ENV
+}
+
+
+//刀具库存储目录
+CString TY_GetDynamicBlockFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DynamicBlocks\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DynamicBlocks\\";
+#endif // DEV_TEST_ENV
+}
+
+//刀具库存储目录
+CString TY_GetDaoBingFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForPCDJD\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForPCDJD\\";
+#endif // DEV_TEST_ENV
+}
+
+//得到钻头和直槽刀的刀柄路径
+CString TY_GetDaoBingSFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZuanTou\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZuanTou\\";
+#endif
+}
 //根据刀柄名称获取刀柄长度
 double GetHandleLengthFromDaoBing(CString daoBingName)
 {
@@ -139,53 +186,7 @@ vector<CString> GetAllDwgFile(const CString& dirPath)
 	return fileLists;
 }
 
-CString TY_GetHLRFilePathName()
-{
-#ifdef DEV_TEST_ENV
-    #ifdef ARX_2014
-	    return L"C:\\Program Files\\Autodesk\\AutoCAD 2014\\AsdkHlrApi19.dbx";
-    #elif ARX_2017
-	return L"C:\\Program Files\\Autodesk\\AutoCAD 2017\\AsdkHlrApi21.dbx";
-    #endif
-#else
-    #ifdef ARX_2014
-	    return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\AsdkHlrApi19.dbx";
-    #elif ARX_2017
-		return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\frame1\\AsdkHlrApi21.dbx";
-    #endif
-#endif // DEV_TEST_ENV
-}
 
-
-//刀具库存储目录
-CString TY_GetDynamicBlockFolder()
-{
-#ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\DynamicBlocks\\";
-#else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DynamicBlocks\\";
-#endif // DEV_TEST_ENV
-}
-
-//刀具库存储目录
-CString TY_GetDaoBingFolder()
-{
-#ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForPCDJD\\";
-#else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForPCDJD\\";
-#endif // DEV_TEST_ENV
-}
-
-//得到钻头和直槽刀的刀柄路径
-CString TY_GetDaoBingSFolder()
-{
-#ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZuanTou\\";
-#else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZuanTou\\";
-#endif
-}
 
 //根据刀尖获取 lf2的值
 double GetLf2ByDiameter(double diameter)
@@ -376,8 +377,7 @@ class HLRInit
 public:
 	HLRInit()
 	{
-		return;
-
+	
 		//----- We need the HLR engine loaded
 		if (!acrxServiceIsRegistered(AsdkHlrApiServiceName))
 		{ 

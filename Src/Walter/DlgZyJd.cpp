@@ -44,6 +44,7 @@ void CDlgZyJd::InitDefaultPara()
 	m_ui_LabberCtrl.SetCurSel(defaultSel);
 
 	//刀柄
+	m_ui_DbCtrl.AddString(L"Z03");
 	m_ui_DbCtrl.AddString(L"Z06");
 	m_ui_DbCtrl.AddString(L"Z08");
 	m_ui_DbCtrl.AddString(L"Z10");
@@ -55,9 +56,9 @@ void CDlgZyJd::InitDefaultPara()
 	m_ui_DbCtrl.AddString(L"Z32");
 	m_ui_DbCtrl.SetCurSel(0);
 	//刀具设置
-	m_SelKnifeClass.AddString(L"整硬铣刀");
+	m_SelKnifeClass.AddString(L"整硬铰刀");
 	m_SelKnifeClass.AddString(L"整硬扩孔刀");
-	m_SelKnifeClass.SetCurSel(0);
+	m_SelKnifeClass.SetCurSel(1);
 	m_ZyDjData.SetKKD(true);
 	//总长
 
@@ -85,7 +86,7 @@ void CDlgZyJd::SetCellHight()
 {
 	for (size_t i=0;i < m_allrowData.size() ; ++i)
 	{
-		m_XdLabberDataCtrl.SetRowHeight(i, 25);
+		m_XdLabberDataCtrl.SetRowHeight(i, 30);
 	}
 }
 

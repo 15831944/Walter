@@ -13,7 +13,6 @@ IMPLEMENT_DYNAMIC(CDlgTuKuang, CDialogEx)
 CDlgTuKuang::CDlgTuKuang(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG_TUKUANG, pParent)
 	, m_designer(_T(""))
-	, m_knifClass(_T(""))
 	, m_SapNum(_T(""))
 	, m_designDate(_T(""))
 {
@@ -36,13 +35,12 @@ void CDlgTuKuang::Init()
 	int defaultIndex = 0;
 	//初始化图框
 	m_tukuang.AddString(L"A3");
-	m_tukuang.AddString(L"空");
 	m_tukuang.SetCurSel(defaultIndex);
+	
 	//初始化比例
 	m_proportion.AddString(L"1:1");
 	m_proportion.AddString(L"2:1");
 	m_proportion.AddString(L"2:3");
-	m_proportion.AddString(L"空");
 	m_proportion.SetCurSel(defaultIndex);
 }
 
@@ -52,9 +50,9 @@ void CDlgTuKuang::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, m_tukuang);
 	DDX_Control(pDX, IDC_COMBO2, m_proportion);
 	DDX_Text(pDX, IDC_EDIT3, m_designer);
-	DDX_Text(pDX, IDC_EDIT5, m_knifClass);
 	DDX_Text(pDX, IDC_EDIT6, m_SapNum);
 	DDX_DateTimeCtrl(pDX, IDC_DATETIMEPICKER1, m_designDate);
+	DDX_Control(pDX, IDC_COMBO3, m_KnifeClassSel);
 }
 
 LRESULT CDlgTuKuang::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -89,20 +87,27 @@ void CDlgTuKuang::OnBnClickedButton1()
 		m_tukuang.GetLBText(selectIndex, TuKuangName);
 		CString TuKuangPath = TY_GetFrameFolder() + TuKuangName + L".dwg";
 		CString blkName = CCommonUtil::GenStrByTime();
-		AcDbObjectId tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);
+
+		//比例
+		CString proportion;
+		selectIndex = m_proportion.GetCurSel();
+		m_proportion.GetLBText(selectIndex, proportion);
+		AcDbObjectId tukuangId;
+		if (proportion.Compare(L"2:1") == 0)
+			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 0.5);
+		else if(proportion.Compare(L"1:1") == 0)
+			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);
+		else if (proportion.Compare(L"2:3") == 0)
+			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1.5);
 		//设置属性定义
 		//类别
-		CBlockUtil::SetBlockRefAttribute(tukuangId, L"!ALT_WZG_BEZ4", m_knifClass);
 		//SAP号
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"MAT_BEZ", m_SapNum);
 		//时间
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"DWG_ERST_DATUM", m_designDate);
 		//设计人员
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"DWG_ERST_INIT", m_designer);
-		//比例
-		CString proportion;
-		selectIndex = m_proportion.GetCurSel();
-		m_proportion.GetLBText(selectIndex, proportion);
+		
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"MASSTAB", proportion);
 		
 

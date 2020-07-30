@@ -35,8 +35,8 @@ public:
 	// ±ÈÀý
 	CComboBox m_proportion;
 	CString m_designer;
-	CString m_knifClass;
 	CString m_SapNum;
 	afx_msg void OnBnClickedButton1();
 	CString m_designDate;
+	CComboBox m_KnifeClassSel;
 };

@@ -730,7 +730,6 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 		AcGeVector3d stdir = CCurveUtil::GetCurveStartPointVector(helixId);
 
 		AcDbObjectId circleid = CCircleUtil::CreateCircle(stpnt, stdir, cirrad);
-
 #ifndef AHNO_DRAW_3D
 		CEntityUtil::ShowObject(circleid, false, true);
 		CEntityUtil::ShowObject(helixId, false, true);
@@ -772,6 +771,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	
 	//ͶӰ
 	TY_Project3DSolidTo2D(mainid, false, false, false,false);
+
 #ifndef AHNO_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
@@ -1965,6 +1965,9 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 
 int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 {
+	//
+	CLayerSwitch layer(L"2");
+	//
 	int size = m_cutterSegs.size();
 	if (size == 0)
 		return -1;

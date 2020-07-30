@@ -85,7 +85,8 @@ void CZcDjDlg::OnBnClickedZcdraw()
 	//¶¥½Ç
 	m_data.m_topAngle = m_VertexAngle;
 	//×Ü³¤
-	m_data.m_totalLength = m_totalLength;
+	double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
+	m_data.m_totalLength = m_totalLength - dis ;
 	//ÈÐÊý
 
 	m_data.SetDaoBingName(m_DaoBingName);

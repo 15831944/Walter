@@ -45,18 +45,21 @@ AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int 
 //出入直径标注
 void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 {
+	CLayerSwitch layer(L"2");
 	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
 	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, stepIndex);
 	AcGePoint3d ptCenter(pnt);
-
+	CString temp;
+	temp.Format(L"%%%%C%.2f", m_stepDatas[stepIndex].m_stepLength);
 	//
 	ptCenter.x += 15 + stepIndex * 15;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
-	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, NULL,dimStyleId);
+	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, temp,dimStyleId);
 }
 //插入L标注
 void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 {
+	CLayerSwitch layer(L"2");
 	if (stepIndex == 0)
 	{
 		return;
@@ -66,12 +69,8 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 	AcGePoint3d LDend = GetDaoJianPoint(pnt, true, stepIndex);
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LDstart, LDend);
-	center.y = LDend.y + 10*stepIndex;
-	//如果是最后一个标注
-	if (stepIndex == m_stepNum - 1)
-	{
-
-	}
+	center.y = LDend.y + 5*stepIndex;
+	
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LDstart, LDend, center,0,NULL, dimStyleId);
 	
@@ -79,23 +78,24 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 //插入Lf1标注
 void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 {
+	CLayerSwitch layer(L"2");
 	double len = GetDisByDBName(m_daoBing);
 	//插入Lf1标注
 	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
-	AcGePoint3d LfDend(LfDstart);
+	AcGePoint3d LfDend = GetDaoJianPoint(pnt,true,stepIndex);
 	//Lf1标注长度为最后L+30
-	LfDend.x = LfDend.x - m_stepDatas[stepIndex].m_stepLength;
+	LfDend.x = LfDend.x - 30;
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
-	center.y = LfDend.y + stepIndex * 10 + 20;
+	center.y = LfDend.y + stepIndex * 5+ 10;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0,NULL, dimStyleId);
 	//插入总长标注
 	AcGePoint3d lastpoint(LfDstart);
 	
-	lastpoint.x = lastpoint.x - m_stepDatas[stepIndex].m_stepLength - len;
+	lastpoint.x = lastpoint.x - m_stepDatas[stepIndex].m_stepLength;
 	center = CMathUtil::GetMidPoint(LfDstart, lastpoint);
-	center.y = LfDend.y + stepIndex * 10 + 30;
+	center.y = LfDend.y + stepIndex * 5 + 20;
 	CDimensionUtil::AddDimRotated(LfDstart, lastpoint, center, 0, NULL, dimStyleId);
 	////插入Lf2标注
 	//double Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
@@ -140,6 +140,7 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 //插入主偏角度标注
 void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 {
+	CLayerSwitch layer(L"2");
 	for (int stepIndex = 0;stepIndex < m_stepNum;stepIndex++)
 	{
 		//角的顶点
@@ -151,7 +152,7 @@ void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 		AcGePoint3d ptEnd2(ptTop.x + x, ptTop.y - y, 0);
 		//标注点
 		AcGePoint3d center(0, 0, 0);
-		center.x = ptEnd1.x + 5;
+		center.x = ptEnd1.x + 10;
 		double len = center.x - ptTop.x;
 		center.y = ptTop.y -  len*tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle / 2.0));
 		AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
@@ -178,6 +179,7 @@ void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 
 void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
 {
+	CLayerSwitch layer(L"2");
 
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	//刀宽标注 默认为7.0
@@ -235,7 +237,7 @@ int SPCDJDData::Draw()
 	//距离要修改但是缺少一个参数len没有获取
 	double distance = 0;
 	double dis =   GetDisByDBName(m_daoBing);
-	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x + dis;
+	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x ;
 	AcGePoint3d insertPiont(pnt.x+  MaxLLen, pnt.y, 0);
 	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 

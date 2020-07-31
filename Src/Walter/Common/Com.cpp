@@ -125,6 +125,40 @@ CString TY_GetDaoBingSFolder()
 	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZuanTou\\";
 #endif
 }
+//整硬刀具的刀柄
+CString TY_GetDaoBingZyFolder()
+{
+#ifdef DEV_TEST_ENV
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZY\\";
+#else
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZY\\";
+#endif
+}
+
+//获取文件夹先的所有Dwg文件名称
+vector<CString> GetAllDwgFile(const CString& dirPath)
+{
+	vector<CString> fileLists;
+	CFileFind tempfind;
+	BOOL isfind;
+	//找寻所有dwg文件
+	isfind = tempfind.FindFile(dirPath + "*.dwg");
+	while (isfind)
+	{
+		isfind = tempfind.FindNextFile();
+		//如果是文件夹就跳过，只查找本文件目录下的dwg文件
+		if (tempfind.IsDots() || tempfind.IsDirectory())
+			continue;
+		else
+		{
+			CString fileName = tempfind.GetFileName();
+			int pos = fileName.ReverseFind('.');
+			fileLists.push_back(fileName.Left(pos));
+		}
+	}
+	tempfind.Close();
+	return fileLists;
+}
 //根据刀柄名称获取刀柄长度
 double GetHandleLengthFromDaoBing(CString daoBingName)
 {
@@ -161,31 +195,6 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"Z32") == 0)		length = 61.0;		//Z40 0
 	return length;
 }
-//获取文件夹先的所有Dwg文件名称
-vector<CString> GetAllDwgFile(const CString& dirPath)
-{
-	vector<CString> fileLists;
-	CFileFind tempfind;
-	BOOL isfind;
-	//找寻所有dwg文件
-	isfind = tempfind.FindFile(dirPath + "*.dwg");
-	while (isfind)
-	{
-		isfind = tempfind.FindNextFile();
-		//如果是文件夹就跳过，只查找本文件目录下的dwg文件
-		if (tempfind.IsDots() || tempfind.IsDirectory())	
-			continue;
-		else
-		{
-			CString fileName = tempfind.GetFileName();
-			int pos = fileName.ReverseFind('.');
-			fileLists.push_back(fileName.Left(pos));
-		}
-	}
-	tempfind.Close();
-	return fileLists;
-}
-
 
 
 //根据刀尖获取 lf2的值

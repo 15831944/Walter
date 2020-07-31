@@ -44,16 +44,22 @@ void CDlgZyJd::InitDefaultPara()
 	m_ui_LabberCtrl.SetCurSel(defaultSel);
 
 	//µ¶±ú
-	m_ui_DbCtrl.AddString(L"Z03");
-	m_ui_DbCtrl.AddString(L"Z06");
-	m_ui_DbCtrl.AddString(L"Z08");
-	m_ui_DbCtrl.AddString(L"Z10");
-	m_ui_DbCtrl.AddString(L"Z12");
-	m_ui_DbCtrl.AddString(L"Z16");
-	m_ui_DbCtrl.AddString(L"Z18");
-	m_ui_DbCtrl.AddString(L"Z20");
-	m_ui_DbCtrl.AddString(L"Z25");
-	m_ui_DbCtrl.AddString(L"Z32");
+	//m_ui_DbCtrl.AddString(L"Z03");
+	//m_ui_DbCtrl.AddString(L"Z06");
+	//m_ui_DbCtrl.AddString(L"Z08");
+	//m_ui_DbCtrl.AddString(L"Z10");
+	//m_ui_DbCtrl.AddString(L"Z12");
+	//m_ui_DbCtrl.AddString(L"Z16");
+	//m_ui_DbCtrl.AddString(L"Z18");
+	//m_ui_DbCtrl.AddString(L"Z20");
+	//m_ui_DbCtrl.AddString(L"Z25");
+	//m_ui_DbCtrl.AddString(L"Z32");
+	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingZyFolder());
+	for (int i = 0; i < dwgfiles.size(); i++)
+	{
+		m_ui_DbCtrl.AddString(dwgfiles[i]);
+	}
+
 	m_ui_DbCtrl.SetCurSel(0);
 	//µ¶¾ßÉèÖÃ
 	m_SelKnifeClass.AddString(L"ÕûÓ²½Âµ¶");

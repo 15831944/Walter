@@ -17,6 +17,7 @@ CString TY_GetDynamicBlockFolder();
 CString TY_GetDaoBingFolder();
 //另外一种刀具
 CString TY_GetDaoBingSFolder();
+CString TY_GetDaoBingZyFolder();
 //得到图框存储路径
 CString TY_GetFrameFolder();
 

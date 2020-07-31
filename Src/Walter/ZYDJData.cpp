@@ -106,6 +106,9 @@ void CZYDJData::Draw()
 	InsertDiaDim(ptInsert);
 	InsertAngleDim(ptInsert);
 	InsertLenDim(ptInsert);
+	//补线
+	Mending(ptInsert);
+
 }
 
 void CZYDJData::SetStepData(vector<ZYXDStepData> const& data)
@@ -165,7 +168,10 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 	pt2.y = pnt.y -  m_Prediameter / 2.0;
 	AcGePoint3d dimTextPosition = CMathUtil::GetMidPoint(pt1,pt2);
 	dimTextPosition.x += 5;
-	CDimensionUtil::AddDimAligned(pt1, pt2, dimTextPosition, NULL);
+
+	CString temp;
+	temp.Format(L"%%%%C%.f", m_Prediameter);
+	CDimensionUtil::AddDimAligned(pt1, pt2, dimTextPosition, temp);
 }
 //插入直径标注
 void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
@@ -186,7 +192,7 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 {
 	CLayerSwitch layer(L"2");
-	for (size_t i = 0; i < m_DjLabberCount; i++)
+	for (size_t i = 0; i < m_DjLabberCount-1; i++)
 	{
 		AcGePoint3d TopPoint;
 		TopPoint.x = pnt.x - m_StepData[i].m_stepLength;
@@ -197,8 +203,9 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 		centerPoint.y = centerPoint.y + 5 * i + 5;
 		CDimensionUtil::AddDimRotated(TopPoint, ptend, centerPoint,0, NULL);
 	}
+	
 	// 插入总长标注
-	double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
+	//double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
 	AcGePoint3d ptInsert(pnt);
 	ptInsert.y = pnt.y + m_StepData[0].m_diameter / 2.0;
 	
@@ -208,6 +215,15 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	AcGePoint3d centerPoint = CMathUtil::GetMidPoint(ptInsert, lastPoint);
 	centerPoint.y = centerPoint.y + 30;
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
+
+	//插入Lf标注
+	lastPoint = pnt;
+	lastPoint.y = pnt.y + m_StepData[m_DjLabberCount - 1].m_diameter / 2.0;
+	lastPoint.x = pnt.x - m_StepData[m_StepData.size() - 2].m_stepLength - 20;
+	centerPoint =  CMathUtil::GetMidPoint(ptInsert, lastPoint);
+	centerPoint.y = centerPoint.y + 23;
+	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
+
 }
 //插入角度标注
 void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
@@ -217,17 +233,33 @@ void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
 	{
 		
 		double diff = (m_StepData[i].m_diameter - m_StepData[i - 1].m_diameter) / 2.0;
+
 		AcGePoint3d TopPoint1 = GetVertexPoint(pnt, i, TRUE);
 		AcGePoint3d TopPoint2(TopPoint1);
-		TopPoint2.y -= diff;
-		TopPoint2.x = TopPoint1.x +  diff / tan(CMathUtil::AngleToRadian(m_StepData[i].m_angle / 2.0));
+		/*TopPoint2.y -= diff;
+		TopPoint2.x = TopPoint1.x +  diff / tan(CMathUtil::AngleToRadian(m_StepData[i].m_angle / 2.0));*/
+		TopPoint2.x = pnt.x - m_StepData[i-1].m_stepLength;
+		TopPoint2.y = TopPoint2.y - diff;
 		AcGePoint3d BottomPoint1 = GetVertexPoint(pnt, i, FALSE);
 		AcGePoint3d BottomPoint2(BottomPoint1);
 		BottomPoint2.y += diff;
-		BottomPoint2.x = BottomPoint1.x +  diff / tan(CMathUtil::AngleToRadian(m_StepData[i].m_angle / 2.0));
+		BottomPoint2.x = pnt.x - m_StepData[i-1].m_stepLength;
+		/*BottomPoint2.x = BottomPoint1.x +  diff / tan(CMathUtil::AngleToRadian(m_StepData[i].m_angle / 2.0));*/
 		//计算插入标记位置
 		AcGePoint3d dimTextPosition = CMathUtil::GetMidPoint(TopPoint1, BottomPoint1);
 		dimTextPosition.x -= (10 * i);
 		CDimensionUtil::AddDim2LineAngular(TopPoint2, TopPoint1, BottomPoint2, BottomPoint1, dimTextPosition);
 	}
+}
+//如果刀柄直径小于刀身直径,则需要将刀的缺口补上
+void CZYDJData::Mending(AcGePoint3d const & pnt)
+{
+	//轮廓线为图层1
+	CLayerSwitch layer(L"1");
+	AcGePoint3d lastTopPoint(pnt);
+	lastTopPoint.x -= m_totalLength;
+	lastTopPoint.y =lastTopPoint.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
+	AcGePoint3d lastBottomPoint(lastTopPoint);
+	lastBottomPoint.y -= m_StepData[m_StepData.size() - 1].m_diameter;
+	CLineUtil::CreateLine(lastTopPoint, lastBottomPoint);
 }

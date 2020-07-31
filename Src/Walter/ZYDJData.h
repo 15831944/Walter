@@ -38,6 +38,8 @@ private:
 	void InsertLenDim(const AcGePoint3d& pnt);
 	//角度标注
 	void InsertAngleDim(const AcGePoint3d& pnt);
+	//补线
+	void Mending(AcGePoint3d const& pnt);
 private:
 	vector<ZYXDStepData> m_StepData;
 	

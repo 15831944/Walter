@@ -16,6 +16,7 @@ typedef struct  SPCDJDData
 	CString m_daoBing;//刀柄
 	int m_stepNum;//阶梯数量
 	std::vector<PCDJDStepData>  m_stepDatas;
+	//int Draw();
 	int Draw();
 	//获取刀尖顶点
 	AcGePoint3d GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int stepIndex);

@@ -20,15 +20,12 @@ CString TY_GetDaoBingSFolder();
 CString TY_GetDaoBingZyFolder();
 //得到图框存储路径
 CString TY_GetFrameFolder();
-
 CString TY_GetDllFilePathName();
 CString TY_GetHLRFilePathName();
 //根据刀柄名称获取刀柄长度
 double GetHandleLengthFromDaoBing(CString daoBingName);
 //获取文件夹下的所有dwg文件
 vector<CString> GetAllDwgFile(const CString& dirPath);
-
-
 bool TY_LoadTyTool();
 bool TY_FreeTyTool();
 int TY_SetProgress(int all, int cur);

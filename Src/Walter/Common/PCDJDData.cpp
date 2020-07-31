@@ -50,7 +50,7 @@ void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, stepIndex);
 	AcGePoint3d ptCenter(pnt);
 	CString temp;
-	temp.Format(L"%%%%C%.2f", m_stepDatas[stepIndex].m_stepLength);
+	temp.Format(L"%%%%C%.f", m_stepDatas[stepIndex].m_diameter);
 	//
 	ptCenter.x += 15 + stepIndex * 15;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
@@ -214,6 +214,303 @@ void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
 
 }
 
+//int SPCDJDData::Draw()
+//{
+//	//第一步：用户选择一个输入点
+//	AcGePoint3d pnt;
+//	CGetInputUtil::GetPoint(L"请选择一个插入点:", pnt);
+//	CDocLock lock;	//如果读取文件失败，可能是因为之前没有加锁
+//
+//	//插入对应的刀身
+//	CString daoShenFilePath = TY_GetDynamicBlockFolder();
+//	CString str;
+//	str.Format(L"%d", m_stepNum);
+//	daoShenFilePath.Append(L"PCD铰刀模板X" + str + L".dwg");
+//	/*CString blkName = CCommonUtil::GenStrByTime();
+//	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);*/
+//
+//	//插入对应的刀柄,并设置参数
+//	CString daoBingFilePath = TY_GetDaoBingFolder();
+//	daoBingFilePath.Append(m_daoBing + L".dwg");
+//	//获得上顶点的位置
+//	AcGePoint3d firstTopPoint = GetDaoJianPoint(pnt, true, 0);
+//	//距离要修改但是缺少一个参数len没有获取
+//	double distance = 0;
+//	double dis =   GetDisByDBName(m_daoBing);
+//	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x ;
+//	AcGePoint3d insertPiont(pnt.x+  MaxLLen, pnt.y, 0);
+//	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
+//
+//	//先插入刀柄，在插入刀身
+//	CString blkName = CCommonUtil::GenStrByTime();
+//	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, insertPiont, 0, 1); 
+//
+//	pnt = insertPiont;
+//	//Lf2
+//	double Lf2;
+//
+//	//刀片的半径和宽
+//	double radius = 0;
+//	double Height = 0;
+//
+//	switch (m_stepNum)
+//	{
+//	case 1:
+//	{
+//		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+//
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength - distance);
+//		
+//		CUpdateUtil::UpdateDisplay();
+//		vAcDbObjectId explodeIds;
+//		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
+//
+//		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+//		Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
+//
+//		vAcDbObjectId blkRefIds;
+//		CBlockUtil::CycleAllBlockReferences(blkRefIds);
+//		for (int i = 0; i < blkRefIds.size(); i++)
+//		{
+//			CString name;
+//			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
+//			if (name == L"刀尖_1_T")
+//			{
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//		}
+//
+//		InsertDDiamension(pnt, 0);
+//		//插入LF1
+//		InsertLf1Dimension(pnt, 0);
+//		//InsertOffsetDimension(pnt);
+//		//InsertSixtyDimension(pnt);
+//		break;
+//	}
+//	case 2:
+//	{
+//		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+//		
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
+//	
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[ 1].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength - distance);
+//
+//		CUpdateUtil::UpdateDisplay();
+//		vAcDbObjectId explodeIds;
+//		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
+//
+//		
+//		vAcDbObjectId blkRefIds;
+//		CBlockUtil::CycleAllBlockReferences(blkRefIds);
+//		for (int i = 0; i < blkRefIds.size(); i++)
+//		{
+//			CString name;
+//			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
+//			if (name == L"刀尖_1_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
+//
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//
+//			if (name == L"刀尖_2_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
+//
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//		}
+//
+//
+//		InsertDDiamension(pnt, 0);
+//		InsertDDiamension(pnt, 1);
+//
+//		InsertLDiamension(pnt, 1);
+//		//插入LF1
+//		InsertLf1Dimension(pnt, 1);
+//		//InsertOffsetDimension(pnt);
+//		//InsertSixtyDimension(pnt);
+//		break;
+//	}
+//	case 3:
+//	{
+//		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+//
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
+//
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[1].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
+//		
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength - distance);
+//
+//		CUpdateUtil::UpdateDisplay();
+//		vAcDbObjectId explodeIds;
+//		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
+//
+//
+//		vAcDbObjectId blkRefIds;
+//		CBlockUtil::CycleAllBlockReferences(blkRefIds);
+//		for (int i = 0; i < blkRefIds.size(); i++)
+//		{
+//			CString name;
+//			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
+//			if (name == L"刀尖_1_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
+//
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//
+//			if (name == L"刀尖_2_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
+//
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//
+//			if (name == L"刀尖_3_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
+//
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//		}
+//
+//		
+//		InsertDDiamension(pnt, 0);
+//		InsertDDiamension(pnt, 1);
+//		InsertDDiamension(pnt, 2 );
+//		InsertLDiamension(pnt, 1);
+//		InsertLDiamension(pnt, 2);
+//		//插入LF1
+//		InsertLf1Dimension(pnt, 2);
+//		//InsertOffsetDimension(pnt);
+//		//InsertSixtyDimension(pnt);
+//		break;
+//	}
+//	case 4:
+//	{
+//		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+//
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
+//		
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[1].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
+//
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength);
+//		
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D4", m_stepDatas[3].m_diameter);
+//		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L4", m_stepDatas[3].m_stepLength - distance);
+//		
+//	
+//		
+//		CUpdateUtil::UpdateDisplay();
+//		vAcDbObjectId explodeIds;
+//		CEntityUtil::ExplodeAndAppend(daoShenID,explodeIds);
+//
+//		vAcDbObjectId blkRefIds;
+//		CBlockUtil::CycleAllBlockReferences(blkRefIds);
+//		for (int i = 0; i < blkRefIds.size(); i++)
+//		{
+//			CString name;
+//			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
+//			if (name == L"刀尖_1_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
+//				
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//
+//			if (name == L"刀尖_2_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
+//				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[1].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//
+//			if (name == L"刀尖_3_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
+//				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[2].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//
+//			if (name == L"刀尖_4_T")
+//			{
+//				radius = GetRadiusByDiameter(m_stepDatas[3].m_diameter);
+//				Height = GetHeightByDiameter(m_stepDatas[3].m_diameter);
+//				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[3].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[3].m_angle);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
+//				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
+//			}
+//		}
+//		InsertDDiamension(pnt, 0);
+//		InsertDDiamension(pnt, 1);
+//		InsertDDiamension(pnt, 2);
+//		InsertDDiamension(pnt, 3);
+//		InsertLDiamension(pnt, 1);
+//		InsertLDiamension(pnt, 2);
+//		InsertLDiamension(pnt, 3);
+//		InsertLf1Dimension(pnt, 3);
+//		//InsertOffsetDimension(pnt);
+//		//InsertSixtyDimension(pnt);
+//		break;
+//	}
+//	default:
+//		break;
+//	}
+//	//插入角度标注
+//	InsertAngleDimension(pnt);
+//	//插入其他标注
+//	//InsertOtherDimension(pnt);
+//
+//	vAcDbObjectId dynamicDimsids;
+//	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_DYNAMIC_DIMENTION, dynamicDimsids);
+//	for (int i = 0; i < dynamicDimsids.size(); i++)
+//	{
+//		CEntityUtil::DeleteObject(dynamicDimsids[i]);
+//	}
+//	return 0;
+//}
+
 int SPCDJDData::Draw()
 {
 	//第一步：用户选择一个输入点
@@ -221,7 +518,7 @@ int SPCDJDData::Draw()
 	CGetInputUtil::GetPoint(L"请选择一个插入点:", pnt);
 	CDocLock lock;	//如果读取文件失败，可能是因为之前没有加锁
 
-	//插入对应的刀身
+					//插入对应的刀身
 	CString daoShenFilePath = TY_GetDynamicBlockFolder();
 	CString str;
 	str.Format(L"%d", m_stepNum);
@@ -236,14 +533,14 @@ int SPCDJDData::Draw()
 	AcGePoint3d firstTopPoint = GetDaoJianPoint(pnt, true, 0);
 	//距离要修改但是缺少一个参数len没有获取
 	double distance = 0;
-	double dis =   GetDisByDBName(m_daoBing);
-	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x ;
-	AcGePoint3d insertPiont(pnt.x+  MaxLLen, pnt.y, 0);
+	double dis = GetDisByDBName(m_daoBing);
+	double MaxLLen = m_stepDatas[m_stepDatas.size() - 1].m_stepLength + pnt.x - firstTopPoint.x;
+	AcGePoint3d insertPiont(pnt.x + MaxLLen, pnt.y, 0);
 	CBlockUtil::InsertDwgAsBlockRef(daoBingFilePath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 
 	//先插入刀柄，在插入刀身
 	CString blkName = CCommonUtil::GenStrByTime();
-	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, insertPiont, 0, 1); 
+	AcDbObjectId daoShenID = CBlockUtil::InsertDwgAsBlockRef(daoShenFilePath, blkName, ACDB_MODEL_SPACE, insertPiont, 0, 1);
 
 	pnt = insertPiont;
 	//Lf2
@@ -253,262 +550,52 @@ int SPCDJDData::Draw()
 	double radius = 0;
 	double Height = 0;
 
-	switch (m_stepNum)
-	{
-	case 1:
-	{
-		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength - distance);
-		
-		CUpdateUtil::UpdateDisplay();
-		vAcDbObjectId explodeIds;
-		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
-
-		radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-		Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
-
-		vAcDbObjectId blkRefIds;
-		CBlockUtil::CycleAllBlockReferences(blkRefIds);
-		for (int i = 0; i < blkRefIds.size(); i++)
-		{
-			CString name;
-			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
-			if (name == L"刀尖_1_T")
-			{
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-		}
-
-		InsertDDiamension(pnt, 0);
-		//插入LF1
-		InsertLf1Dimension(pnt, 0);
-		//InsertOffsetDimension(pnt);
-		//InsertSixtyDimension(pnt);
-		break;
-	}
-	case 2:
-	{
-		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
-		
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
 	
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[ 1].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength - distance);
+	Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
+	CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
 
-		CUpdateUtil::UpdateDisplay();
-		vAcDbObjectId explodeIds;
-		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
-
-		
-		vAcDbObjectId blkRefIds;
-		CBlockUtil::CycleAllBlockReferences(blkRefIds);
-		for (int i = 0; i < blkRefIds.size(); i++)
-		{
-			CString name;
-			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
-			if (name == L"刀尖_1_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
-
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-
-			if (name == L"刀尖_2_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
-
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-		}
-
-
-		InsertDDiamension(pnt, 0);
-		InsertDDiamension(pnt, 1);
-
-		InsertLDiamension(pnt, 1);
-		//插入LF1
-		InsertLf1Dimension(pnt, 1);
-		//InsertOffsetDimension(pnt);
-		//InsertSixtyDimension(pnt);
-		break;
-	}
-	case 3:
+	for (size_t i = 0; i< m_stepDatas.size();++i)
 	{
-		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[1].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
-		
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength - distance);
-
-		CUpdateUtil::UpdateDisplay();
-		vAcDbObjectId explodeIds;
-		CEntityUtil::ExplodeAndAppend(daoShenID, explodeIds);
-
-
-		vAcDbObjectId blkRefIds;
-		CBlockUtil::CycleAllBlockReferences(blkRefIds);
-		for (int i = 0; i < blkRefIds.size(); i++)
-		{
-			CString name;
-			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
-			if (name == L"刀尖_1_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
-
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-
-			if (name == L"刀尖_2_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
-
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-
-			if (name == L"刀尖_3_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
-
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-		}
-
-		
-		InsertDDiamension(pnt, 0);
-		InsertDDiamension(pnt, 1);
-		InsertDDiamension(pnt, 2 );
-		InsertLDiamension(pnt, 1);
-		InsertLDiamension(pnt, 2);
-		//插入LF1
-		InsertLf1Dimension(pnt, 2);
-		//InsertOffsetDimension(pnt);
-		//InsertSixtyDimension(pnt);
-		break;
+		CString temp;
+		temp.Format(L"D%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_diameter);
+		temp.Format(L"L%d", i + 1);
+		if (i == m_stepDatas.size() - 1)
+			CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_stepLength - dis);
+		else
+			CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_stepLength);
+			
 	}
-	case 4:
+
+	for (size_t i = 0; i < m_stepDatas.size() ; i++)
 	{
-		Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+		CString temp;
+		radius = GetRadiusByDiameter(m_stepDatas[i].m_diameter);
+		Height = GetHeightByDiameter(m_stepDatas[i].m_diameter);
+		temp.Format(L"An%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_angle);
+		temp.Format(L"R%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID,temp, radius);
+		temp.Format(L"yLen%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, Height);
 
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D1", m_stepDatas[0].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L1", m_stepDatas[0].m_stepLength);
-		
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D2", m_stepDatas[1].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L2", m_stepDatas[1].m_stepLength);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D3", m_stepDatas[2].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L3", m_stepDatas[2].m_stepLength);
-		
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"D4", m_stepDatas[3].m_diameter);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"L4", m_stepDatas[3].m_stepLength - distance);
-		
-	
-		
-		CUpdateUtil::UpdateDisplay();
-		vAcDbObjectId explodeIds;
-		CEntityUtil::ExplodeAndAppend(daoShenID,explodeIds);
-
-		vAcDbObjectId blkRefIds;
-		CBlockUtil::CycleAllBlockReferences(blkRefIds);
-		for (int i = 0; i < blkRefIds.size(); i++)
-		{
-			CString name;
-			CDynamicBlockUtil::GetDynamicBlockName(blkRefIds[i], name);
-			if (name == L"刀尖_1_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[0].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[0].m_diameter);
-				
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[0].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-
-			if (name == L"刀尖_2_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[1].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[1].m_diameter);
-				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[1].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[1].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-
-			if (name == L"刀尖_3_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[2].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[2].m_diameter);
-				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[2].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[2].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-
-			if (name == L"刀尖_4_T")
-			{
-				radius = GetRadiusByDiameter(m_stepDatas[3].m_diameter);
-				Height = GetHeightByDiameter(m_stepDatas[3].m_diameter);
-				//CDynamicBlockUtil::SetDynamicValueInDynamicBlock(blkName, name, L"An", m_stepDatas[3].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"An", m_stepDatas[3].m_angle);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"R", radius);
-				CDynamicBlockUtil::SetDynamicBlockValue(blkRefIds[i], L"yLen", Height);
-			}
-		}
-		InsertDDiamension(pnt, 0);
-		InsertDDiamension(pnt, 1);
-		InsertDDiamension(pnt, 2);
-		InsertDDiamension(pnt, 3);
-		InsertLDiamension(pnt, 1);
-		InsertLDiamension(pnt, 2);
-		InsertLDiamension(pnt, 3);
-		InsertLf1Dimension(pnt, 3);
-		//InsertOffsetDimension(pnt);
-		//InsertSixtyDimension(pnt);
-		break;
+		//直径标准
+		InsertDDiamension(pnt, i);
+		//长度标注
+		InsertLDiamension(pnt, i);
 	}
-	default:
-		break;
-	}
+	InsertLf1Dimension(pnt, m_stepDatas.size() - 1);
 	//插入角度标注
 	InsertAngleDimension(pnt);
 	//插入其他标注
 	//InsertOtherDimension(pnt);
 
-	vAcDbObjectId dynamicDimsids;
+	/*vAcDbObjectId dynamicDimsids;
 	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_DYNAMIC_DIMENTION, dynamicDimsids);
 	for (int i = 0; i < dynamicDimsids.size(); i++)
 	{
 		CEntityUtil::DeleteObject(dynamicDimsids[i]);
-	}
-	CViewUtil::ZoomExtent();
+	}*/
 	return 0;
 }
 

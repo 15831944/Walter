@@ -55,7 +55,8 @@ CString TY_GetDwgFolder()
 #ifdef DEV_TEST_ENV
 	return TY_GetAppPath() + "\\Support\\Walter\\DaoJuXingHao\\";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+	//return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\dwg\\";
+	return L"G:\\Departments\\TTB\\dwg\\";
 #endif // DEV_TEST_ENV
 }
 

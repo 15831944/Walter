@@ -93,12 +93,22 @@ void CMD_ZCDJ()
 	gZcDjDlg->Create(IDD_DIALOG_DCD);
 	gZcDjDlg->ShowWindow(SW_SHOW);
 }
-//ÕûÓ²Ï³µ¶
+//ÕûÓ²À©¿×µ¶
 CDlgZyJd *gZyXd = NULL;
-void CMD_ZYXD()
+void CMD_ZYKKD()
 {
 	CAcModuleResourceOverride resOverride;
 	gZyXd = new CDlgZyJd(acedGetAcadFrame());
+	gZyXd->SetKnifeClass(true);
+	gZyXd->Create(IDD_DIALOG_PCD_XD);
+	gZyXd->ShowWindow(SW_SHOW);
+}
+//ÕûÓ²Ï³µ¶
+void CMD_ZYJD()
+{
+	CAcModuleResourceOverride resOverride;
+	gZyXd = new CDlgZyJd(acedGetAcadFrame());
+	gZyXd->SetKnifeClass(false);
 	gZyXd->Create(IDD_DIALOG_PCD_XD);
 	gZyXd->ShowWindow(SW_SHOW);
 }
@@ -309,10 +319,19 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("ZYDJ"),
-		_T("ZYDJ"),
+		_T("ZYKKD"),
+		_T("ZYKKD"),
 		ACRX_CMD_MODAL,
-		CMD_ZYXD,
+		CMD_ZYKKD,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("ZYJD"),
+		_T("ZYJD"),
+		ACRX_CMD_MODAL,
+		CMD_ZYJD,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -415,7 +434,7 @@ void menu()
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&PCD½Âµ¶Éè¼Æ"), _T("PCDJD1 "));
+		IPopUpMenu.AddMenuItem(index, _T("&PCD½Âµ¶/º¸Ó²ÖÊºÏ½ðµ¶"), _T("PCDJD1 "));
 
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
@@ -430,7 +449,12 @@ void menu()
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²µ¶¾ß"), _T("ZYDJ "));
+		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²À©¿×µ¶"), _T("ZYKKD "));
+
+		VariantInit(&index);
+		V_VT(&index) = VT_I4;
+		V_I4(&index) = MenuIndex++;
+		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²½Âµ¶"), _T("ZYJD "));
 
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;

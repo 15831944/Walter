@@ -42,6 +42,19 @@ void CDlgTuKuang::Init()
 	m_proportion.AddString(L"2:1");
 	m_proportion.AddString(L"2:3");
 	m_proportion.SetCurSel(defaultIndex);
+
+	//刀具类别
+	m_KnifeClassSel.AddString(L"整硬钻头");
+	m_KnifeClassSel.AddString(L"整硬铰刀");
+	m_KnifeClassSel.AddString(L"整硬铣刀");
+	m_KnifeClassSel.AddString(L"丝锥");
+	m_KnifeClassSel.AddString(L"整硬扩孔刀");
+	m_KnifeClassSel.AddString(L"焊接硬质合金扩孔刀");
+	m_KnifeClassSel.AddString(L"PCD钻头");
+	m_KnifeClassSel.AddString(L"PCD铰刀");
+	m_KnifeClassSel.AddString(L"PCD铣刀");
+	m_KnifeClassSel.AddString(L"可换刀片镗刀");
+	m_KnifeClassSel.SetCurSel(defaultIndex);
 }
 
 void CDlgTuKuang::DoDataExchange(CDataExchange* pDX)
@@ -101,6 +114,10 @@ void CDlgTuKuang::OnBnClickedButton1()
 			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1.5);
 		//设置属性定义
 		//类别
+		int index = m_KnifeClassSel.GetCurSel();
+		CString temp;
+		m_KnifeClassSel.GetLBText(index, temp);
+		CBlockUtil::SetBlockRefAttribute(tukuangId, L"!ALT_WZG_BEZ4", temp);
 		//SAP号
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"MAT_BEZ", m_SapNum);
 		//时间

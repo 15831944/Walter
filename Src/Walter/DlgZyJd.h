@@ -16,7 +16,7 @@ public:
 	
 	virtual ~CDlgZyJd();
 
-
+	void SetKnifeClass(bool iskkd) { m_isKKd = iskkd; }
 //初始化参数
 private:
 	void InitDefaultPara();
@@ -26,6 +26,9 @@ private:
 	void SetGridData();
 	MultiRowText GetGridData();
 	void ReloadGridData();
+
+	//重新加载示意图
+	void ReloadPic();
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_DIALOG_PCD_XD };
@@ -48,7 +51,8 @@ public:
 
 	//数据填充
 	CZYDJData m_ZyDjData;
-	CComboBox m_SelKnifeClass;
-	afx_msg void OnCbnSelchangeCombo3();
+
 	double m_totalLength;
+	//判断是整硬铣刀还是扩孔刀
+	bool m_isKKd;
 };

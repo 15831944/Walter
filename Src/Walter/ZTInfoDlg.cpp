@@ -62,13 +62,20 @@ void CZTInfoDlg::InitDefaultPara()
 	UpdateData(TRUE);
 	int defaultIndex = 0;
 
+
+
 	//顶角
 	m_VertAngle = 140.0;
 	//temp.Format(L"%.1f", m_VertAngle);
-
+	m_DrillSel.AddString(L"麻花钻");
+	m_DrillSel.AddString(L"直槽钻");
+	m_DrillSel.SetCurSel(defaultIndex);
 	//m_VertexEdit.SetWindowTextW(temp);
+	m_ui_DrNumCtrl.AddString(L"2");
+	m_ui_DrNumCtrl.AddString(L"3");
+	m_ui_DrNumCtrl.SetCurSel(defaultIndex);
 	//总长
-	m_TotalLength = 160.0;
+	m_TotalLength = 180.0;
 	//temp.Format(L"%.1f", m_TotalLength);
 	//m_TotalLenEdit.SetWindowTextW(temp);
 
@@ -235,6 +242,7 @@ void CZTInfoDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_VERTEX_ANGLE, m_VertAngle);
 	DDX_CBString(pDX, IDC_COMBO1_DJ, m_daobing);
 	DDX_Control(pDX, IDC_COMBO1_DJ, m_DaoBingCtrl);
+	DDX_Control(pDX, IDC_COMBO1, m_DrillSel);
 }
 
 LRESULT CZTInfoDlg::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -279,10 +287,13 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	//顶角
 	m_data.m_topAngle = m_VertAngle;
 	//总长
-	m_data.m_totalLength = m_TotalLength;
+	double dis = GetHandleLengthFromDaoBing(m_daobing);
+	m_data.m_totalLength = m_TotalLength - dis;
 	//刃数
 	int CurSel = m_ui_DrNumCtrl.GetCurSel();
-	
+	CString temp;
+	m_ui_DrNumCtrl.GetLBText(CurSel, temp);
+	m_data.m_cuttingEdgeCount = _ttoi(temp);
 	m_data.SetDaoBingName(m_daobing);
 
 	//隐藏窗口

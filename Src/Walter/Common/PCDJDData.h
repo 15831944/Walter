@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#define DIMSTYLENAME L"WALTER_1"
+
 //pcd铰刀阶梯数据
 typedef struct PCDJDStepData
 {
@@ -33,6 +33,7 @@ typedef struct  SPCDJDData
 	//void InsertSixtyDimension(const AcGePoint3d& pnt);
 	//插入其他标注
 	void InsertOtherDimension(const AcGePoint3d& pnt);
-	
+	//补线
+	void Mending(AcGePoint3d const& pnt);
 }SPCDJDData;
 

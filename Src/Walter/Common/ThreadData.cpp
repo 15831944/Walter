@@ -610,6 +610,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	vSDXY dxys;
 	//这里计算出来的len已经不用了 后面进行了重新计算
 	int ret = ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_handleLength - m_guoDuDaiX, dxys);
+
 	if(ret != 0)
 	{
 		acutPrintf(L"ConvertToDxy参数错误\n");
@@ -775,11 +776,11 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 #ifndef AHNO_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
-
+	
 	//第五步：创建中心线
 	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0),1);
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
-
+	
 	//第六步：创建标注
 	CreateDims(offsetXY,AcGePoint3d(0,0,0));
 
@@ -1965,8 +1966,8 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 
 int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 {
-	//
-	CLayerSwitch layer(L"2");
+	//标注图层
+	CLayerSwitch layer(DIMLAYERNAME);
 	//
 	int size = m_cutterSegs.size();
 	if (size == 0)
@@ -2069,7 +2070,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			    rePlaceText.Format(L"%%%%C%.3f{\\H0.7x;\\S+%.3f^+%.3f;}",m_cutterSegs[i].m_diameter, m_cutterSegs[i].m_topGongCha,m_cutterSegs[i].m_lowGongCha);
 		}
 		CString temp;
-		temp.Format(L"%%%%C%.1f", m_cutterSegs[i].m_diameter);
+		temp.Format(L"%%%%C%.f", m_cutterSegs[i].m_diameter);
 		//直径标注解决
 		CDimensionUtil::AddDimAligned(start, end, dim,temp);
 

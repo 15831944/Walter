@@ -37,37 +37,35 @@ void CDlgZyJd::InitDefaultPara()
 	m_totalLength = 113.0f;
 	//默认为3
 	int defaultSel = 3;
-	m_ui_LabberCtrl.AddString(L"1");
+	/*m_ui_LabberCtrl.AddString(L"1");
 	m_ui_LabberCtrl.AddString(L"2");
 	m_ui_LabberCtrl.AddString(L"3");
-	m_ui_LabberCtrl.AddString(L"4");
-	m_ui_LabberCtrl.SetCurSel(defaultSel);
-
-	//刀柄
-	//m_ui_DbCtrl.AddString(L"Z03");
-	//m_ui_DbCtrl.AddString(L"Z06");
-	//m_ui_DbCtrl.AddString(L"Z08");
-	//m_ui_DbCtrl.AddString(L"Z10");
-	//m_ui_DbCtrl.AddString(L"Z12");
-	//m_ui_DbCtrl.AddString(L"Z16");
-	//m_ui_DbCtrl.AddString(L"Z18");
-	//m_ui_DbCtrl.AddString(L"Z20");
-	//m_ui_DbCtrl.AddString(L"Z25");
-	//m_ui_DbCtrl.AddString(L"Z32");
-	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingZyFolder());
-	for (int i = 0; i < dwgfiles.size(); i++)
+	m_ui_LabberCtrl.AddString(L"4");*/
+	auto addlaber = [&]() {for (int i=1;i <= 4;i++)
 	{
-		m_ui_DbCtrl.AddString(dwgfiles[i]);
+		CString temp;
+		temp.Format(L"%d", i);
+		m_ui_LabberCtrl.AddString(temp);
+	}
+	};
+	addlaber();
+	m_ui_LabberCtrl.SetCurSel(defaultSel);
+	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingZyFolder());
+	for (auto dwg : dwgfiles)
+	{
+		m_ui_DbCtrl.AddString(dwg);
 	}
 
 	m_ui_DbCtrl.SetCurSel(0);
 	//刀具设置
-	m_SelKnifeClass.AddString(L"整硬铰刀");
-	m_SelKnifeClass.AddString(L"整硬扩孔刀");
-	m_SelKnifeClass.SetCurSel(1);
-	m_ZyDjData.SetKKD(true);
+	if (!m_isKKd) {
+		ReloadPic();
+		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_HIDE);
+		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_HIDE);
+		this->SetWindowText(L"整硬铰刀");
+	}
+	m_ZyDjData.SetKKD(m_isKKd);
 	//总长
-
 	UpdateData(FALSE);
 }
 
@@ -236,6 +234,15 @@ void CDlgZyJd::ReloadGridData()
 	m_XdLabberDataCtrl.FillTable(m_allrowData);
 }
 
+//更换示意图
+void CDlgZyJd::ReloadPic()
+{
+	CStatic *pStatic = (CStatic*)GetDlgItem(IDC_STATIC_ZY);
+	CBitmap cbitmap;
+	cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP7));
+	pStatic->SetBitmap(cbitmap);
+}
+
 MultiRowText CDlgZyJd::GetGridData()
 {
 	
@@ -259,7 +266,6 @@ void CDlgZyJd::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO2, m_ui_LabberCtrl);
 	DDX_Control(pDX, IDC_CUSTOM1_XD, m_XdLabberDataCtrl);
 	DDX_Text(pDX, IDC_KKD_DIA, m_diameter);
-	DDX_Control(pDX, IDC_COMBO3, m_SelKnifeClass);
 	DDX_Text(pDX, IDC_EDIT2, m_totalLength);
 }
 
@@ -273,7 +279,6 @@ BEGIN_MESSAGE_MAP(CDlgZyJd, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, &CDlgZyJd::OnAcadKeepFocus)
 	ON_CBN_SELCHANGE(IDC_COMBO2, &CDlgZyJd::OnCbnSelchangeCombo2)
 	ON_BN_CLICKED(IDC_BUTTON1, &CDlgZyJd::OnBnClickedButton1)
-	ON_CBN_SELCHANGE(IDC_COMBO3, &CDlgZyJd::OnCbnSelchangeCombo3)
 END_MESSAGE_MAP()
 
 
@@ -317,51 +322,9 @@ void CDlgZyJd::OnBnClickedButton1()
 	m_ZyDjData.SetStepData(allStepData);
 	ShowWindow(SW_HIDE);
 	//扩孔刀则需设置预孔直径
-	if (m_diameter == 0 && m_ZyDjData.GetIsKKD())
-	{
-		MessageBox(L"预孔直径不能为0");
-	}
-	else
-	{
+	if (m_isKKd)
 		m_ZyDjData.SetPreDiameter(m_diameter);
-		//插入图纸
-		m_ZyDjData.Draw();
-	}
+	//插入图纸
+	m_ZyDjData.Draw();
 	CDialogEx::OnOK();
-}
-
-
-
-void CDlgZyJd::OnCbnSelchangeCombo3()
-{
-	UpdateData(TRUE);
-	// TODO: 在此添加控件通知处理程序代码
-	int selectIndex = m_SelKnifeClass.GetCurSel();
-	CString knifeClass;
-	m_SelKnifeClass.GetLBText(selectIndex, knifeClass);
-	//实现图片的切换
-	CStatic* pstatic;
-	CBitmap cbitMap;
-	pstatic = (CStatic*)GetDlgItem(IDC_STATIC_ZY);
-	pstatic->ModifyStyle(0xF, SS_BITMAP | SS_CENTERIMAGE);
-	if (knifeClass.Compare(L"整硬扩孔刀") == 0)
-	{
-		m_ZyDjData.SetKKD(true);
-		((CStatic*)GetDlgItem(IDC_KKD_PAR))->ShowWindow(SW_SHOW);
-		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_SHOW);
-		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_SHOW);
-		cbitMap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP8));
-
-	}
-	else
-	{
-		m_ZyDjData.SetKKD(false);
-		//将预孔直径参数隐藏
-		((CStatic*)GetDlgItem(IDC_KKD_PAR))->ShowWindow(SW_HIDE);
-		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_HIDE);
-		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_HIDE);
-		cbitMap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP7));
-	}
-	pstatic->SetBitmap(cbitMap);
-	UpdateData(FALSE);
 }

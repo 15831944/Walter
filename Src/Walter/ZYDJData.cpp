@@ -88,7 +88,7 @@ void CZYDJData::Draw()
 
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L2", m_StepData[1].m_stepLength);
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A2", m_StepData[1].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D3", m_StepData[1].m_diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D2", m_StepData[1].m_diameter);
 
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L3", m_StepData[2].m_stepLength);
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A3", m_StepData[2].m_angle);
@@ -161,7 +161,7 @@ AcGePoint3d CZYDJData::GetVertexPoint(const AcGePoint3d & pnt,int index,bool isT
 //插入预孔直径标注
 void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	AcGePoint3d pt1(pnt);
 	pt1.y = pnt.y + m_Prediameter / 2.0;
 	AcGePoint3d pt2(pnt);
@@ -176,7 +176,7 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 //插入直径标注
 void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	for (size_t i = 0; i < m_DjLabberCount; i++)
 	{
 		AcGePoint3d TopPoint = GetVertexPoint(pnt, i, TRUE);
@@ -191,7 +191,7 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 //插入长度标注
 void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	for (size_t i = 0; i < m_DjLabberCount-1; i++)
 	{
 		AcGePoint3d TopPoint;
@@ -218,7 +218,7 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 
 	//插入Lf标注
 	lastPoint = pnt;
-	lastPoint.y = pnt.y + m_StepData[m_DjLabberCount - 1].m_diameter / 2.0;
+	lastPoint.y = pnt.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
 	lastPoint.x = pnt.x - m_StepData[m_StepData.size() - 2].m_stepLength - 20;
 	centerPoint =  CMathUtil::GetMidPoint(ptInsert, lastPoint);
 	centerPoint.y = centerPoint.y + 23;
@@ -228,7 +228,7 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 //插入角度标注
 void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	for (size_t i = 1; i < m_DjLabberCount; i++)
 	{
 		

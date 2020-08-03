@@ -16,13 +16,23 @@ AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int 
 	}
 
 	double width = GetHeightByDiameter(m_stepDatas[0].m_diameter);
-	double lenx2 = width / tan(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
-	double lenx1 = 0.5 / sin(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
-	double firstOffsetX = lenx2 - lenx1;
-
+	double firstOffsetX = 0;
 	AcGePoint3d firstTopPoint = pnt;
-	firstTopPoint.x -= firstOffsetX;
+	if (m_stepDatas[0].m_angle != 90) {
+		double lenx2 = width / tan(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
+		double lenx1 = 0.5 / sin(CMathUtil::AngleToRadian(m_stepDatas[0].m_angle));
+		firstOffsetX = lenx2 - lenx1;
+		firstTopPoint.x -= firstOffsetX;
+		
+	}
+	else
+	{
+		firstOffsetX = 0.5;
+		firstTopPoint.x += firstOffsetX;
+	}
+
 	firstTopPoint.y += m_stepDatas[0].m_diameter / 2;
+	
 
 	if (stepIndex == 0)
 	{
@@ -45,7 +55,7 @@ AcGePoint3d SPCDJDData::GetDaoJianPoint(const AcGePoint3d& pnt, bool isTop, int 
 //出入直径标注
 void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
 	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, stepIndex);
 	AcGePoint3d ptCenter(pnt);
@@ -59,7 +69,7 @@ void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 //插入L标注
 void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	if (stepIndex == 0)
 	{
 		return;
@@ -78,7 +88,7 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 //插入Lf1标注
 void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	double len = GetDisByDBName(m_daoBing);
 	//插入Lf1标注
 	AcGePoint3d LfDstart = GetDaoJianPoint(pnt, true, 0);
@@ -140,16 +150,17 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 //插入主偏角度标注
 void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 	for (int stepIndex = 0;stepIndex < m_stepNum;stepIndex++)
 	{
 		//角的顶点
 		AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
 		double y = GetHeightByDiameter(m_stepDatas[stepIndex].m_diameter);
-		double x = y / tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle));
+		double x = m_stepDatas[stepIndex].m_angle != 90 ? y / tan(CMathUtil::AngleToRadian(m_stepDatas[stepIndex].m_angle)) : 0;
 		//构成角的射线中两点
-		AcGePoint3d ptEnd1(ptTop.x + x, ptTop.y, 0);
+		AcGePoint3d ptEnd1(ptTop.x + 5, ptTop.y, 0);
 		AcGePoint3d ptEnd2(ptTop.x + x, ptTop.y - y, 0);
+		
 		//标注点
 		AcGePoint3d center(0, 0, 0);
 		center.x = ptEnd1.x + 10;
@@ -179,7 +190,7 @@ void SPCDJDData::InsertAngleDimension(const AcGePoint3d & pnt)
 
 void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
 {
-	CLayerSwitch layer(L"2");
+	CLayerSwitch layer(DIMLAYERNAME);
 
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	//刀宽标注 默认为7.0
@@ -212,6 +223,17 @@ void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
 		ptVertex, AcGePoint3d(ptVertex.x - x, ptVertex.y + y, ptVertex.z),
 		AcGePoint3d(ptVertex.x - x,ptVertex.y + y / 2.0,ptVertex.z), NULL, dimStyleId);
 
+}
+
+void SPCDJDData::Mending(AcGePoint3d const & pnt)
+{
+	CLayerSwitch layer(L"1");
+	AcGePoint3d lastTopPoint(pnt);
+	lastTopPoint.x -= m_stepDatas[m_stepDatas.size() - 1].m_stepLength;
+	lastTopPoint.y = lastTopPoint.y + m_stepDatas[m_stepDatas.size() - 1].m_diameter / 2.0 - 0.5;
+	AcGePoint3d lastBottomPoint(lastTopPoint);
+	lastBottomPoint.y = lastBottomPoint.y - m_stepDatas[m_stepDatas.size() - 1].m_diameter + 0.5;
+	CLineUtil::CreateLine(lastTopPoint, lastBottomPoint);
 }
 
 //int SPCDJDData::Draw()
@@ -589,7 +611,7 @@ int SPCDJDData::Draw()
 	InsertAngleDimension(pnt);
 	//插入其他标注
 	//InsertOtherDimension(pnt);
-
+	Mending(pnt);
 	/*vAcDbObjectId dynamicDimsids;
 	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_DYNAMIC_DIMENTION, dynamicDimsids);
 	for (int i = 0; i < dynamicDimsids.size(); i++)

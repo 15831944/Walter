@@ -219,7 +219,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"30");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -231,7 +231,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"30");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 
@@ -242,7 +242,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"60");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -254,7 +254,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"30");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 
@@ -265,7 +265,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"60");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 
@@ -276,7 +276,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"90");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -288,7 +288,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"30");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 
@@ -299,7 +299,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"60");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 
@@ -310,7 +310,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"90");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 
@@ -321,7 +321,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"120");
 		defaultText.push_back(str);
-		str.Format(L"75");
+		str.Format(L"90");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;

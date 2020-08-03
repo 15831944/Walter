@@ -17,6 +17,7 @@
 #define IDB_BITMAP6                     158
 #define IDD_DIALOG_TUKUANG              159
 #define IDD_DIALOG_PCD_XD               161
+#define IDD_DIALOG_ZYKKD                161
 #define IDB_BITMAP7                     165
 #define IDB_BITMAP8                     166
 #define IDC_EDIT_XPT                    1000

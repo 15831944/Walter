@@ -4,6 +4,7 @@
 #include "res/resource.h"
 #include "afxwin.h"
 #include "ThreadData.h"
+
 typedef vector<CString>	OneRowData;
 typedef vector<OneRowData> MultiRowData;
 // CZTInfoDlg ¶Ô»°¿ò
@@ -54,4 +55,5 @@ public:
 	CString m_daobing;
 	CComboBox m_DaoBingCtrl;
 
+	CComboBox m_DrillSel;
 };

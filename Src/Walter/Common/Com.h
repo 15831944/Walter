@@ -3,7 +3,8 @@
 
 #define DEV_TEST_ENV//开发测试环境
 enum TUKuangType{A1 = 0, A2, A3};
-
+#define DIMLAYERNAME L"2" //标注所在图层
+#define DIMSTYLENAME L"WALTER_1"
 CString TY_GetAppPath();
 //根据刀柄名称获取distance
 double GetDisByDBName(CString name);

@@ -441,11 +441,11 @@ void menu()
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&钻头设计"), _T("CWDR "));
 
-		VariantInit(&index);
+		/*VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&直槽刀具"), _T("ZCDJ "));
-
+*/
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;

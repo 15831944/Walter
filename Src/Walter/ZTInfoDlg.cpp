@@ -291,6 +291,7 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	m_data.m_topAngle = m_VertAngle;
 	//总长
 	double dis = GetHandleLengthFromDaoBing(m_daobing);
+	m_data.m_handleLength = 0;
 	m_data.m_totalLength = m_TotalLength - dis;
 	//刃数
 	int CurSel = m_ui_DrNumCtrl.GetCurSel();
@@ -301,7 +302,14 @@ void CZTInfoDlg::OnBnClickedBtnok()
 
 	//隐藏窗口
 	ShowWindow(SW_HIDE);
-	m_data.Draw(false);
+	int sel = m_DrillSel.GetCurSel();
+	m_DrillSel.GetLBText(sel, temp);
+	if (temp.Compare(L"麻花钻") == 0) {
+		m_data.Draw(false);
+	}
+	else {
+		m_data.Draw(true);
+	}
 	CDialogEx::OnOK();
 }
 
@@ -323,7 +331,7 @@ void CZTInfoDlg::OnCbnSelchangeCombo1()
 	}
 	else
 	{
-		cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP5));
+		cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP6));
 		pStatic->SetBitmap(cbitmap);
 	}
 	UpdateData(FALSE);

@@ -229,11 +229,17 @@ void SPCDJDData::InsertOtherDimension(const AcGePoint3d & pnt)
 void SPCDJDData::Mending(AcGePoint3d const & pnt)
 {
 	CLayerSwitch layer(L"1");
+	AcGePoint3d firstTopPoint = GetDaoJianPoint(pnt, true, 0);
 	AcGePoint3d lastTopPoint(pnt);
-	lastTopPoint.x -= m_stepDatas[m_stepDatas.size() - 1].m_stepLength;
-	lastTopPoint.y = lastTopPoint.y + m_stepDatas[m_stepDatas.size() - 1].m_diameter / 2.0 - 0.5;
+	double handleLen = GetDisByDBName(m_daoBing);
+	double dia = m_stepDatas[m_stepDatas.size() - 1].m_diameter - 1;
+
+	lastTopPoint.x = firstTopPoint.x - m_stepDatas[m_stepDatas.size() - 1].m_stepLength + handleLen;
+	lastTopPoint.y = lastTopPoint.y + dia / 2.0 ;
+
 	AcGePoint3d lastBottomPoint(lastTopPoint);
-	lastBottomPoint.y = lastBottomPoint.y - m_stepDatas[m_stepDatas.size() - 1].m_diameter + 0.5;
+	lastBottomPoint.y = lastBottomPoint.y - dia ;
+
 	CLineUtil::CreateLine(lastTopPoint, lastBottomPoint);
 }
 
@@ -576,7 +582,23 @@ int SPCDJDData::Draw()
 	
 	Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
 	CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+	for (size_t i = 0; i < m_stepDatas.size(); i++)
+	{
+		CString temp;
+		radius = GetRadiusByDiameter(m_stepDatas[i].m_diameter);
+		Height = GetHeightByDiameter(m_stepDatas[i].m_diameter);
+		temp.Format(L"An%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_angle);
+		temp.Format(L"R%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, radius);
+		temp.Format(L"yLen%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, Height);
 
+		//直径标准
+		InsertDDiamension(pnt, i);
+		//长度标注
+		InsertLDiamension(pnt, i);
+	}
 	for (size_t i = 0; i< m_stepDatas.size();++i)
 	{
 		CString temp;
@@ -590,26 +612,12 @@ int SPCDJDData::Draw()
 			
 	}
 
-	for (size_t i = 0; i < m_stepDatas.size() ; i++)
-	{
-		CString temp;
-		radius = GetRadiusByDiameter(m_stepDatas[i].m_diameter);
-		Height = GetHeightByDiameter(m_stepDatas[i].m_diameter);
-		temp.Format(L"An%d", i + 1);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_angle);
-		temp.Format(L"R%d", i + 1);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID,temp, radius);
-		temp.Format(L"yLen%d", i + 1);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, Height);
-
-		//直径标准
-		InsertDDiamension(pnt, i);
-		//长度标注
-		InsertLDiamension(pnt, i);
-	}
+	
 	InsertLf1Dimension(pnt, m_stepDatas.size() - 1);
 	//插入角度标注
 	InsertAngleDimension(pnt);
+	//添加补线
+	Mending(pnt);
 	//插入其他标注
 	//InsertOtherDimension(pnt);
 	/*vAcDbObjectId dynamicDimsids;

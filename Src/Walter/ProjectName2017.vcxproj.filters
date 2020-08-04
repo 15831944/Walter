@@ -285,5 +285,7 @@
     <Image Include="res\zykkd.bmp">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="mhz.bmp" />
+    <Image Include="res\mhz.bmp" />
   </ItemGroup>
 </Project>

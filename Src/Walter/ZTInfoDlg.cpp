@@ -24,6 +24,7 @@ CZTInfoDlg::~CZTInfoDlg()
 }
 BOOL CZTInfoDlg::OnInitDialog()
 {
+	
 	CDialogEx::OnInitDialog();
 	InitGridCtrl();
 	//设置默认数据
@@ -70,6 +71,7 @@ void CZTInfoDlg::InitDefaultPara()
 	m_DrillSel.AddString(L"麻花钻");
 	m_DrillSel.AddString(L"直槽钻");
 	m_DrillSel.SetCurSel(defaultIndex);
+	
 	//m_VertexEdit.SetWindowTextW(temp);
 	m_ui_DrNumCtrl.AddString(L"2");
 	m_ui_DrNumCtrl.AddString(L"3");
@@ -255,6 +257,7 @@ BEGIN_MESSAGE_MAP(CZTInfoDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, &CZTInfoDlg::OnAcadKeepFocus)
 	ON_CBN_SELCHANGE(IDC_COMBO_STEPNUM, &CZTInfoDlg::OnCbnSelchangeComboStepnum)
 	ON_BN_CLICKED(IDC_BTNOK, &CZTInfoDlg::OnBnClickedBtnok)
+	ON_CBN_SELCHANGE(IDC_COMBO1, &CZTInfoDlg::OnCbnSelchangeCombo1)
 END_MESSAGE_MAP()
 
 
@@ -302,3 +305,26 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	CDialogEx::OnOK();
 }
 
+
+
+void CZTInfoDlg::OnCbnSelchangeCombo1()
+{
+	UpdateData(TRUE);
+	int sel = m_DrillSel.GetCurSel();
+	CString temp;
+	m_DrillSel.GetLBText(sel, temp);
+	// TODO: 在此添加控件通知处理程序代码
+	CStatic *pStatic = (CStatic*)GetDlgItem(IDC_ZT_BMP);
+	CBitmap cbitmap;
+	if (temp.Compare(L"麻花钻") == 0) {
+		
+		cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP9));
+		pStatic->SetBitmap(cbitmap);
+	}
+	else
+	{
+		cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP5));
+		pStatic->SetBitmap(cbitmap);
+	}
+	UpdateData(FALSE);
+}

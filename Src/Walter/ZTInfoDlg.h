@@ -56,4 +56,5 @@ public:
 	CComboBox m_DaoBingCtrl;
 
 	CComboBox m_DrillSel;
+	afx_msg void OnCbnSelchangeCombo1();
 };

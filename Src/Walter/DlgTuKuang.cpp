@@ -124,7 +124,7 @@ void CDlgTuKuang::OnBnClickedButton1()
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"DWG_ERST_DATUM", m_designDate);
 		//设计人员
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"DWG_ERST_INIT", m_designer);
-		
+		//比例
 		CBlockUtil::SetBlockRefAttribute(tukuangId, L"MASSTAB", proportion);
 		
 

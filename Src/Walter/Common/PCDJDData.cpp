@@ -59,8 +59,9 @@ void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 	AcGePoint3d ptTop = GetDaoJianPoint(pnt, true, stepIndex);
 	AcGePoint3d ptBottom = GetDaoJianPoint(pnt, false, stepIndex);
 	AcGePoint3d ptCenter(pnt);
+	
 	CString temp;
-	temp.Format(L"%%%%C%.f", m_stepDatas[stepIndex].m_diameter);
+	temp.Format(L"%%%%C%s", removeLastZero(m_stepDatas[stepIndex].m_diameter));
 	//
 	ptCenter.x += 15 + stepIndex * 15;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
@@ -611,7 +612,6 @@ int SPCDJDData::Draw()
 	InsertAngleDimension(pnt);
 	//插入其他标注
 	//InsertOtherDimension(pnt);
-	Mending(pnt);
 	/*vAcDbObjectId dynamicDimsids;
 	CToolingUtil::CycleAllTypedObjectsInAllLayer(CToolingUtil::ACDB_DYNAMIC_DIMENTION, dynamicDimsids);
 	for (int i = 0; i < dynamicDimsids.size(); i++)

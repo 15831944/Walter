@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
-
+#include <sstream>
 #define DEV_TEST_ENV//开发测试环境
 enum TUKuangType{A1 = 0, A2, A3};
 #define DIMLAYERNAME L"2" //标注所在图层
-#define DIMSTYLENAME L"WALTER_1"
+#define DIMSTYLENAME L"WALTER_1" // 标注样式
+const size_t N = 2; //小数点后的有效数字
 CString TY_GetAppPath();
 //根据刀柄名称获取distance
 double GetDisByDBName(CString name);
@@ -27,6 +28,14 @@ CString TY_GetHLRFilePathName();
 double GetHandleLengthFromDaoBing(CString daoBingName);
 //获取文件夹下的所有dwg文件
 vector<CString> GetAllDwgFile(const CString& dirPath);
+//去掉浮点数无效的0
+CString removeLastZero(double num);
+
+
+
+
+
+
 bool TY_LoadTyTool();
 bool TY_FreeTyTool();
 int TY_SetProgress(int all, int cur);

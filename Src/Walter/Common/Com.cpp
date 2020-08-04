@@ -21,33 +21,7 @@ CString TY_GetAppPath()
 	}
 	return strPath;
 }
-//根据刀柄的名称获取一个距离
-double GetDisByDBName(CString name)
-{
-	double dis = 22.0;
-	if (name.Compare(L"BT30") == 0)			dis = 22.0;		//BT30 22
-	else if (name.Compare(L"BT40") == 0)	dis = 27.0;		//BT40 27
-	else if (name.Compare(L"BT50") == 0)	dis = 38.0;		//BT50 38
-	else if (name.Compare(L"HSK-A40")==0)	dis = 20.0 + 15.0;		//HSK-A40 20
-	else if (name.Compare(L"HSK-A50") == 0)	dis = 25.95 + 16.05;	//HSK-A50 25.95
-	else if (name.Compare(L"HSK-A63") == 0)	dis = 25.95 + 16.05;	//HSK-A63 25.95
-	else if (name.Compare(L"HSK-A80") == 0)	dis = 25.95 + 16.05;	//HSK-A80 25.95
-	else if (name.Compare(L"HSK-A100") == 0)dis = 28.95 + 16.05;	//HSK-A100 28.95
-	else if (name.Compare(L"SK30") == 0)	dis = 19.05;	//SK30 19.05
-	else if (name.Compare(L"SK40") == 0)	dis = 19.05;	//SK40 19.05
-	else if (name.Compare(L"SK50") == 0)	dis = 19.05;	//SK50 19.05
-	else if (name.Compare(L"W16") == 0)		dis = 0.0;		//W16 0
-	else if (name.Compare(L"W20") == 0)		dis = 0.0;		//W20 0
-	else if (name.Compare(L"W25") == 0)		dis = 0.0;		//W25 0
-	else if (name.Compare(L"W32") == 0)		dis = 0.0;		//W32 0
-	else if (name.Compare(L"W40") == 0)		dis = 0.0;		//W40 0
-	else if (name.Compare(L"Z16") == 0)		dis = 0.0;		//Z16 0
-	else if (name.Compare(L"Z20") == 0)		dis = 0.0;		//Z20 0
-	else if (name.Compare(L"Z25") == 0)		dis = 0.0;		//Z25 0
-	else if (name.Compare(L"Z32") == 0)		dis = 0.0;		//Z32 0
-	else if (name.Compare(L"Z40") == 0)		dis = 0.0;		//Z40 0
-	return dis;
-}
+
 
 //刀具库存储目录
 CString TY_GetDwgFolder()
@@ -160,6 +134,28 @@ vector<CString> GetAllDwgFile(const CString& dirPath)
 	tempfind.Close();
 	return fileLists;
 }
+//去掉小数点后无效的0
+CString removeLastZero(double num)
+{
+	CString temp;
+	temp.Format(L"%f", num);
+	int pos = temp.ReverseFind('.');
+	int dotpos = pos;
+	//最多包含两位小数
+	for (int i = 0; i <= N;i++)
+	{
+		if (temp[i + dotpos] != '0' ) {
+			pos++;
+		}
+	}
+	CString result = temp.Left(pos);
+	//整数去掉小数点
+	if (result[result.GetLength() - 1] == '.') {
+		result = temp.Left(pos - 1);
+	}
+	return result;
+}
+
 //根据刀柄名称获取刀柄长度
 double GetHandleLengthFromDaoBing(CString daoBingName)
 {
@@ -196,7 +192,33 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"Z32") == 0)		length = 61.0;		//Z40 0
 	return length;
 }
-
+//根据刀柄的名称获取一个距离
+double GetDisByDBName(CString name)
+{
+	double dis = 22.0;
+	if (name.Compare(L"BT30") == 0)			dis = 22.0;		//BT30 22
+	else if (name.Compare(L"BT40") == 0)	dis = 27.0;		//BT40 27
+	else if (name.Compare(L"BT50") == 0)	dis = 38.0;		//BT50 38
+	else if (name.Compare(L"HSK-A40") == 0)	dis = 20.0 + 15.0;		//HSK-A40 20
+	else if (name.Compare(L"HSK-A50") == 0)	dis = 25.95 + 16.05;	//HSK-A50 25.95
+	else if (name.Compare(L"HSK-A63") == 0)	dis = 25.95 + 16.05;	//HSK-A63 25.95
+	else if (name.Compare(L"HSK-A80") == 0)	dis = 25.95 + 16.05;	//HSK-A80 25.95
+	else if (name.Compare(L"HSK-A100") == 0)dis = 28.95 + 16.05;	//HSK-A100 28.95
+	else if (name.Compare(L"SK30") == 0)	dis = 19.05;	//SK30 19.05
+	else if (name.Compare(L"SK40") == 0)	dis = 19.05;	//SK40 19.05
+	else if (name.Compare(L"SK50") == 0)	dis = 19.05;	//SK50 19.05
+	else if (name.Compare(L"W16") == 0)		dis = 0.0;		//W16 0
+	else if (name.Compare(L"W20") == 0)		dis = 0.0;		//W20 0
+	else if (name.Compare(L"W25") == 0)		dis = 0.0;		//W25 0
+	else if (name.Compare(L"W32") == 0)		dis = 0.0;		//W32 0
+	else if (name.Compare(L"W40") == 0)		dis = 0.0;		//W40 0
+	else if (name.Compare(L"Z16") == 0)		dis = 0.0;		//Z16 0
+	else if (name.Compare(L"Z20") == 0)		dis = 0.0;		//Z20 0
+	else if (name.Compare(L"Z25") == 0)		dis = 0.0;		//Z25 0
+	else if (name.Compare(L"Z32") == 0)		dis = 0.0;		//Z32 0
+	else if (name.Compare(L"Z40") == 0)		dis = 0.0;		//Z40 0
+	return dis;
+}
 
 //根据刀尖获取 lf2的值
 double GetLf2ByDiameter(double diameter)

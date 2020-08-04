@@ -2069,8 +2069,9 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			else
 			    rePlaceText.Format(L"%%%%C%.3f{\\H0.7x;\\S+%.3f^+%.3f;}",m_cutterSegs[i].m_diameter, m_cutterSegs[i].m_topGongCha,m_cutterSegs[i].m_lowGongCha);
 		}
+		
 		CString temp;
-		temp.Format(L"%%%%C%.f", m_cutterSegs[i].m_diameter);
+		temp.Format(L"%%%%C%s", removeLastZero(m_cutterSegs[i].m_diameter));
 		//直径标注解决
 		CDimensionUtil::AddDimAligned(start, end, dim,temp);
 

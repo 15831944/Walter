@@ -10,7 +10,6 @@
 #define IDB_BITMAP3                     137
 #define IDB_BITMAP4                     138
 #define IDD_DIALOG_CWDR                 139
-#define IDD_DIALOG_DCD                  141
 #define IDB_PNG1                        144
 #define IDB_PNG2                        145
 #define IDB_BITMAP5                     155
@@ -21,6 +20,7 @@
 #define IDB_BITMAP7                     165
 #define IDB_BITMAP8                     166
 #define IDB_BITMAP9                     167
+#define IDD_DIALOG2                     168
 #define IDC_EDIT_XPT                    1000
 #define IDC_EDIT_ANGLE                  1001
 #define IDC_BUTTON_POINT                1002
@@ -38,7 +38,6 @@
 #define IDC_EDIT1                       1020
 #define IDC_FilePath                    1020
 #define IDC_EDIT_ALLLENGTH              1020
-#define IDC_ZC_EDIT                     1020
 #define IDC_KKD_DIA                     1020
 #define IDC_COMBO1                      1021
 #define IDC_EDIT2                       1022
@@ -71,9 +70,6 @@
 #define IDC_CUSTOM_DJINFO               1044
 #define IDC_COMBO1_DJ                   1045
 #define IDC_ZCDJINFO                    1046
-#define IDC_ZCDJ_COMBOX                 1047
-#define IDC_E                           1048
-#define IDC_ZCDRAW                      1049
 #define IDC_COMBO2                      1050
 #define IDC_DATETIMEPICKER1             1052
 #define IDC_CUSTOM1_XD                  1053
@@ -87,7 +83,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        168
+#define _APS_NEXT_RESOURCE_VALUE        170
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1059
 #define _APS_NEXT_SYMED_VALUE           101

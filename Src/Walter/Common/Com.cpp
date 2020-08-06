@@ -104,9 +104,9 @@ CString TY_GetDaoBingSFolder()
 CString TY_GetDaoBingZyFolder()
 {
 #ifdef DEV_TEST_ENV
-	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZY\\";
+	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZYDJ\\";
 #else
-	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZY\\";
+	return L"G:\\Departments\\TT\\WCN Database\\10_CAD Block\\Walter\\DaoBingForZYDJ\\";
 #endif
 }
 
@@ -552,9 +552,9 @@ AcDbObjectId MD2010_AddAngleDimension2(AcGePoint3d centerPoint, AcGePoint3d xLin
 
 
 	//pDim->setDimltype();
-	AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(L"ZQV");
-	pDim->setDimensionStyle(dimSty);
-	pDim->setColorIndex(3);
+	//AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(L"ZQV");
+	//pDim->setDimensionStyle(dimSty);
+	//pDim->setColorIndex(3);
 	AcDbObjectId dimID = CDwgDatabaseUtil::PostModalToBlockTable(pDim);
 
 	//pDim->setLayer(newLayer);
@@ -576,9 +576,11 @@ AcDbObjectId MD2010_AddAngleDimension3(AcGePoint3d centerPoint1, AcGePoint3d xLi
 
 
 	//pDim->setDimltype();
-	AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(L"ZQV");
-	pDim->setDimensionStyle(dimSty);
-	pDim->setColorIndex(3);
+	//AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(L"ZQV");
+	//默认样式
+	//AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
+	//pDim->setDimensionStyle(dimSty);
+	//pDim->setColorIndex(3);
 
 	if (replaceText.GetLength() > 0)
 	{
@@ -602,7 +604,7 @@ AcDbObjectId MD2010_AddAlignedDimension_GongCha2(AcGePoint3d start, AcGePoint3d 
 	//AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start,end,dimlinpnt);
 	AcDbRotatedDimension  *pDim = new AcDbRotatedDimension(roa, start, end, dimlinpnt);
 
-	pDim->setColorIndex(3);
+	//pDim->setColorIndex(3);
 	pDim->setDimtol(true);
 	pDim->setDimtm(gc1);
 	pDim->setDimtp(gc2);
@@ -613,9 +615,9 @@ AcDbObjectId MD2010_AddAlignedDimension_GongCha2(AcGePoint3d start, AcGePoint3d 
 
 	pDim->setToleranceSuppressTrailingZeros(false);//后续0
 	pDim->setToleranceSuppressLeadingZeros(false);//前导0
-
-	AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(L"ZQH");
-	pDim->setDimensionStyle(dimSty);
+												  //修改标注风格
+	//AcDbObjectId dimSty = CDimensionUtil::GetDimstylerID(L"ZQH");
+	//pDim->setDimensionStyle(dimSty);
 
 	if (replaceText.GetLength() > 0)
 	{

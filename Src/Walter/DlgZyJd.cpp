@@ -32,33 +32,25 @@ CDlgZyJd::~CDlgZyJd()
 
 void CDlgZyJd::InitDefaultPara()
 {
-	UpdateData(TRUE);
 	m_diameter = 8.0f;
 	m_totalLength = 113.0f;
 	//默认为3
 	int defaultSel = 3;
-	/*m_ui_LabberCtrl.AddString(L"1");
+	m_ui_LabberCtrl.AddString(L"1");
 	m_ui_LabberCtrl.AddString(L"2");
 	m_ui_LabberCtrl.AddString(L"3");
-	m_ui_LabberCtrl.AddString(L"4");*/
-	auto addlaber = [&]() {for (int i=1;i <= 4;i++)
-	{
-		CString temp;
-		temp.Format(L"%d", i);
-		m_ui_LabberCtrl.AddString(temp);
-	}
-	};
-	addlaber();
+	m_ui_LabberCtrl.AddString(L"4");
 	m_ui_LabberCtrl.SetCurSel(defaultSel);
 	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingZyFolder());
-	for (auto dwg : dwgfiles)
+	for (int i = 0; i< dwgfiles.size();i ++)
 	{
-		m_ui_DbCtrl.AddString(dwg);
+		m_ui_DbCtrl.AddString(dwgfiles[i]);
 	}
 
 	m_ui_DbCtrl.SetCurSel(0);
 	//刀具设置
-	if (!m_isKKd) {
+	if (!m_isKKd) 
+	{
 		ReloadPic();
 		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_HIDE);
 		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_HIDE);

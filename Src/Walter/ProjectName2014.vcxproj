@@ -252,6 +252,7 @@
     <None Include="res\11.BMP" />
     <None Include="res\111.bmp" />
     <None Include="res\222.bmp" />
+    <None Include="res\mhz.bmp" />
     <None Include="res\zyjd.bmp" />
     <None Include="res\zykkd.bmp" />
   </ItemGroup>

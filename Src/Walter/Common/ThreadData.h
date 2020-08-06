@@ -245,8 +245,9 @@ public:
 public:
 	//µ∂±˙Œª÷√
 	CString m_daobing;
-
-	//
+	//≈≈–º≤€≥§
+	double m_GrooveLength;
+	
 	vector<CThreadSegData> m_cutterSegs;
 
 	//20190526¡Ÿ ±

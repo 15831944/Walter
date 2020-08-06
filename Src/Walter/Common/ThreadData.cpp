@@ -86,7 +86,7 @@ CThreadData::CThreadData()
 	m_topAngle = 135; //顶角
 
 	m_handleDiameter=20; //柄径
-	m_handleLength = 0; //柄长
+	m_handleLength = 50; //柄长
 
 	m_totalLength=160; //总长 20200412本来默认160 修改为0
 
@@ -155,8 +155,9 @@ int CThreadData::GetJieTiTwoDxy(const CThreadSegData &preSeg, const CThreadSegDa
 		return -2;//前后两个R不能相等
 
 	isTwo = thisSeg.m_bDoubleLadder;
-	double ra1 = CMathUtil::AngleToRadian(thisSeg.m_ladderAngle1/2.0);//转换成单侧弧度
-	double ra2 = CMathUtil::AngleToRadian(thisSeg.m_ladderAngle2/2.0);//转换成单侧弧度
+	//修改为前一个角度
+	double ra1 = CMathUtil::AngleToRadian(preSeg.m_ladderAngle1/2.0);//转换成单侧弧度
+	double ra2 = CMathUtil::AngleToRadian(preSeg.m_ladderAngle2/2.0);//转换成单侧弧度
 
 	//两个阶梯Y向的差距的绝对值
 	//double YDis = fabs(thisR - preR);---20190610
@@ -609,7 +610,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	//第一步： 转换点
 	vSDXY dxys;
 	//这里计算出来的len已经不用了 后面进行了重新计算
-	int ret = ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_handleLength - m_guoDuDaiX, dxys);
+	int ret = ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_guoDuDaiX, dxys);//ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_handleLength - m_guoDuDaiX, dxys);
 
 	if(ret != 0)
 	{
@@ -712,7 +713,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 
 	for(int i = 0; i < m_cuttingEdgeCount; i++)
 	{
-		xLen = m_cutterSegs[ladderNum-1].m_length;//最后一段的长度 取做槽长
+		xLen = m_GrooveLength;//最后一段的长度 取做槽长
 
 		if (tailRemoveType == 1)
 		    xLen -= cirrad;//最后留一个球形的长度（体积）
@@ -1084,7 +1085,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	//第一步： 转换点
 	vSDXY dxys;
 
-	int ret = ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_handleLength - m_guoDuDaiX, dxys);
+	int ret = ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_guoDuDaiX, dxys);//ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_handleLength - m_guoDuDaiX, dxys);
 	//for (int i = 0; i < dxys.size(); i++)
 		//dxys[i].dy *= -1;
 	if(ret != 0)
@@ -1124,7 +1125,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	}
 
 	double xLen = 0;
-	xLen = m_cutterSegs[m_cutterSegs.size()-1].m_length;//最后一段的长度 取做槽长
+	xLen = m_GrooveLength;// m_cutterSegs[m_cutterSegs.size() - 1].m_length;//最后一段的长度 取做槽长
 	double taiQiLen = 0;
 
 	//钻头和铰刀的不开刃需要标注槽长
@@ -1975,37 +1976,53 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 
 	//创建X方向的dims
 	double yvalue = offsetXY.y -m_cutterSegs[size - 1].m_diameter/2 - 10;
-	for (int i = 0; i < m_cutterSegs.size()-1; i++)
+	//for (int i = 0; i < m_cutterSegs.size()-1; i++)
+	//{
+	//	if (m_cutterSegs[i].m_lengthType == E_CutterSegLength_刀尖到刀尖 || m_cutterSegs[i].m_lengthType == E_CutterSegLength_刀尖到圆柱)
+	//	{
+	//		AcGePoint3d start(0,offsetXY.y,0),end(0,offsetXY.y,0);
+	//		GetXValueForOneCutterSeg_2(i,start.x);
+	//		start.x += offsetXY.x;
+
+	//		end.x = start.x + m_cutterSegs[i].m_length;
+	//		AcGePoint3d dimpt(0,yvalue,0);
+	//		dimpt.x = (start.x + end.x)/2;
+	//		CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
+	//	}
+
+	//	if (m_cutterSegs[i].m_lengthType == E_CutterSegLength_圆柱到刀尖 || m_cutterSegs[i].m_lengthType == E_CutterSegLength_圆柱到圆柱)
+	//	{
+	//		AcGePoint3d start(0,offsetXY.y,0),end(0,offsetXY.y,0);
+	//		GetXValueForOneCutterSeg(i,start.x);
+	//		start.x += offsetXY.x;
+
+	//		end.x = start.x + m_cutterSegs[i].m_length;
+	//		AcGePoint3d dimpt(0,yvalue,0);
+	//		dimpt.x = (start.x + end.x)/2;
+	//		CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
+	//	}
+	//}
+	for (int i = 0; i < m_cutterSegs.size() ; i++)
 	{
-		if (m_cutterSegs[i].m_lengthType == E_CutterSegLength_刀尖到刀尖 || m_cutterSegs[i].m_lengthType == E_CutterSegLength_刀尖到圆柱)
-		{
-			AcGePoint3d start(0,offsetXY.y,0),end(0,offsetXY.y,0);
-			GetXValueForOneCutterSeg_2(i,start.x);
+			AcGePoint3d start(0, offsetXY.y, 0), end(0, offsetXY.y, 0);
+			GetXValueForOneCutterSeg_2(0, start.x);
 			start.x += offsetXY.x;
 
-			end.x = start.x + m_cutterSegs[i].m_length;
-			AcGePoint3d dimpt(0,yvalue,0);
-			dimpt.x = (start.x + end.x)/2;
-			CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
-		}
-
-		if (m_cutterSegs[i].m_lengthType == E_CutterSegLength_圆柱到刀尖 || m_cutterSegs[i].m_lengthType == E_CutterSegLength_圆柱到圆柱)
-		{
-			AcGePoint3d start(0,offsetXY.y,0),end(0,offsetXY.y,0);
-			GetXValueForOneCutterSeg(i,start.x);
-			start.x += offsetXY.x;
-
-			end.x = start.x + m_cutterSegs[i].m_length;
-			AcGePoint3d dimpt(0,yvalue,0);
-			dimpt.x = (start.x + end.x)/2;
-			CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
-		}
+			double sum = 0.0;
+			for (int j = 0; j<=i;j++)
+			{
+				sum += m_cutterSegs[j].m_length;
+			}
+			end.x = start.x + sum;
+			AcGePoint3d dimpt(0, yvalue, 0);
+			dimpt.x = (start.x + end.x) / 2;
+			dimpt.y -= i * 4;
+			CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
 	}
-
 	//标注一个槽长
 	AcGePoint3d start(offsetXY.x, offsetXY.y, 0);
-	AcGePoint3d end(offsetXY.x + m_cutterSegs[m_cutterSegs.size()-1].m_length, offsetXY.y, 0);
-	AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue-6,0);
+	AcGePoint3d end(offsetXY.x + m_GrooveLength, offsetXY.y, 0);
+	AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue + 6,0);
 	CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
 
 	//标注一个总长
@@ -2014,7 +2031,8 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	double len = GetHandleLengthFromDaoBing(m_daobing); 
 
 	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
-	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue-12,0);
+	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue,0);
+	dimpt2.y -= m_cutterSegs.size() * 4;
 	CDimensionUtil::AddDimAligned(start2, end2, dimpt2,L"");
 
 
@@ -2117,16 +2135,16 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		CString replaceText;
 		if (m_cutterSegs[i].m_lengBianType == SEdgeType::E_EdgeType_不清边)
 		{
-			double angle = m_cutterSegs[i].m_ladderAngle1;
+			double angle = m_cutterSegs[i-1].m_ladderAngle1;
 			replaceText.Format(L"%.1f°(仅倒角)",angle);
 		}
 		else
 		{
-			double angle = m_cutterSegs[i].m_ladderAngle1;
+			double angle = m_cutterSegs[i-1].m_ladderAngle1;
 			replaceText.Format(L"%.1f°",angle);
 		}
 		MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
-			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"尺寸线");
+			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"2");
 		
 	}
 
@@ -2141,7 +2159,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		CString replace;
 		//replace.Format(L"%%%%C%.1f{\\H0.7x;\\S-0.1^+0.1;}", m_pointCenterDistance);
 		replace.Format(L"%%%%C%.1f%%%%P0.1", m_pointCenterDistance);
-		MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"尺寸", replace, CMathUtil::PI / 2);
+		MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
 	}
 }
 

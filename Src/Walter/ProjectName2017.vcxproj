@@ -145,7 +145,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib-TYTool\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;acbr21.lib;AsdkHlrApi21.lib;acgex21.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -184,7 +184,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WalterDialog.cpp" />
-    <ClCompile Include="ZcDjDlg.cpp" />
     <ClCompile Include="ZTInfoDlg.cpp" />
     <ClCompile Include="ZYDJData.cpp" />
   </ItemGroup>
@@ -231,7 +230,6 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="WalterDialog.h" />
-    <ClInclude Include="ZcDjDlg.h" />
     <ClInclude Include="ZTInfoDlg.h" />
     <ClInclude Include="ZYDJData.h" />
   </ItemGroup>
@@ -242,12 +240,10 @@
     <ResourceCompile Include="res\ProjectName.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="mhz.bmp" />
     <Image Include="res\11.BMP" />
     <Image Include="res\111.bmp" />
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
-    <Image Include="res\bitmap5.bmp" />
     <Image Include="res\mhz.bmp" />
     <Image Include="res\zyjd.bmp" />
     <Image Include="res\zykkd.bmp" />

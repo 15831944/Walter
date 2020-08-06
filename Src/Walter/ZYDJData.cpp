@@ -22,7 +22,7 @@ void CZYDJData::Draw()
 	CString labberCountStr;
 	labberCountStr.Format(L"%d", m_DjLabberCount);
 	CString DaoShenFullPath;
-	CString DaoBingFullPath = TY_GetDaoBingSFolder() + m_DaoBingName + L".dwg";
+	CString DaoBingFullPath = TY_GetDaoBingZyFolder() + m_DaoBingName + L".dwg";
 	if (m_IsKKD)
 		DaoShenFullPath = TY_GetDynamicBlockFolder() + L"整硬扩孔刀模板X"+ labberCountStr + L".dwg";
 	else
@@ -32,7 +32,7 @@ void CZYDJData::Draw()
 	//计算刀身插入点
 	double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
 	AcGePoint3d ptInsert(pnt);
-	ptInsert.x += m_totalLength + dis;
+	ptInsert.x += m_totalLength ;
 	AcDbObjectId DaoShenId = CBlockUtil::InsertDwgAsBlockRef(DaoShenFullPath, NULL, ACDB_MODEL_SPACE, ptInsert, 0, 1);
 
 	//设置总长
@@ -170,7 +170,7 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 	dimTextPosition.x += 5;
 
 	CString temp;
-	temp.Format(L"%%%%C%.f", m_Prediameter);
+	temp.Format(L"%%%%C%s", removeLastZero(m_Prediameter));
 	CDimensionUtil::AddDimAligned(pt1, pt2, dimTextPosition, temp);
 }
 //插入直径标注

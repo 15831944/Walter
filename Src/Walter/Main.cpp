@@ -39,7 +39,7 @@
 #include "WalterDialog.h"
 #include "DlgPcdJD.h"
 #include "ThreadData.h"
-#include "ZcDjDlg.h"
+//#include "ZcDjDlg.h"
 #include "ZTInfoDlg.h"
 #include "DlgTuKuang.h"
 #include "DlgZyJd.h"
@@ -84,15 +84,7 @@ void CMD_CWDR()
 	g_ztInfoDlg->Create(IDD_DIALOG_CWDR);
 	g_ztInfoDlg->ShowWindow(SW_SHOW);
 }
-//Ö±²Ûµ¶¾ß
-CZcDjDlg *gZcDjDlg = NULL;
-void CMD_ZCDJ()
-{
-	CAcModuleResourceOverride resOverride;
-	gZcDjDlg = new CZcDjDlg(acedGetAcadFrame());
-	gZcDjDlg->Create(IDD_DIALOG_DCD);
-	gZcDjDlg->ShowWindow(SW_SHOW);
-}
+
 //ÕûÓ²À©¿×µ¶
 CDlgZyJd *gZyXd = NULL;
 void CMD_ZYKKD()
@@ -103,7 +95,7 @@ void CMD_ZYKKD()
 	gZyXd->Create(IDD_DIALOG_PCD_XD);
 	gZyXd->ShowWindow(SW_SHOW);
 }
-//ÕûÓ²Ï³µ¶
+//ÕûÓ²½Âµ¶
 void CMD_ZYJD()
 {
 	CAcModuleResourceOverride resOverride;
@@ -309,14 +301,6 @@ static void initApp()
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("ZCDJ"),
-		_T("ZCDJ"),
-		ACRX_CMD_MODAL,
-		CMD_ZCDJ,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
 		_T("ZYKKD"),

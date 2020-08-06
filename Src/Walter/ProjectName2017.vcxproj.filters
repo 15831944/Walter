@@ -79,9 +79,6 @@
     <ClCompile Include="Common\ThreadData.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="ZcDjDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="DlgTuKuang.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -216,9 +213,6 @@
     <ClInclude Include="Common\ThreadData.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="ZcDjDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="DlgTuKuang.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -272,7 +266,6 @@
     <Image Include="res\11.BMP">
       <Filter>Res</Filter>
     </Image>
-    <Image Include="res\bitmap5.bmp" />
     <Image Include="res\111.bmp">
       <Filter>Res</Filter>
     </Image>
@@ -285,7 +278,8 @@
     <Image Include="res\zykkd.bmp">
       <Filter>Res</Filter>
     </Image>
-    <Image Include="mhz.bmp" />
-    <Image Include="res\mhz.bmp" />
+    <Image Include="res\mhz.bmp">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

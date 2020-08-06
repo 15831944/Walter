@@ -1,5 +1,5 @@
 #pragma once
-#include "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afxwin.h"
+#include "afxwin.h"
 
 
 // CDlgTuKuang ¶Ô»°¿ò

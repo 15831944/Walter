@@ -39,7 +39,7 @@
 #include "WalterDialog.h"
 #include "DlgPcdJD.h"
 #include "ThreadData.h"
-//#include "ZcDjDlg.h"
+#include "ZyXdDlg.h"
 #include "ZTInfoDlg.h"
 #include "DlgTuKuang.h"
 #include "DlgZyJd.h"
@@ -86,23 +86,32 @@ void CMD_CWDR()
 }
 
 //ÕûÓ²À©¿×µ¶
-CDlgZyJd *gZyXd = NULL;
+CDlgZyJd *gZyDJ = NULL;
 void CMD_ZYKKD()
 {
 	CAcModuleResourceOverride resOverride;
-	gZyXd = new CDlgZyJd(acedGetAcadFrame());
-	gZyXd->SetKnifeClass(true);
-	gZyXd->Create(IDD_DIALOG_PCD_XD);
-	gZyXd->ShowWindow(SW_SHOW);
+	gZyDJ = new CDlgZyJd(acedGetAcadFrame());
+	gZyDJ->SetKnifeClass(true);
+	gZyDJ->Create(IDD_DIALOG_ZYKKD);
+	gZyDJ->ShowWindow(SW_SHOW);
+}
+//ÕûÓ²Ï³µ¶
+CZyXdDlg *g_zyxd = NULL;
+void CMD_ZYXD()
+{
+	CAcModuleResourceOverride resOverride;
+	g_zyxd = new CZyXdDlg(acedGetAcadFrame());
+	g_zyxd->Create(IDD_DIALOG_ZYXD);
+	g_zyxd->ShowWindow(SW_SHOW);
 }
 //ÕûÓ²½Âµ¶
 void CMD_ZYJD()
 {
 	CAcModuleResourceOverride resOverride;
-	gZyXd = new CDlgZyJd(acedGetAcadFrame());
-	gZyXd->SetKnifeClass(false);
-	gZyXd->Create(IDD_DIALOG_PCD_XD);
-	gZyXd->ShowWindow(SW_SHOW);
+	gZyDJ = new CDlgZyJd(acedGetAcadFrame());
+	gZyDJ->SetKnifeClass(false);
+	gZyDJ->Create(IDD_DIALOG_ZYKKD);
+	gZyDJ->ShowWindow(SW_SHOW);
 }
 //Í¼¿ò
 CDlgTuKuang *gTuKuang = NULL;
@@ -319,7 +328,15 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
-
+	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+		_T("ZYXD"),
+		_T("ZYXD"),
+		ACRX_CMD_MODAL,
+		CMD_ZYXD,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+	
 	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
 		_T("INTK"),
 		_T("INTK"),
@@ -425,11 +442,11 @@ void menu()
 		V_I4(&index) = MenuIndex++;
 		IPopUpMenu.AddMenuItem(index, _T("&×êÍ·Éè¼Æ"), _T("CWDR "));
 
-		/*VariantInit(&index);
+		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&Ö±²Ûµ¶¾ß"), _T("ZCDJ "));
-*/
+		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²Ï³µ¶"), _T("ZYXD "));
+
 		VariantInit(&index);
 		V_VT(&index) = VT_I4;
 		V_I4(&index) = MenuIndex++;

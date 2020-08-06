@@ -102,7 +102,7 @@ CThreadData::CThreadData()
 	m_jingDu = 3;
 
 	m_cutterType = T_DRILL_CUTTER;
-	m_daoJianType = E_DaoJian_NULL;
+	m_daoJianType = E_DaoJian_Æ½µ×;
 }
 
 

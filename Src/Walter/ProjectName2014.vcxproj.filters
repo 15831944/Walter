@@ -249,6 +249,7 @@
     <None Include="res\zyjd.bmp" />
     <None Include="res\zykkd.bmp" />
     <None Include="res\mhz.bmp" />
+    <None Include="res\xd.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

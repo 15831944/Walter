@@ -186,6 +186,7 @@
     <ClCompile Include="WalterDialog.cpp" />
     <ClCompile Include="ZTInfoDlg.cpp" />
     <ClCompile Include="ZYDJData.cpp" />
+    <ClCompile Include="ZyXdDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Com.h" />
@@ -232,6 +233,7 @@
     <ClInclude Include="WalterDialog.h" />
     <ClInclude Include="ZTInfoDlg.h" />
     <ClInclude Include="ZYDJData.h" />
+    <ClInclude Include="ZyXdDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -245,6 +247,7 @@
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
     <Image Include="res\mhz.bmp" />
+    <Image Include="res\xd.bmp" />
     <Image Include="res\zyjd.bmp" />
     <Image Include="res\zykkd.bmp" />
   </ItemGroup>

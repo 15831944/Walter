@@ -114,7 +114,7 @@ MultiRowData CZTInfoDlg::getDefaultGridData(int index)
 		defaultText.push_back(str);
 		str.Format(L"%.3f",25.0);
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -133,7 +133,7 @@ MultiRowData CZTInfoDlg::getDefaultGridData(int index)
 		defaultText.push_back(str);
 		str.Format(L"%.3f", 50.0);
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
@@ -162,7 +162,7 @@ MultiRowData CZTInfoDlg::getDefaultGridData(int index)
 		defaultText.push_back(str);
 		str.Format(L"%.3f", 50.0);
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -199,7 +199,7 @@ MultiRowData CZTInfoDlg::getDefaultGridData(int index)
 		defaultText.push_back(str);
 		str.Format(L"%.3f", 50.0);
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -229,12 +229,22 @@ MultiRowData CZTInfoDlg::getTableData()
 void CZTInfoDlg::LoadGridData()
 {
 	int index = m_StepNum.GetCurSel();
+	//将上一次设置的不可编辑设置为可编辑
+	if (m_alldjInfos.size() > 0)
+	{
+		m_djInfoCtrl.SetContentItemEditable(m_alldjInfos.size() - 1, m_alldjInfos[0].size() - 1, true);
+	}
+	
 	m_alldjInfos = getDefaultGridData(index);
 	//
 	double maxLength = _ttof(m_alldjInfos[m_alldjInfos.size() - 1][1]); // 最大刃段长度
 	double maxDia = _ttof(m_alldjInfos[m_alldjInfos.size() - 1][0]);	 //最大刃径
 	m_GrooveLenth = maxLength + 2 * maxDia;
 	m_djInfoCtrl.FillTable(m_alldjInfos);
+	
+	//设置最后一个不可编辑
+	m_djInfoCtrl.SetContentItemEditable(m_alldjInfos.size() - 1, m_alldjInfos[0].size() - 1, false);
+	//CGridCellBase *cell = m_djInfoCtrl.GetCell(m_alldjInfos.size() - 1, m_alldjInfos[0].size() -1)
 }
 
 void CZTInfoDlg::DoDataExchange(CDataExchange* pDX)
@@ -296,23 +306,27 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	m_data.SetLadderCount((int)m_alldjInfos.size()-1 );
 	//顶角
 	m_data.m_topAngle = m_VertAngle;
+	//刀柄
 	int sel = m_DaoBingCtrl.GetCurSel();
 	CString daobing;
 	m_DaoBingCtrl.GetLBText(sel, daobing);
-	//总长
+	
 	double dis = GetHandleLengthFromDaoBing(daobing);
+	//刀柄长度
 	m_data.m_handleLength = dis;
+	//总长
 	m_data.m_totalLength = m_TotalLength - dis;
 	//刃数
 	int CurSel = m_ui_DrNumCtrl.GetCurSel();
 	CString temp;
 	m_ui_DrNumCtrl.GetLBText(CurSel, temp);
 	m_data.m_cuttingEdgeCount = _ttoi(temp);
+	//刀柄
 	m_data.SetDaoBingName(daobing);
 	//排屑槽长
 	m_data.m_GrooveLength = m_GrooveLenth;
 	//刀尖类型
-	//m_data.m_daoJianType = E_DaoJian_球头;
+	m_data.m_daoJianType = E_DaoJian_平底;
 
 	//隐藏窗口
 	ShowWindow(SW_HIDE);

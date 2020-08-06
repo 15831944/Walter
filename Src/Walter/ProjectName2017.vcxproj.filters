@@ -88,6 +88,9 @@
     <ClCompile Include="ZYDJData.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="ZyXdDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -222,6 +225,9 @@
     <ClInclude Include="ZYDJData.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="ZyXdDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">
@@ -279,6 +285,9 @@
       <Filter>Res</Filter>
     </Image>
     <Image Include="res\mhz.bmp">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="res\xd.bmp">
       <Filter>Res</Filter>
     </Image>
   </ItemGroup>

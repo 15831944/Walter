@@ -778,9 +778,12 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 #ifndef AHNO_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
+	acDocManager->unlockDocument(curDoc());
+	CLayerSwitch(L"3");
+	acDocManager->lockDocument(curDoc());
 	
 	//第五步：创建中心线
-	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0),1);
+	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0));
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
 	
 	//第六步：创建标注
@@ -1181,10 +1184,11 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 #ifndef AHNO_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
-	
-
+	acDocManager->unlockDocument(curDoc());
+	CLayerSwitch(L"3");
+	acDocManager->lockDocument(curDoc());
 	//第六步：创建中心线
-//	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0),1);
+	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0));
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
 
 	//第七步 标注

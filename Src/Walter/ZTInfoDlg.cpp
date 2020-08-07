@@ -89,7 +89,6 @@ void CZTInfoDlg::InitDefaultPara()
 	m_StepNum.SetCurSel(defaultIndex);
 	//加载刀柄信息
 	m_djInfoCtrl.SetEditable(TRUE);
-	CString dirpath = TY_GetDaoBingZyFolder();
 	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingZyFolder());
 	for (int i = 0; i< dwgfiles.size() ; i++)
 	{
@@ -234,12 +233,7 @@ void CZTInfoDlg::LoadGridData()
 	{
 		m_djInfoCtrl.SetContentItemEditable(m_alldjInfos.size() - 1, m_alldjInfos[0].size() - 1, true);
 	}
-	
 	m_alldjInfos = getDefaultGridData(index);
-	//
-	double maxLength = _ttof(m_alldjInfos[m_alldjInfos.size() - 1][1]); // 最大刃段长度
-	double maxDia = _ttof(m_alldjInfos[m_alldjInfos.size() - 1][0]);	 //最大刃径
-	m_GrooveLenth = maxLength + 2 * maxDia;
 	m_djInfoCtrl.FillTable(m_alldjInfos);
 	
 	//设置最后一个不可编辑
@@ -259,7 +253,6 @@ void CZTInfoDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_VERTEX_ANGLE, m_VertAngle);
 	DDX_Control(pDX, IDC_COMBO1_DJ, m_DaoBingCtrl);
 	DDX_Control(pDX, IDC_COMBO1, m_DrillSel);
-	DDX_Text(pDX, IDC_EDIT2, m_GrooveLenth);
 }
 
 LRESULT CZTInfoDlg::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -302,6 +295,10 @@ void CZTInfoDlg::OnBnClickedBtnok()
 		m_segdata.m_ladderAngle1 = _ttof(RowData[2]); //阶梯角
 		m_data.AddCutterSegData(std::move(m_segdata));
 	}
+
+	double maxLength = _ttof(m_alldjInfos[m_alldjInfos.size() - 1][1]); // 最大刃段长度
+	double maxDia = _ttof(m_alldjInfos[m_alldjInfos.size() - 1][0]);	 //最大刃径
+	m_GrooveLenth = maxLength + 2 * maxDia;
 	//阶梯数量
 	m_data.SetLadderCount((int)m_alldjInfos.size()-1 );
 	//顶角

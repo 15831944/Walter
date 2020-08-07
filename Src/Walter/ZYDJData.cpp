@@ -182,7 +182,7 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 		AcGePoint3d TopPoint = GetVertexPoint(pnt, i, TRUE);
 		AcGePoint3d BottomPoint = GetVertexPoint(pnt, i, FALSE);
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
-		centerPoint.x = pnt.x + 5 * i + 12;
+		centerPoint.x = pnt.x + 8 * i + 12;
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].m_diameter));
 		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint,temp);

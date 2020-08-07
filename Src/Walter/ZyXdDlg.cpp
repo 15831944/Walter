@@ -36,17 +36,12 @@ void CZyXdDlg::InitDefaultPara()
 {
 	int defaultIndex = 0;
 	//设置刀柄
-	m_ui_DbCtrl.AddString(L"Z03");
-	m_ui_DbCtrl.AddString(L"Z06");
-	m_ui_DbCtrl.AddString(L"Z08");
-	m_ui_DbCtrl.AddString(L"Z10");
-	m_ui_DbCtrl.AddString(L"Z12");
-	m_ui_DbCtrl.AddString(L"Z14");
-	m_ui_DbCtrl.AddString(L"Z16");
-	m_ui_DbCtrl.AddString(L"Z18");
-	m_ui_DbCtrl.AddString(L"Z20");
-	m_ui_DbCtrl.AddString(L"Z25");
-	m_ui_DbCtrl.AddString(L"Z32");
+	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingSFolder());
+	for (int i = 0; i < dwgfiles.size(); i++)
+	{
+		m_ui_DbCtrl.AddString(dwgfiles[i]);
+	}
+	m_ui_DbCtrl.SetCurSel(defaultIndex);
 	m_ui_DbCtrl.SetCurSel(defaultIndex);
 	//默认直径
 	m_diameter = 10.0f;
@@ -109,8 +104,8 @@ void CZyXdDlg::OnBnClickedButton1()
 	m_ThreadData.m_totalLength = m_lengthOfHang - dis;
 	//刀尖类型
 	m_ThreadData.m_daoJianType = E_DaoJian_平底;
-	//必须设置排屑槽长
-	m_ThreadData.m_GrooveLength = m_lengthOfKnife;
+	//必须设置排屑槽长，排屑槽长要大于刃径的0.5倍
+	m_ThreadData.m_GrooveLength = m_lengthOfKnife * 0.5 ;
 	//
 	m_ThreadData.AddCutterSegData(m_ThreadSegData);
 	m_ThreadData.SetLadderCount(0);

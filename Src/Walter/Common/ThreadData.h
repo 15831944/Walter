@@ -128,7 +128,7 @@ public:
 	bool SetCutterSegData(CThreadSegData& p_segData, int p_index);
 
 	void AddCutterSegData(CThreadSegData &data){m_cutterSegs.push_back(data);}
-	void ClearCutterSegs(){m_cutterSegs.clear();}
+	void ClearCutterSegs() { m_cutterSegs.clear(); m_cutterSegs.shrink_to_fit(); }
 	
 
 	//给两个阶梯， 计算出前后两个阶梯角的 ladderA.dx ladderA.dy, ladderB.dx, ladderB.dy

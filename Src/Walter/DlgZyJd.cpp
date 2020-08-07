@@ -246,7 +246,7 @@ MultiRowText CDlgZyJd::GetGridData()
 		{
 			rowText.push_back(m_XdLabberDataCtrl.GetContentItemText(i, j));
 		}
-		nRowdata.push_back(rowText);
+		nRowdata.push_back(std::move(rowText));
 	}
 	return nRowdata;
 }
@@ -309,7 +309,7 @@ void CDlgZyJd::OnBnClickedButton1()
 		oneStepData.m_diameter = _ttof(m_allrowData[i][1]);
 		oneStepData.m_stepLength = _ttof(m_allrowData[i][2]);
 		oneStepData.m_angle = _ttof(m_allrowData[i][3]);
-		allStepData.push_back(oneStepData);
+		allStepData.push_back(std::move(oneStepData));
 	}
 	m_ZyDjData.SetStepData(allStepData);
 	ShowWindow(SW_HIDE);

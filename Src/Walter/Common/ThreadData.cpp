@@ -617,7 +617,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 		acutPrintf(L"ConvertToDxy参数错误\n");
 		return ret;
 	}
-
+	CLayerSwitch(L"1");
 	acDocManager->lockDocument(curDoc());
 
 	//第二步：创建基础的面域
@@ -709,7 +709,8 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 		else
 			tailRemoveType = 4;//铰刀不开刃 标注槽长
 	}
-		
+	
+	
 
 	for(int i = 0; i < m_cuttingEdgeCount; i++)
 	{
@@ -1093,7 +1094,8 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 		acutPrintf(L"ConvertToDxy参数错误\n");
 		return ret;
 	}
-
+	//
+	CLayerSwitch(L"1");
 	acDocManager->lockDocument(curDoc());
 
 	//第二步：创建基础的面域
@@ -1182,7 +1184,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	
 
 	//第六步：创建中心线
-	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0),1);
+//	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0),1);
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
 
 	//第七步 标注
@@ -2219,7 +2221,6 @@ void CThreadData::Draw(bool IsZC)
 		CString blkName = CCommonUtil::GenStrByTime();
 		CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
 	}
-	
 }
 
 void CThreadData::SetDaoBingName(const CString & DaoBingName)

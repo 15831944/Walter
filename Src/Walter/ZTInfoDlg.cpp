@@ -220,7 +220,7 @@ MultiRowData CZTInfoDlg::getTableData()
 		{
 			oneRowText.push_back(m_djInfoCtrl.GetContentItemText(i, j));
 		}
-		vec.push_back(oneRowText);
+		vec.push_back(std::move(oneRowText));
 	}
 	return vec;
 }
@@ -300,7 +300,7 @@ void CZTInfoDlg::OnBnClickedBtnok()
 		m_segdata.m_diameter = _ttof(RowData[0]); //ÈÐ¾¶
 		m_segdata.m_length = _ttof(RowData[1]); //ÈÐ¶Î³¤¶È
 		m_segdata.m_ladderAngle1 = _ttof(RowData[2]); //½×ÌÝ½Ç
-		m_data.AddCutterSegData(m_segdata);
+		m_data.AddCutterSegData(std::move(m_segdata));
 	}
 	//½×ÌÝÊýÁ¿
 	m_data.SetLadderCount((int)m_alldjInfos.size()-1 );

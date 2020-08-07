@@ -138,7 +138,7 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 		temp.m_diameter = _ttof(jdData.m_uiData_allListData[i][1]);
 		temp.m_stepLength = _ttoi(jdData.m_uiData_allListData[i][2]);
 		temp.m_angle = _ttof(jdData.m_uiData_allListData[i][3]);
-		m_data.m_stepDatas.push_back(temp);
+		m_data.m_stepDatas.push_back(std::move(temp));
 	}
 	ShowWindow(SW_HIDE);	//不能把这个写到下面的draw()函数里，直接再这里隐藏即可
 	m_data.Draw();
@@ -199,7 +199,7 @@ MultiRowData DlgPcdJD::GetTable()
 		{
 			oneRowText.push_back(m_gridCtrl.GetContentItemText(i, j));
 		}
-		vec.push_back(oneRowText);
+		vec.push_back(std::move(oneRowText));
 	}
 	return vec;
 }

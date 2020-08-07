@@ -2138,12 +2138,14 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		if (m_cutterSegs[i].m_lengBianType == SEdgeType::E_EdgeType_不清边)
 		{
 			double angle = m_cutterSegs[i-1].m_ladderAngle1;
-			replaceText.Format(L"%.1f°(仅倒角)",angle);
+			replaceText.Format(L"%s°(仅倒角)",removeLastZero(angle));
+			//replaceText.Format(L"%.1f°(仅倒角)", angle);
 		}
 		else
 		{
 			double angle = m_cutterSegs[i-1].m_ladderAngle1;
-			replaceText.Format(L"%.1f°",angle);
+			replaceText.Format(L"%s°", removeLastZero(angle));
+			//replaceText.Format(L"%.1f°", angle);
 		}
 		MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
 			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"2");

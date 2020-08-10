@@ -54,10 +54,10 @@ vCString COpenExcelDialog::TYCOM_GetFilesFromDialog(CString fileExt, int maxFile
 vCString COpenExcelDialog::TYCOM_GetFilesFromDialog( int maxFileNumber)
 {
 	CString strFilter;
-	strFilter.Format(_T("xls Files (*.xls)|*.xls|xlsx Files (*.xlsx)|*.xlsx|All Files (*.*)|*.*||"));
+	strFilter.Format(_T("xlsx Files (*.xlsx)|*.xlsx|xls Files (*.xls)|*.xls|"));
 
 	CString prompt;
-	prompt.Format(_T("Select xls file(*.xls)|Select xlsx file(*.xlsx)"));
+	prompt.Format(_T("Select xlsx file(*.xlsx)|Select xls file(*.xls)"));
 
 	CFileDialog FileDlg (true, NULL, NULL,
 		OFN_FILEMUSTEXIST| OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT, strFilter);

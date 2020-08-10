@@ -512,14 +512,16 @@ void TY_Project3DSolidTo2D(AcDbObjectId solid3d,
 			acutPrintf(_T("Failed to add entity to current space.\n"));
 			break;
 		}
-		if (acdbOpenAcDbEntity(pEnt, solid3d, AcDb::kForRead) != Acad::eOk) {
+		if (acdbOpenAcDbEntity(pEnt, solid3d, AcDb::kForRead) != Acad::eOk) 
+		{
 			acutPrintf(_T("Failed to open last added outputed curve.\n"));
 			break;
 		}
 
 		//----- Entity originator path for block reference entities
 		AcDbObjectIdArray ids = p->getObjectIds();
-		if (ids.logicalLength() > 0) {
+		if (ids.logicalLength() > 0)
+		{
 			acutPrintf(ACRX_T("\n%lx, "), pEnt->objectId().asOldId());
 			if (p->getSubentId().type() != AcDb::kNullSubentType)
 				acutPrintf(ACRX_T("[%ld, %ld], "), p->getSubentId().type(), p->getSubentId().index());

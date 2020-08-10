@@ -639,6 +639,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	AcDbEntity * pMirrorPline = 0;
 	pline->getTransformedCopy(mxMirror,pMirrorPline);
 	AcDbObjectId plineId1 = CDwgDatabaseUtil::PostToModelSpace(pline);
+	CEntityUtil::SetColorIndex(plineId1, 2);
 	AcDbObjectId plineId2 = CDwgDatabaseUtil::PostToModelSpace(pMirrorPline);
 	//JHCOM_SetEntityType(plineId1, L"ACAD_ISO02W100");
 	//JHCOM_SetEntityType(plineId2, L"ACAD_ISO02W100");

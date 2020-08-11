@@ -574,18 +574,33 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 	//根据倒角R 和倒角 做后续处理
 	PostProcessAngleHead(dxys);
 
+
+	int start  = 0;
 	points.append(offsetXY);
-	for (int i = 0; i < (int)dxys.size(); i++)
+	if (fabs(m_pointR) > 0)
+	{
+		start += 1;
+		AcGePoint2d temp = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy - m_pointR);
+		points.append(temp);
+		temp = AcGePoint2d(offsetXY.x + dxys[0].dx + m_pointR, offsetXY.y + dxys[0].dy);
+		points.append(temp);
+		offsetXY = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy);
+	}
+
+	for (int i = start; i < (int)dxys.size(); i++)
 	{
 		offsetXY = AcGePoint2d(offsetXY.x + dxys[i].dx, offsetXY.y + dxys[i].dy);
 		points.append(offsetXY);
 	}
 
 	AcDbPolyline *pPoly= new AcDbPolyline();
-	for (int i = 0; i < (int)points.length(); i++)
+	for (int i = 0; i < (int)points.length() ; i++)
 	{
-		if (i >= 1 && fabs(dxys[i-1].buglet) > USER_TOL * 100)
-		    pPoly->addVertexAt(i,points.at(i),dxys[i-1].buglet);
+		
+		if (i >= 1 && fabs(dxys[i - 1].buglet) > USER_TOL * 100)
+		{
+			pPoly->addVertexAt(i, points.at(i), dxys[i - 1].buglet);
+		}
 		else
 		    pPoly->addVertexAt(i,points.at(i),0);
 	}
@@ -620,7 +635,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 
 	//第二步：创建基础的面域
 	AcDbPolyline *pline = CreatePolyline2d(offsetXY, dxys);
-	Acad::ErrorStatus eks =  pline->setLayer(L"2");
+	Acad::ErrorStatus eks =  pline->setLayer(L"1");
 
 	AcDb3dSolid *pSolid = NULL;
 	AcDbRegion * region = CRegionUtil::CreateRegionFromCurve(pline);
@@ -1097,7 +1112,6 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 		return ret;
 	}
 	//
-	CLayerSwitch(L"1");
 	acDocManager->lockDocument(curDoc());
 
 	//第二步：创建基础的面域

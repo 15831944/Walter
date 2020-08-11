@@ -85,12 +85,14 @@ void CZyXdDlg::OnBnClickedButton1()
 	m_ThreadData.ClearCutterSegs();
 	// TODO: 在此添加控件通知处理程序代码
 	//添加一阶数据
+
+	m_ThreadData.m_pointR = m_ArcOfknife;
+
 	m_ThreadSegData.m_diameter = m_diameter;
 	m_ThreadSegData.m_length = m_lengthOfKnife;
 	m_ThreadSegData.m_ladderAngle1 = 180.0;
 	//如果是刀尖圆角是0则刀尖应该是直角
-	if (m_ArcOfknife == 0) 
-		m_ThreadData.m_topAngle = 180.0;
+	m_ThreadData.m_topAngle = 180.0;
 	//不由用户设置
 	m_ThreadData.m_cuttingEdgeCount = 6;
 	//刀柄

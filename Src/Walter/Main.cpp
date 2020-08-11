@@ -235,116 +235,118 @@ static void CMD_Test()
 
 static void initApp()
 {
+	if (WALTER)
+	{
+		CAcModuleResourceOverride resOverride;
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("test"),
+			_T("test"),
+			ACRX_CMD_MODAL,
+			CMD_Test,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	CAcModuleResourceOverride resOverride;
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("GYZ1"),
+			_T("GYZ1"),
+			ACRX_CMD_MODAL,
+			dialogCreate,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("test"),
-		_T("test"),
-		ACRX_CMD_MODAL,
-		CMD_Test,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("gx"),
+			_T("gx"),
+			ACRX_CMD_MODAL,
+			updateAttr,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("GYZ1"),
-		_T("GYZ1"),
-		ACRX_CMD_MODAL,
-		dialogCreate,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("setCheck"),
+			_T("setCheck"),
+			ACRX_CMD_MODAL,
+			UpadeAtuAttr,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("gx"),
-		_T("gx"),
-		ACRX_CMD_MODAL,
-		updateAttr,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("setBom"),
+			_T("setBom"),
+			ACRX_CMD_MODAL,
+			UpadenewBomExcel,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
+#ifndef APPLY_DEPARTMENT
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("WRepair"),
+			_T("WRepair"),
+			ACRX_CMD_MODAL,
+			RepairDwgs,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("setCheck"),
-		_T("setCheck"),
-		ACRX_CMD_MODAL,
-		UpadeAtuAttr,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("PCDJD1"),
+			_T("PCDJD1"),
+			ACRX_CMD_MODAL,
+			CMD_PCDJD1,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("setBom"),
-		_T("setBom"),
-		ACRX_CMD_MODAL,
-		UpadenewBomExcel,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("WRepair"),
-		_T("WRepair"),
-		ACRX_CMD_MODAL,
-		RepairDwgs,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("PCDJD1"),
-		_T("PCDJD1"),
-		ACRX_CMD_MODAL,
-		CMD_PCDJD1,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("CWDR"),
-		_T("CWDR"),
-		ACRX_CMD_MODAL,
-		CMD_CWDR,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("CWDR"),
+			_T("CWDR"),
+			ACRX_CMD_MODAL,
+			CMD_CWDR,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("ZYKKD"),
-		_T("ZYKKD"),
-		ACRX_CMD_MODAL,
-		CMD_ZYKKD,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("ZYKKD"),
+			_T("ZYKKD"),
+			ACRX_CMD_MODAL,
+			CMD_ZYKKD,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("ZYJD"),
-		_T("ZYJD"),
-		ACRX_CMD_MODAL,
-		CMD_ZYJD,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("ZYXD"),
-		_T("ZYXD"),
-		ACRX_CMD_MODAL,
-		CMD_ZYXD,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-	
-	acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
-		_T("INTK"),
-		_T("INTK"),
-		ACRX_CMD_MODAL,
-		CMD_INTK,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("ZYJD"),
+			_T("ZYJD"),
+			ACRX_CMD_MODAL,
+			CMD_ZYJD,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("ZYXD"),
+			_T("ZYXD"),
+			ACRX_CMD_MODAL,
+			CMD_ZYXD,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
+
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("INTK"),
+			_T("INTK"),
+			ACRX_CMD_MODAL,
+			CMD_INTK,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
+	}
+#endif
 	//É¾³ýË«»÷ÊÂ¼þ
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
 	TY_LoadTyTool();
@@ -420,48 +422,51 @@ void menu()
 	{
 		CAcadPopupMenu IPopUpMenu(IPopUpMenus.Add(cstrMenuName));
 		UINT MenuIndex = 0;
+		
+		if (WALTER)
+		{
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&ÅúÁ¿µ¼Èë±ê×¼Í¼Ö½"), _T("_GYZ1 "));
+#ifndef APPLY_DEPARTMENT
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&Íß¶ûÌØÍ¼Ö½ÐÞ¸´"), _T("_WREPAIR "));
 
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&ÅúÁ¿µ¼Èë±ê×¼Í¼Ö½"),_T("_GYZ1 "));
 
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&Íß¶ûÌØÍ¼Ö½ÐÞ¸´"), _T("_WREPAIR "));
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&PCD½Âµ¶/º¸Ó²ÖÊºÏ½ðµ¶"), _T("PCDJD1 "));
 
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&×êÍ·Éè¼Æ"), _T("CWDR "));
 
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&PCD½Âµ¶/º¸Ó²ÖÊºÏ½ðµ¶"), _T("PCDJD1 "));
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²Ï³µ¶"), _T("ZYXD "));
 
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&×êÍ·Éè¼Æ"), _T("CWDR "));
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²À©¿×µ¶"), _T("ZYKKD "));
 
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²Ï³µ¶"), _T("ZYXD "));
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²½Âµ¶"), _T("ZYJD "));
 
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²À©¿×µ¶"), _T("ZYKKD "));
-
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&ÕûÓ²½Âµ¶"), _T("ZYJD "));
-
-		VariantInit(&index);
-		V_VT(&index) = VT_I4;
-		V_I4(&index) = MenuIndex++;
-		IPopUpMenu.AddMenuItem(index, _T("&²åÈëÍ¼¿ò"), _T("INTK "));
-
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&²åÈëÍ¼¿ò"), _T("INTK "));
+#endif
+		}
 		pDisp = IPopUpMenu.m_lpDispatch;
 		pDisp->AddRef();
 	}

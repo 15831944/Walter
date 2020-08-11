@@ -594,7 +594,6 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 	else
 		pPoly->setClosed(Adesk::kFalse);
 	pPoly->setNormal(AcGeVector3d(0,0,1));
-	pPoly->setColorIndex(5);
 
 	//AcGeMatrix3d transMX;
 	//transMX.setToTranslation(AcGeVector3d(origin.x,origin.y,origin.z));//3维矩阵
@@ -617,11 +616,11 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 		acutPrintf(L"ConvertToDxy参数错误\n");
 		return ret;
 	}
-	CLayerSwitch(L"1");
 	acDocManager->lockDocument(curDoc());
 
 	//第二步：创建基础的面域
 	AcDbPolyline *pline = CreatePolyline2d(offsetXY, dxys);
+	Acad::ErrorStatus eks =  pline->setLayer(L"2");
 
 	AcDb3dSolid *pSolid = NULL;
 	AcDbRegion * region = CRegionUtil::CreateRegionFromCurve(pline);
@@ -639,8 +638,9 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	AcDbEntity * pMirrorPline = 0;
 	pline->getTransformedCopy(mxMirror,pMirrorPline);
 	AcDbObjectId plineId1 = CDwgDatabaseUtil::PostToModelSpace(pline);
-	CEntityUtil::SetColorIndex(plineId1, 2);
+	CEntityUtil::SetLayer(plineId1, L"1");
 	AcDbObjectId plineId2 = CDwgDatabaseUtil::PostToModelSpace(pMirrorPline);
+	CEntityUtil::SetLayer(plineId2, L"1");
 	//JHCOM_SetEntityType(plineId1, L"ACAD_ISO02W100");
 	//JHCOM_SetEntityType(plineId2, L"ACAD_ISO02W100");
 
@@ -779,14 +779,12 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 #ifndef AHNO_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
-	acDocManager->unlockDocument(curDoc());
-	CLayerSwitch(L"3");
-	acDocManager->lockDocument(curDoc());
+
 	
 	//第五步：创建中心线
 	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0));
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
-	
+	CEntityUtil::SetLayer(centerLine, L"SK4");
 	//第六步：创建标注
 	CreateDims(offsetXY,AcGePoint3d(0,0,0));
 
@@ -931,7 +929,7 @@ int CreateTopTrangle(AcGePoint2d offset, double radius, double startangle, doubl
 	AcGePoint3d pnt3 = pLine2->endPoint();
 
 	AcDbLine *pLine3 = new AcDbLine(pnt2,pnt3);
-	pLine3->setColorIndex(3);
+	//pLine3->setColorIndex(3);
 	AcDbObjectId lineID = CDwgDatabaseUtil::PostModalToBlockTable(pLine3, ACDB_MODEL_SPACE);
 	
 	pLine1->close();
@@ -1185,14 +1183,11 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 #ifndef AHNO_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
-	acDocManager->unlockDocument(curDoc());
-	CLayerSwitch(L"3");
-	acDocManager->lockDocument(curDoc());
+	
 	//第六步：创建中心线
 	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0));
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
-
-	//第七步 标注
+	CEntityUtil::SetLayer(centerLine, L"SK4");
 	CreateDims(offsetXY,farestPnt);
 
 	//第八步：冷却
@@ -1251,7 +1246,7 @@ int CThreadData::CreateHelix(AcGePoint2d offsetXY, //偏移的点
 	aHelix->setConstrain(AcDbHelix::kHeight);
 	aHelix->setHeight(totalHeight);
 	aHelix->setTurnHeight(singleH); // Turns = Height / TurnHeight
-
+	aHelix->setLayer(L"1");
 	aHelix->createHelix();
 
 	id = CDwgDatabaseUtil::PostToModelSpace(aHelix); 
@@ -1273,7 +1268,6 @@ int CThreadData::CreateHelix(AcGePoint2d offsetXY, //偏移的点
 	aHelix->setAxisVector(AcGeVector3d(1, 0, 0));
 	aHelix->setStartPoint(startPnt);//第一个点
 
-
 	aHelix->setBaseRadius(firstRad);
 	aHelix->setTopRadius(firstRad);
 	aHelix->setTwist(m_isClockwise);
@@ -1283,7 +1277,7 @@ int CThreadData::CreateHelix(AcGePoint2d offsetXY, //偏移的点
 	aHelix->setConstrain(AcDbHelix::kHeight);
 	aHelix->setHeight(totalHeight);
 	aHelix->setTurnHeight(singleH); // Turns = Height / TurnHeight
-
+	aHelix->setLayer(L"1");
 	aHelix->createHelix();
 
 	id = CDwgDatabaseUtil::PostToModelSpace(aHelix); 
@@ -1319,7 +1313,6 @@ int CThreadData::CreateHelix(
 	//aHelix->setTurnHeight(singleH); // Turns = Height / TurnHeight
 
 	aHelix->createHelix();
-
 	id = CDwgDatabaseUtil::PostToModelSpace(aHelix); 
 
 	return 0;
@@ -1925,7 +1918,7 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
             end.x += len;
 
 		AcDbObjectId lineId = CLineUtil::CreateLine(mid, end);
-
+	
 		//拉伸裁剪
 		AcDbObjectId extrudeSolidId;
 		JHCOM_ExtrudeAlongPath2(regionId, lineId, extrudeSolidId);
@@ -2214,6 +2207,10 @@ void CThreadData::Draw(bool IsZC)
 	ptInsert.x = pInt.x + m_totalLength ;
 	ptInsert.y = pInt.y;
 	int ret = -1;
+
+	CString filePath = TY_GetDaoBingSFolder() + m_daobing + L".dwg";
+	CString blkName = CCommonUtil::GenStrByTime();
+	CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
 	//判断是否是直槽刀
 	/*double len = GetHandleLengthFromDaoBing(m_daobing);
 	m_totalLength += len;*/
@@ -2222,12 +2219,10 @@ void CThreadData::Draw(bool IsZC)
 	else
 		ret = CreateModel3D(pInt, id);
 	//插入刀柄 插入点的位置计算
-	if (ret == 0)
+	/*if (ret == 0)
 	{
-		CString filePath = TY_GetDaoBingSFolder() + m_daobing + L".dwg";
-		CString blkName = CCommonUtil::GenStrByTime();
-		CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
-	}
+		
+	}*/
 }
 
 void CThreadData::SetDaoBingName(const CString & DaoBingName)

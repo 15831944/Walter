@@ -287,11 +287,24 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	//读取数据
 	m_alldjInfos = getTableData();
 	m_data.ClearCutterSegs();
+	auto DrLength = [&](int i) 
+	{
+		return _ttof(m_alldjInfos[i][1]) - _ttof(m_alldjInfos[i-1][1]);
+	 };
+	double sum;
 	for (int i=0;i < m_alldjInfos.size();i++)
 	{
 		OneRowText RowData = m_alldjInfos[i];
 		m_segdata.m_diameter = _ttof(RowData[0]); //刃径
-		m_segdata.m_length = _ttof(RowData[1]); //刃段长度
+		if (i != 0) 
+		{
+			double len = DrLength(i);
+			m_segdata.m_length = len; //刃段长度 //需要修改
+		}
+		else
+		{
+			m_segdata.m_length = _ttof(RowData[1]);
+		}
 		m_segdata.m_ladderAngle1 = _ttof(RowData[2]); //阶梯角
 		m_data.AddCutterSegData(std::move(m_segdata));
 	}

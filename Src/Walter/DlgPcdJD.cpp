@@ -14,6 +14,7 @@ IMPLEMENT_DYNAMIC(DlgPcdJD, CDialogEx)
 DlgPcdJD::DlgPcdJD(CWnd* pParent /*=NULL*/)
 : CDialogEx(DlgPcdJD::IDD, pParent)
 
+, m_totalLength(0)
 {
 
 }
@@ -29,6 +30,7 @@ void DlgPcdJD::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_STEP_NUM, m_ui_stepNum);
 	DDX_Control(pDX, IDC_COMBO_HILT_CHOOSE, m_ui_hiltChoose);
 
+	DDX_Text(pDX, IDC_EDIT1, m_totalLength);
 }
 
 
@@ -79,7 +81,7 @@ BOOL DlgPcdJD::OnInitDialog()
 	m_ui_hiltChoose.AddString(L"HSK-A80");
 	m_ui_hiltChoose.AddString(L"HSK-A100");*/
 	//初始化图框
-	
+	m_totalLength = 120;
 	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingFolder());
 	for (int i=0;i < dwgfiles.size();i++)
 	{
@@ -102,7 +104,7 @@ BOOL DlgPcdJD::OnInitDialog()
 	//m_proportion.AddString(L"空");
 	//m_proportion.SetCurSel(defaultValue1);
 	InitGridCtrl();
-	
+	UpdateData(FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常:  OCX 属性页应返回 FALSE
 }
@@ -110,6 +112,7 @@ BOOL DlgPcdJD::OnInitDialog()
 
 void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 {
+	UpdateData();
 	CString indexText;
 	int index;
 	index = ((CComboBox*)GetDlgItem(IDC_COMBO_HILT_CHOOSE))->GetCurSel();
@@ -136,7 +139,7 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 		PCDJDStepData temp;
 		temp.index = _ttoi(jdData.m_uiData_allListData[i][0]);
 		temp.m_diameter = _ttof(jdData.m_uiData_allListData[i][1]);
-		temp.m_stepLength = _ttoi(jdData.m_uiData_allListData[i][2]);
+		temp.m_stepLength = _ttoi(jdData.m_uiData_allListData[i][2]) == 0? m_totalLength : _ttoi(jdData.m_uiData_allListData[i][2]);
 		temp.m_angle = _ttof(jdData.m_uiData_allListData[i][3]);
 		m_data.m_stepDatas.push_back(std::move(temp));
 	}
@@ -149,6 +152,11 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 
 void DlgPcdJD::OnCbnSelchangeComboStepNum()
 {
+
+	if (m_allListData.size() > 0)
+	{
+		m_gridCtrl.SetContentItemEditable(m_allListData.size() - 1, m_allListData[0].size() - 2, true);
+	}
 	int tableColumnCount = 3;
 	int index;
 	index = ((CComboBox*)GetDlgItem(IDC_COMBO_STEP_NUM))->GetCurSel();
@@ -168,7 +176,7 @@ void DlgPcdJD::OnCbnSelchangeComboStepNum()
 	default:
 		break;
 	}
-
+	m_gridCtrl.SetContentItemEditable(m_allListData.size() - 1, m_allListData[0].size() - 2, false);
 	m_gridCtrl.Refresh();
 }
 
@@ -185,6 +193,7 @@ void DlgPcdJD::InitGridCtrl()
 	{
 		SetCellHeight();
 		m_gridCtrl.FillTable(m_allListData);
+		m_gridCtrl.SetContentItemEditable(m_allListData.size() - 1, m_allListData[0].size() - 2, false);
 	}
 }
 
@@ -217,7 +226,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"10");
 		defaultText.push_back(str);
-		str.Format(L"30");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"90");
 		defaultText.push_back(str);
@@ -240,7 +249,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"20");
 		defaultText.push_back(str);
-		str.Format(L"60");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"90");
 		defaultText.push_back(str);
@@ -274,7 +283,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"30");
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"90");
 		defaultText.push_back(str);
@@ -319,7 +328,7 @@ MultiRowData DlgPcdJD::FillDefaultData(int rowCount, int columnCount)
 		defaultText.push_back(str);
 		str.Format(L"40");
 		defaultText.push_back(str);
-		str.Format(L"120");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"90");
 		defaultText.push_back(str);

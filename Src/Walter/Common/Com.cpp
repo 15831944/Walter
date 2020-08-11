@@ -4,6 +4,7 @@
 
 static HINSTANCE s_gTyToolInst = 0;
 
+
 CString TY_GetAppPath()
 {
 	WCHAR lpFileName[MAX_PATH];
@@ -362,13 +363,13 @@ int JHCOM_ExtrudeAlongPath2(AcDbObjectId regionid, AcDbObjectId path, AcDbObject
 	AcDbEntity* pEnt = 0;
 	Acad::ErrorStatus es = acdbOpenAcDbEntity(pEnt, path, AcDb::kForWrite);
 	AcDbCurve *pHelix = dynamic_cast<AcDbCurve *>(pEnt);
-
+	
 
 
 	AcDbEntity* pEnt2 = 0;
 	es = acdbOpenAcDbEntity(pEnt2, regionid, AcDb::kForWrite);
 	AcDbRegion *pRegion = dynamic_cast<AcDbRegion *>(pEnt2);
-
+	
 
 
 	/*AcDbEntity* pEntRegion = 0;
@@ -490,21 +491,23 @@ void TY_Project3DSolidTo2D(AcDbObjectId solid3d,
 
 		AcDbEntity *pEnt = p->getResultEntity();
 		AsdkHlrData::Visibility vis = p->getVisibility();
-		if (vis == AsdkHlrData::kVisible)
-		{
-			pEnt->setColorIndex(7); //----- Read
-		}
-		else if (vis == AsdkHlrData::kInternallyHidden)
-		{
-			if (p->getHlrVisibility() == AsdkHlrData::kVisible)
-				pEnt->setColorIndex(2); //----- Yellow
-			else
-				pEnt->setColorIndex(3); //----- Green
-		}
-		else
-		{
-			pEnt->setColorIndex(5); //----- Blue
-		}
+		//if (vis == AsdkHlrData::kVisible)
+		//{
+		//	pEnt->setColorIndex(7); //----- Read
+		//}
+		//else if (vis == AsdkHlrData::kInternallyHidden)
+		//{
+		//	if (p->getHlrVisibility() == AsdkHlrData::kVisible)
+		//		pEnt->setColorIndex(2); //----- Yellow
+		//	else
+		//		pEnt->setColorIndex(3); //----- Green
+		//}
+		//else
+		//{
+		//	pEnt->setColorIndex(5); //----- Blue
+		//}
+
+		pEnt->setLayer(L"1");
 
 		solid3d = CDwgDatabaseUtil::PostToModelSpace(pEnt);
 		if (solid3d == 0)

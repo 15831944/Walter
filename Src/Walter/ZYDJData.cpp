@@ -219,7 +219,10 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	//≤Â»ÎLf±Í◊¢
 	lastPoint = pnt;
 	lastPoint.y = pnt.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
-	lastPoint.x = pnt.x - m_StepData[m_StepData.size() - 2].m_stepLength - 20;
+	auto diff = [&](){
+		return m_IsKKD ? m_StepData[m_StepData.size() - 1].m_diameter : 0.5 * m_StepData[m_StepData.size() - 1].m_diameter;
+	};
+	lastPoint.x = pnt.x - m_StepData[m_StepData.size() - 2].m_stepLength - diff();
 	centerPoint =  CMathUtil::GetMidPoint(ptInsert, lastPoint);
 	centerPoint.y = centerPoint.y + 23;
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
@@ -258,8 +261,13 @@ void CZYDJData::Mending(AcGePoint3d const & pnt)
 	CLayerSwitch layer(L"1");
 	AcGePoint3d lastTopPoint(pnt);
 	lastTopPoint.x -= m_totalLength;
-	lastTopPoint.y =lastTopPoint.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
+
+	auto diff = [&]() {
+		return m_IsKKD ? 0 : 0.5;
+	};
+
+	lastTopPoint.y =lastTopPoint.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0 - diff();
 	AcGePoint3d lastBottomPoint(lastTopPoint);
-	lastBottomPoint.y -= m_StepData[m_StepData.size() - 1].m_diameter;
+	lastBottomPoint.y = lastBottomPoint.y - m_StepData[m_StepData.size() - 1].m_diameter +2* diff();
 	CLineUtil::CreateLine(lastTopPoint, lastBottomPoint);
 }

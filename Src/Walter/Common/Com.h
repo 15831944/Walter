@@ -2,9 +2,16 @@
 #include <vector>
 //#define DEV_TEST_ENV//开发测试环境
 enum TUKuangType{A1 = 0, A2, A3};
+
 #define DIMLAYERNAME L"2" //标注所在图层
 #define DIMSTYLENAME L"WALTER_1" // 标注样式
 const size_t N = 2; //小数点后的有效数字
+//技术部门或者应用部门
+//#define APPLY_DEPARTMENT
+
+//判断路径是否存在 如不存在则不可使用 
+#define WALTER PathFileExists(L"G:\\") 
+
 CString TY_GetAppPath();
 //根据刀柄名称获取distance
 double GetDisByDBName(CString name);

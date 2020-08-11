@@ -53,4 +53,5 @@ public:
 
 	SPCDJDData m_data;
 
+	double m_totalLength;
 };

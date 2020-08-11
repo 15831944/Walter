@@ -87,10 +87,10 @@ void CZyXdDlg::OnBnClickedButton1()
 	//添加一阶数据
 	m_ThreadSegData.m_diameter = m_diameter;
 	m_ThreadSegData.m_length = m_lengthOfKnife;
-	m_ThreadSegData.m_ladderAngle1 = 90.0;
+	m_ThreadSegData.m_ladderAngle1 = 180.0;
 	//如果是刀尖圆角是0则刀尖应该是直角
 	if (m_ArcOfknife == 0) 
-		m_ThreadData.m_topAngle = 180;
+		m_ThreadData.m_topAngle = 180.0;
 	//不由用户设置
 	m_ThreadData.m_cuttingEdgeCount = 6;
 	//刀柄
@@ -105,7 +105,7 @@ void CZyXdDlg::OnBnClickedButton1()
 	//刀尖类型
 	m_ThreadData.m_daoJianType = E_DaoJian_平底;
 	//必须设置排屑槽长，排屑槽长要大于刃径的0.5倍
-	m_ThreadData.m_GrooveLength = m_lengthOfKnife * 0.5 ;
+	m_ThreadData.m_GrooveLength = m_lengthOfKnife + m_diameter * 0.5 ;
 	//
 	m_ThreadData.AddCutterSegData(m_ThreadSegData);
 	m_ThreadData.SetLadderCount(0);

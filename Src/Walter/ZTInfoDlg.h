@@ -41,19 +41,19 @@ public:
 	
 public:
 	CGridCtrlEx m_djInfoCtrl;
-	double m_TotalLength;
-	double m_VertAngle;
-	CComboBox m_StepNum;
-	CComboBox m_ui_DrNumCtrl;
-	MultiRowData m_alldjInfos;
-	CEdit m_TotalLenEdit;
-	CEdit m_VertexEdit;
+	double m_TotalLength; //总长
+	double m_VertAngle;  //顶角
+	CComboBox m_StepNum;  //阶梯数量
+	CComboBox m_ui_DrNumCtrl; //刀刃数量
+	MultiRowData m_alldjInfos; // 刀具所有的信息
+	CEdit m_TotalLenEdit; //总长
+	CEdit m_VertexEdit; //
 
-	CThreadSegData m_segdata;
-	CThreadData m_data;
-	CComboBox m_DaoBingCtrl;
+	CThreadSegData m_segdata; //刀刃数据
+	CThreadData m_data; 
+	CComboBox m_DaoBingCtrl; //刀柄选择
 
 	CComboBox m_DrillSel;
 	afx_msg void OnCbnSelchangeCombo1();
-	double m_GrooveLenth;
+	double m_GrooveLenth; //排屑槽长
 };

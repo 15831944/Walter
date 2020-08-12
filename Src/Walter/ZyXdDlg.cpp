@@ -87,7 +87,7 @@ void CZyXdDlg::OnBnClickedButton1()
 	//添加一阶数据
 
 	m_ThreadData.m_pointR = m_ArcOfknife;
-
+	m_ThreadData.m_cutterType = T_DRILL_MILLING_CUTTER;
 	m_ThreadSegData.m_diameter = m_diameter;
 	m_ThreadSegData.m_length = m_lengthOfKnife;
 	m_ThreadSegData.m_ladderAngle1 = 180.0;

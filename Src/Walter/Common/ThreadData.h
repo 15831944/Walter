@@ -12,6 +12,7 @@ enum E_CutterType//刀具类型
 	T_MILLING_CUTTER,	//铣刀
 	T_REAMER_CUTTER,	//铰刀f
 	T_PROFILE_CUTTER,	//成型刀
+	T_DRILL_MILLING_CUTTER, //整硬铣刀
 };
 CString ToCString(E_CutterType p_type);
 E_CutterType CutterTypeFromString(CString str);

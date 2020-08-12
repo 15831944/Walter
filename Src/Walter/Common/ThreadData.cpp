@@ -561,7 +561,40 @@ int CThreadData::PostProcessAngleHead(vSDXY &dxys) const
 		}
 		return 0;
 	}
-	
+	//整硬铣刀的处理部分
+	if (m_cutterType == T_DRILL_MILLING_CUTTER)
+	{
+		if (fabs(m_pointR) > 0)
+		{
+
+			double A = CMathUtil::AngleToRadian(m_topAngle / 4.0);
+			double B = 2 * A;
+
+			double tanA = tan(A);
+			double len = m_pointR;// *tanA;
+
+			double dx = m_pointR * cos(B);
+			double dy = m_pointR * sin(B);
+
+			//第一个点 ---缩短 加上圆弧
+			dxys[0].dx -= dx;
+			dxys[0].dy -= dy;
+
+			double buchang = -0.023;//补偿
+			dxys[0].buglet = -B / 4.0 ;
+
+			//增加第二个点
+			SDXY newDxy;
+			newDxy.dx = dx + len;
+			newDxy.dy = dy;
+			newDxy.buglet = 0;
+			dxys.insert(dxys.begin() + 1, newDxy);
+
+			//处理第三段
+			dxys[2].dx -= len;
+		}
+		return 0;
+	}
 	return 0;
 
 	
@@ -577,15 +610,15 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 
 	int start  = 0;
 	points.append(offsetXY);
-	if (fabs(m_pointR) > 0)
-	{
-		start += 1;
-		AcGePoint2d temp = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy - m_pointR);
-		points.append(temp);
-		temp = AcGePoint2d(offsetXY.x + dxys[0].dx + m_pointR, offsetXY.y + dxys[0].dy);
-		points.append(temp);
-		offsetXY = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy);
-	}
+	//if (T_DRILL_MILLING_CUTTER == m_cutterType && fabs(m_pointR) > 0)
+	//{
+	//	start += 1;
+	//	//AcGePoint2d temp = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy - m_pointR);
+	//	//points.append(temp);
+	//	AcGePoint2d temp = AcGePoint2d(offsetXY.x + dxys[0].dx - m_pointR, offsetXY.y + dxys[0].dy);
+	//	points.append(temp);
+	//	offsetXY = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy);
+	//}
 
 	for (int i = start; i < (int)dxys.size(); i++)
 	{
@@ -596,7 +629,6 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 	AcDbPolyline *pPoly= new AcDbPolyline();
 	for (int i = 0; i < (int)points.length() ; i++)
 	{
-		
 		if (i >= 1 && fabs(dxys[i - 1].buglet) > USER_TOL * 100)
 		{
 			pPoly->addVertexAt(i, points.at(i), dxys[i - 1].buglet);
@@ -604,6 +636,7 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 		else
 		    pPoly->addVertexAt(i,points.at(i),0);
 	}
+	//pPoly->setBulgeAt(2, m_pointR);
 	if (closed)
 	    pPoly->setClosed(Adesk::kTrue);//将其闭合
 	else
@@ -705,7 +738,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	double xLen = 0;
 	//尾巴切除方法 //目前所有钻头和7度的铰刀用球形生成方法
 	int tailRemoveType = -1;
-	if (m_cutterType == T_DRILL_CUTTER)
+	if (m_cutterType == T_DRILL_CUTTER || m_cutterType == T_DRILL_MILLING_CUTTER)
 		tailRemoveType = 1;
 	else if (m_cutterType == T_MILLING_CUTTER)
 	{

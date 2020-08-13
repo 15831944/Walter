@@ -8,7 +8,7 @@ typedef struct ZYDJStepData
 	double m_diameter;//直径
 	double m_stepLength;//阶梯长度
 	double m_angle;//阶梯主偏角
-}ZYXDStepData;
+}ZYDJStepData;
 
 //整硬刀具共用的类
 class CZYDJData
@@ -18,7 +18,7 @@ public:
 	~CZYDJData();
 	//在模型空间中绘图
 	void Draw();
-	void SetStepData(vector<ZYXDStepData> const& data);
+	void SetStepData(vector<ZYDJStepData> const& data);
 	void SetPreDiameter(double diameter);
 	void SetDaobing(CString Daobing);
 	void SetLabberCount(int labberCount);
@@ -41,7 +41,7 @@ private:
 	//补线
 	void Mending(AcGePoint3d const& pnt);
 private:
-	vector<ZYXDStepData> m_StepData;
+	vector<ZYDJStepData> m_StepData;
 	
 	//扩孔刀数据预孔直径
 	double m_Prediameter;

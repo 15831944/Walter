@@ -160,6 +160,7 @@
     <ClCompile Include="Common\ThreadData.cpp" />
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
+    <ClCompile Include="DlgPcdXd.cpp" />
     <ClCompile Include="DlgTuKuang.cpp" />
     <ClCompile Include="DlgZyJd.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="GridCtrl\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenExcelDialog.cpp" />
+    <ClCompile Include="PCDXDdata.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -208,6 +210,7 @@
     <ClInclude Include="Common\ThreadData.h" />
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
+    <ClInclude Include="DlgPcdXd.h" />
     <ClInclude Include="DlgTuKuang.h" />
     <ClInclude Include="DlgZyJd.h" />
     <ClInclude Include="GridCtrl\GridCellCheckEx.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="ZTInfoDlg.h" />
     <ClInclude Include="ZYDJData.h" />
     <ClInclude Include="ZyXdDlg.h" />
+    <ClInclude Include="PCDXDdata.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -247,6 +251,7 @@
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
     <Image Include="res\mhz.bmp" />
+    <Image Include="res\pcdxd.bmp" />
     <Image Include="res\xd.bmp" />
     <Image Include="res\zyjd.bmp" />
     <Image Include="res\zykkd.bmp" />

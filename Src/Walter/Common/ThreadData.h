@@ -4,7 +4,7 @@
 using namespace std;
 
 
-//#define  AHNO_DRAW_3D
+//#define  TY_DRAW_3D
 
 enum E_CutterType//µ∂æﬂ¿‡–Õ
 {

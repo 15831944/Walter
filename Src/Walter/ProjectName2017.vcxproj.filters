@@ -91,6 +91,12 @@
     <ClCompile Include="ZyXdDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="DlgPcdXd.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PCDXDdata.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -228,6 +234,12 @@
     <ClInclude Include="ZyXdDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="DlgPcdXd.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PCDXDdata.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">
@@ -288,6 +300,9 @@
       <Filter>Res</Filter>
     </Image>
     <Image Include="res\xd.bmp">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="res\pcdxd.bmp">
       <Filter>Res</Filter>
     </Image>
   </ItemGroup>

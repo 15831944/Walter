@@ -782,7 +782,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 		AcGeVector3d stdir = CCurveUtil::GetCurveStartPointVector(helixId);
 
 		AcDbObjectId circleid = CCircleUtil::CreateCircle(stpnt, stdir, cirrad);
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 		CEntityUtil::ShowObject(circleid, false, true);
 		CEntityUtil::ShowObject(helixId, false, true);
 #endif
@@ -824,7 +824,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	//投影
 	TY_Project3DSolidTo2D(mainid, false, false, false,false);
 
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
 
@@ -1020,7 +1020,7 @@ int CreateTailTrangleAndRolve(AcGePoint2d offset, //三角形所在的位置
 
 	//pLine 这个是张开角度的中线 就是沿着中心点 伸出去的一个中线
 
-#ifdef AHNO_DRAW_3D
+#ifdef TY_DRAW_3D
 	pLine->setColorIndex(4);
 	AcGeMatrix3d mx1;
 	AcDbEntity * newEnt = 0;
@@ -1107,7 +1107,7 @@ int CreateTailTrangleAndRolve(AcGePoint2d offset, //三角形所在的位置
 
 	CBrepUtil::AN_Subtract(mainid, toolid);
 
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 	CObjectUtil::DeleteObject(regionId);
 	CObjectUtil::DeleteObject(lineID);
 	CObjectUtil::DeleteObject(copylineID);
@@ -1227,7 +1227,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	//投影
 	TY_Project3DSolidTo2D(mainid, false, false, false,false) ;
 
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
 	
@@ -1479,12 +1479,12 @@ int CThreadData::CreateLengBians(AcDbObjectId mainid, AcGePoint2d offsetXY, doub
 
 		if (i == m_cutterSegs.size() - 1)//最后一段特殊处理
 		{
-			if (m_cutterType == T_DRILL_CUTTER)
-		        len = m_cutterSegs[i].m_length - xValue - saoMiaoCirRad;
+			if (m_cutterType == T_DRILL_CUTTER && m_cutterSegs.size() > 1)
+				len = m_cutterSegs[i].m_length - 1;// -xValue - saoMiaoCirRad;
 			else//铣刀铰刀
 			{
 				if (!isMaHua)//铣刀铰刀-直槽-最后一段
-					len = m_cutterSegs[i].m_length - xValue - saoMiaoCirRad;
+					len = m_cutterSegs[i].m_length -xValue - saoMiaoCirRad;
 				else//铣刀铰刀-麻花-最后一段
 				    len = m_cutterSegs[i].m_length - xValue;
 			}
@@ -1869,7 +1869,7 @@ int CThreadData::CreateRegionForOneArc(AcGeCircArc3d&arc, AcGePoint2d offsetXY, 
 		pcurvOut = CConvertUtil::ConvertGeCurveToDbCurve(&outerArc);
 
 		//中间圆弧
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 		CConvertUtil::ConvertGeCurveToDbCurve(&midArc);
 #endif
 	}
@@ -1921,7 +1921,7 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 		CBrepUtil::AN_Subtract(mainId, extrudeSolidId);
 
 		//隐藏对象
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 		CEntityUtil::ShowObject(regionId, false, true);
 		CEntityUtil::ShowObject(helixId, false, true);
 #endif
@@ -1947,7 +1947,7 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 
 			CBrepUtil::AN_Subtract(mainId, extrudeSolidId);
 			//隐藏对象
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 			CEntityUtil::ShowObject(regionId, false, true);
 			CEntityUtil::ShowObject(helixId, false, true);
 #endif
@@ -1973,7 +1973,7 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 		CBrepUtil::AN_Subtract(mainId, extrudeSolidId);
 
 		//隐藏对象
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 		CEntityUtil::ShowObject(lineId, false, true);
 		CEntityUtil::ShowObject(regionId, false, true);
 #endif
@@ -1997,7 +1997,7 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 			CEntityUtil::ShowObject(lineId, false, true);
 
 			//隐藏对象
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 			CEntityUtil::ShowObject(lineId, false, true);
 #endif
 		}
@@ -2005,7 +2005,7 @@ int CThreadData::CreateLengBianForOneArc(AcDbObjectId mainId, AcGeCircArc3d&arc,
 	
 
 	//隐藏对象
-#ifndef AHNO_DRAW_3D
+#ifndef TY_DRAW_3D
 	CEntityUtil::ShowObject(regionId, false, true);
 #endif
 

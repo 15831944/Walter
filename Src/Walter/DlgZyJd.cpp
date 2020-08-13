@@ -301,10 +301,10 @@ void CDlgZyJd::OnBnClickedButton1()
 	m_ZyDjData.SetDaobing(Daobing);
 	//…Ë÷√ ˝æ›
 	m_allrowData = GetGridData();
-	vector<ZYXDStepData> allStepData;
+	vector<ZYDJStepData> allStepData;
 	for (size_t i = 0; i < _ttoi(labberCountStr); i++)
 	{
-		ZYXDStepData oneStepData;
+		ZYDJStepData oneStepData;
 		oneStepData.index = _ttof(m_allrowData[i][0]);
 		oneStepData.m_diameter = _ttof(m_allrowData[i][1]);
 		oneStepData.m_stepLength = _ttof(m_allrowData[i][2]);

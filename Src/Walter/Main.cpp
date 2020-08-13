@@ -43,6 +43,7 @@
 #include "ZTInfoDlg.h"
 #include "DlgTuKuang.h"
 #include "DlgZyJd.h"
+#include  "DlgPcdXd.h"
 HINSTANCE g_tytoolInst = 0;
 
 #ifdef _DEBUG
@@ -66,7 +67,14 @@ void dialogCreate()
 	g_Walter->Create(IDD_Walter);
 	g_Walter->ShowWindow(SW_SHOW);
 }
-
+CDlgPcdXd* g_pcdxd = nullptr;
+void CMD_PCDXD() 
+{
+	CAcModuleResourceOverride resOverride;
+	g_pcdxd = new CDlgPcdXd(acedGetAcadFrame());
+	g_pcdxd->Create(IDD_DIALOG2_PCD_XD);
+	g_pcdxd->ShowWindow(SW_SHOW);
+}
 DlgPcdJD* g_dlgPcdJd1 = NULL;
 void CMD_PCDJD1()
 {
@@ -300,6 +308,14 @@ static void initApp()
 			NULL,
 			-1,
 			theArxDLL.ModuleResourceInstance());
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("PCDXD"),
+			_T("PCDXD"),
+			ACRX_CMD_MODAL,
+			CMD_PCDXD,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 
 		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
 			_T("CWDR"),
@@ -440,6 +456,11 @@ void menu()
 			V_VT(&index) = VT_I4;
 			V_I4(&index) = MenuIndex++;
 			IPopUpMenu.AddMenuItem(index, _T("&PCD½Âµ¶/º¸Ó²ÖÊºÏ½ðµ¶"), _T("PCDJD1 "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&PCDÏ³µ¶"), _T("PCDXD "));
 
 			VariantInit(&index);
 			V_VT(&index) = VT_I4;

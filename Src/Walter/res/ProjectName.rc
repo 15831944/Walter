@@ -151,6 +151,24 @@ BEGIN
     CONTROL         IDB_BITMAP10,IDC_STATIC,"Static",SS_BITMAP,6,118,334,172
 END
 
+IDD_DIALOG2_PCD_XD DIALOGEX 0, 0, 351, 229
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "PCD铣刀"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "刀具直径:",IDC_STATIC,79,6,38,8
+    LTEXT           "刃长:",IDC_STATIC,6,30,21,8
+    LTEXT           "悬伸长度：",IDC_STATIC,173,6,44,8
+    EDITTEXT        IDC_EDIT1,223,3,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,121,5,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,31,25,42,14,ES_AUTOHSCROLL
+    LTEXT           "刀柄：",IDC_STATIC,6,8,27,8
+    COMBOBOX        IDC_COMBO1,31,5,43,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "生成图纸",IDC_BUTTON1,110,24,50,14
+    GROUPBOX        "示意图",IDC_STATIC,0,45,350,184
+    CONTROL         IDB_BITMAP11,IDC_STATIC,"Static",SS_BITMAP,11,54,334,172
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -189,6 +207,10 @@ BEGIN
     IDD_DIALOG_ZYXD, DIALOG
     BEGIN
         BOTTOMMARGIN, 322
+    END
+
+    IDD_DIALOG2_PCD_XD, DIALOG
+    BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -234,6 +256,11 @@ BEGIN
     0
 END
 
+IDD_DIALOG2_PCD_XD AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -272,6 +299,8 @@ IDB_BITMAP8             BITMAP                  "zykkd.bmp"
 IDB_BITMAP9             BITMAP                  "mhz.bmp"
 
 IDB_BITMAP10            BITMAP                  "xd.bmp"
+
+IDB_BITMAP11            BITMAP                  "pcdxd.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

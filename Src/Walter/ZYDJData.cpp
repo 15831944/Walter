@@ -111,7 +111,7 @@ void CZYDJData::Draw()
 
 }
 
-void CZYDJData::SetStepData(vector<ZYXDStepData> const& data)
+void CZYDJData::SetStepData(vector<ZYDJStepData> const& data)
 {
 	m_StepData = data;
 }

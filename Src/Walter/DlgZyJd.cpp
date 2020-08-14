@@ -67,7 +67,7 @@ void CDlgZyJd::InitGrid()
 	m_XdLabberDataCtrl.LoadDefaltSettings();
 	m_XdLabberDataCtrl.SetEditable(TRUE);
 	m_XdLabberDataCtrl.SetRowCount((int)m_allrowData.size() + 1);
-	m_XdLabberDataCtrl.SetHeaderText(L"½×ÌÝºÅ;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;½×ÌÝÖ÷Æ«½ÇA/¡ã");
+	m_XdLabberDataCtrl.SetHeaderText(L"½×ÌÝºÅ;Ö±¾¶D/mm;½×ÌÝ³¤¶ÈL/mm;½×ÌÝ½ÇA/¡ã");
 	m_XdLabberDataCtrl.SetHeaderWidth(L"25;25;25;25");
 	m_XdLabberDataCtrl.SetFixedRowCount(1);
 	SetGridData();
@@ -101,7 +101,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"20");
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -124,7 +124,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"40");
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -158,7 +158,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"60");
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -203,7 +203,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"80");
 		defaultText.push_back(str);
-		str.Format(L"90");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		vec.push_back(defaultText);
 		break;
@@ -221,9 +221,12 @@ void CDlgZyJd::SetGridData()
 
 void CDlgZyJd::ReloadGridData()
 {
+	if (m_allrowData.size() > 0)
+		m_XdLabberDataCtrl.SetContentItemEditable(m_allrowData.size(), m_allrowData[0].size() - 1, true);
 	int selectIndex = m_ui_LabberCtrl.GetCurSel();
 	m_allrowData = GetDefaultGridData(selectIndex);
 	m_XdLabberDataCtrl.FillTable(m_allrowData);
+	m_XdLabberDataCtrl.SetContentItemEditable(m_allrowData.size(), m_allrowData[0].size() - 1, false);
 }
 
 //¸ü»»Ê¾ÒâÍ¼

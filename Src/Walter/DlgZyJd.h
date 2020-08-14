@@ -53,6 +53,6 @@ public:
 	CZYDJData m_ZyDjData;
 
 	double m_totalLength;
-	//判断是整硬铣刀还是扩孔刀
+	//判断是整硬铰刀还是扩孔刀
 	bool m_isKKd;
 };

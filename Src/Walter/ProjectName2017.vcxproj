@@ -161,6 +161,7 @@
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
     <ClCompile Include="DlgPcdXd.cpp" />
+    <ClCompile Include="DlgTd.cpp" />
     <ClCompile Include="DlgTuKuang.cpp" />
     <ClCompile Include="DlgZyJd.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheckEx.cpp" />
@@ -185,6 +186,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TDData.cpp" />
     <ClCompile Include="WalterDialog.cpp" />
     <ClCompile Include="ZTInfoDlg.cpp" />
     <ClCompile Include="ZYDJData.cpp" />
@@ -211,6 +213,7 @@
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
     <ClInclude Include="DlgPcdXd.h" />
+    <ClInclude Include="DlgTd.h" />
     <ClInclude Include="DlgTuKuang.h" />
     <ClInclude Include="DlgZyJd.h" />
     <ClInclude Include="GridCtrl\GridCellCheckEx.h" />
@@ -233,6 +236,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TDData.h" />
     <ClInclude Include="WalterDialog.h" />
     <ClInclude Include="ZTInfoDlg.h" />
     <ClInclude Include="ZYDJData.h" />
@@ -252,6 +256,7 @@
     <Image Include="res\222.bmp" />
     <Image Include="res\mhz.bmp" />
     <Image Include="res\pcdxd.bmp" />
+    <Image Include="res\td.bmp" />
     <Image Include="res\xd.bmp" />
     <Image Include="res\zyjd.bmp" />
     <Image Include="res\zykkd.bmp" />

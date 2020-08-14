@@ -24,6 +24,8 @@
 #define IDB_BITMAP10                    170
 #define IDD_DIALOG2_PCD_XD              171
 #define IDB_BITMAP11                    173
+#define IDD_DIALOG_TD                   174
+#define IDB_BITMAP12                    177
 #define IDC_EDIT_XPT                    1000
 #define IDC_EDIT_ANGLE                  1001
 #define IDC_BUTTON_POINT                1002
@@ -61,6 +63,7 @@
 #define IDC_BROWSE                      1031
 #define IDC_CUSTOM1                     1032
 #define IDC_CUSTOM1_JD                  1032
+#define IDC_TD                          1032
 #define IDC_COMBO_HILT_CHOOSE           1033
 #define IDC_COMBO_STEP_CHOOSE           1034
 #define IDC_COMBO_STEP_NUM              1034
@@ -86,7 +89,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        174
+#define _APS_NEXT_RESOURCE_VALUE        178
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1059
 #define _APS_NEXT_SYMED_VALUE           101

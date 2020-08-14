@@ -253,6 +253,8 @@
     <None Include="res\111.bmp" />
     <None Include="res\222.bmp" />
     <None Include="res\mhz.bmp" />
+    <None Include="res\pcdxd.bmp" />
+    <None Include="res\td.bmp" />
     <None Include="res\xd.bmp" />
     <None Include="res\zyjd.bmp" />
     <None Include="res\zykkd.bmp" />

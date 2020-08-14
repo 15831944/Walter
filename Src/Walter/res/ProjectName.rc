@@ -169,6 +169,23 @@ BEGIN
     CONTROL         IDB_BITMAP11,IDC_STATIC,"Static",SS_BITMAP,11,54,334,172
 END
 
+IDD_DIALOG_TD DIALOGEX 0, 0, 391, 333
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "可换刀片镗刀"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "刀柄：",IDC_STATIC,13,11,27,8
+    COMBOBOX        IDC_COMBO1,41,9,48,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "悬伸长度：",IDC_STATIC,107,9,44,8
+    EDITTEXT        IDC_EDIT2,149,9,40,14,ES_AUTOHSCROLL
+    LTEXT           "阶梯数量：",IDC_STATIC,192,9,44,8
+    COMBOBOX        IDC_COMBO2,239,9,48,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "生成图纸",IDC_BUTTON1,311,9,50,14
+    CONTROL         "Custom1",IDC_TD,"MFCGridCtrl",WS_TABSTOP,0,30,390,111
+    GROUPBOX        "示意图",IDC_STATIC,1,146,389,187
+    CONTROL         IDB_BITMAP12,IDC_STATIC,"Static",SS_BITMAP,31,153,334,172
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -210,6 +227,10 @@ BEGIN
     END
 
     IDD_DIALOG2_PCD_XD, DIALOG
+    BEGIN
+    END
+
+    IDD_DIALOG_TD, DIALOG
     BEGIN
     END
 END
@@ -261,6 +282,11 @@ BEGIN
     0
 END
 
+IDD_DIALOG_TD AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -301,6 +327,8 @@ IDB_BITMAP9             BITMAP                  "mhz.bmp"
 IDB_BITMAP10            BITMAP                  "xd.bmp"
 
 IDB_BITMAP11            BITMAP                  "pcdxd.bmp"
+
+IDB_BITMAP12            BITMAP                  "td.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

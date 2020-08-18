@@ -250,11 +250,13 @@
     <ResourceCompile Include="res\ProjectName.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="mhzt.bmp" />
     <Image Include="res\11.BMP" />
     <Image Include="res\111.bmp" />
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
     <Image Include="res\mhz.bmp" />
+    <Image Include="res\mhzt.bmp" />
     <Image Include="res\pcdxd.bmp" />
     <Image Include="res\td.bmp" />
     <Image Include="res\xd.bmp" />

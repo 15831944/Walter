@@ -304,14 +304,17 @@ void CDlgZyJd::OnBnClickedButton1()
 	m_ZyDjData.SetDaobing(Daobing);
 	//…Ë÷√ ˝æ›
 	m_allrowData = GetGridData();
-	vector<ZYDJStepData> allStepData;
+	vector<ZYXDStepData> allStepData;
 	for (size_t i = 0; i < _ttoi(labberCountStr); i++)
 	{
-		ZYDJStepData oneStepData;
+		ZYXDStepData oneStepData;
 		oneStepData.index = _ttof(m_allrowData[i][0]);
 		oneStepData.m_diameter = _ttof(m_allrowData[i][1]);
 		oneStepData.m_stepLength = _ttof(m_allrowData[i][2]);
-		oneStepData.m_angle = _ttof(m_allrowData[i][3]);
+		if (i > 0)
+			oneStepData.m_angle = _ttof(m_allrowData[i -1][3]);
+		else
+			oneStepData.m_angle = _ttof(m_allrowData[i][3]);
 		allStepData.push_back(std::move(oneStepData));
 	}
 	m_ZyDjData.SetStepData(allStepData);

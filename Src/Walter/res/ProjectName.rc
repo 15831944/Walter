@@ -85,7 +85,7 @@ BEGIN
     COMBOBOX        IDC_COMBO_STEPNUM,47,48,40,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Custom1",IDC_CUSTOM_DJINFO,"MFCGridCtrl",WS_TABSTOP,0,69,412,112
     GROUPBOX        "示意图",IDC_STATIC,0,185,413,232
-    CONTROL         IDB_BITMAP9,IDC_ZT_BMP,"Static",SS_BITMAP,51,209,319,172
+    CONTROL         IDB_BITMAP9,IDC_ZT_BMP,"Static",SS_BITMAP,51,209,334,172
     LTEXT           "刀柄:",IDC_STATIC,106,19,21,8
     COMBOBOX        IDC_COMBO1_DJ,135,17,35,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "钻头类型:",IDC_STATIC,10,18,38,8
@@ -322,13 +322,13 @@ IDB_BITMAP7             BITMAP                  "zyjd.bmp"
 
 IDB_BITMAP8             BITMAP                  "zykkd.bmp"
 
-IDB_BITMAP9             BITMAP                  "mhz.bmp"
-
 IDB_BITMAP10            BITMAP                  "xd.bmp"
 
 IDB_BITMAP11            BITMAP                  "pcdxd.bmp"
 
 IDB_BITMAP12            BITMAP                  "td.bmp"
+
+IDB_BITMAP9             BITMAP                  "mhzt.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

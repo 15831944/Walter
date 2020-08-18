@@ -321,7 +321,6 @@ void CDlgTd::OnBnClickedButton1()
 		segdata.m_len = _ttoi(data[2]) == 0 ? m_totallength : _ttoi(data[2]);
 		m_tdData.AddSegData(std::move(segdata));
 	}
-
 	m_tdData.SetLabberCount(m_labberCount);
 	//ÐüÉì³¤¶È
 	m_tdData.SetTotalLen(m_totallength);

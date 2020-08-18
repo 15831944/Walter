@@ -32,76 +32,33 @@ void CZYDJData::Draw()
 	//计算刀身插入点
 	double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
 	AcGePoint3d ptInsert(pnt);
+	CString blkName = CCommonUtil::GenStrByTime();
 	ptInsert.x += m_totalLength ;
-	AcDbObjectId DaoShenId = CBlockUtil::InsertDwgAsBlockRef(DaoShenFullPath, NULL, ACDB_MODEL_SPACE, ptInsert, 0, 1);
+	AcDbObjectId DaoShenId = CBlockUtil::InsertDwgAsBlockRef(DaoShenFullPath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
 
 	//设置总长
+	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"Lf", m_grooveLength);
 	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L", m_totalLength);
 	// 如果是扩孔刀需要设置预孔直径
 	if (m_IsKKD)
 	{
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D0",m_Prediameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D0", m_Prediameter);
 		InsertPreDiaDim(ptInsert);
 	}
-
 	//设置参数数据
-	switch (m_DjLabberCount)
+	for (int i = 0; i < m_DjLabberCount; i++)
 	{
-	case 1:
-	{
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L1", m_StepData[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A1", m_StepData[0].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D1", m_StepData[0].m_diameter);
-		break;
+		CString temp;
+		temp.Format(L"L%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_stepLength);
+		temp.Format(L"A%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_angle);
+		temp.Format(L"D%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_diameter);
 	}
-	case 2:
-	{
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L1", m_StepData[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A1", m_StepData[0].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D1", m_StepData[0].m_diameter);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L2", m_StepData[1].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A2", m_StepData[1].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D2", m_StepData[1].m_diameter);
-		break;
-	}
-	case 3:
-	{
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L1", m_StepData[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A1", m_StepData[0].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D1", m_StepData[0].m_diameter);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L2", m_StepData[1].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A2", m_StepData[1].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D2", m_StepData[1].m_diameter);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L3", m_StepData[2].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A3", m_StepData[2].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D3", m_StepData[2].m_diameter);
-		break;
-	}
-	case 4:
-	{
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L1", m_StepData[0].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A1", m_StepData[0].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D1", m_StepData[0].m_diameter);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L2", m_StepData[1].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A2", m_StepData[1].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D2", m_StepData[1].m_diameter);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L3", m_StepData[2].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A3", m_StepData[2].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D3", m_StepData[2].m_diameter);
-
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L4", m_StepData[3].m_stepLength);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A4", m_StepData[3].m_angle);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D4", m_StepData[3].m_diameter);
-		break;
-	}
-	default:
-		break;
-	}
+	//CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L4", m_StepData[3].m_stepLength);
+	//CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A4", m_StepData[3].m_angle);
+	//CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D4", m_StepData[3].m_diameter);
 	//插入标注
 	InsertDiaDim(ptInsert);
 	InsertAngleDim(ptInsert);
@@ -111,9 +68,13 @@ void CZYDJData::Draw()
 
 }
 
-void CZYDJData::SetStepData(vector<ZYDJStepData> const& data)
+void CZYDJData::SetStepData(vector<ZYXDStepData> const& data)
 {
 	m_StepData = data;
+	if (data.size() >= 2)
+		m_grooveLength = data[data.size() - 2].m_stepLength + data[data.size() - 1].m_diameter;
+	else
+		m_grooveLength = data[data.size() - 1].m_stepLength + data[data.size() - 1].m_diameter;
 }
 
 void CZYDJData::SetPreDiameter(double diameter)
@@ -219,10 +180,7 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	//插入Lf标注
 	lastPoint = pnt;
 	lastPoint.y = pnt.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
-	auto diff = [&](){
-		return m_IsKKD ? m_StepData[m_StepData.size() - 1].m_diameter : 0.5 * m_StepData[m_StepData.size() - 1].m_diameter;
-	};
-	lastPoint.x = pnt.x - m_StepData[m_StepData.size() - 2].m_stepLength - diff();
+	lastPoint.x = pnt.x - m_grooveLength;
 	centerPoint =  CMathUtil::GetMidPoint(ptInsert, lastPoint);
 	centerPoint.y = centerPoint.y + 23;
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
@@ -262,7 +220,7 @@ void CZYDJData::Mending(AcGePoint3d const & pnt)
 	AcGePoint3d lastTopPoint(pnt);
 	lastTopPoint.x -= m_totalLength;
 
-	auto diff = [&]() {
+	auto diff = [=]() {
 		return m_IsKKD ? 0 : 0.5;
 	};
 

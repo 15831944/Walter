@@ -19,8 +19,11 @@ public:
 	void SetTotalLen(double len) { m_totallength = len; }
 	void SetLabberCount(int count) { m_labberCount = count; }
 	void Draw();
-	void AddDiaDimension(); //直径标注
-	void AddLenDimension(); // 插入长度标注
+	AcGePoint3d getVertexPoint(const AcGePoint3d & pnt, int index, bool IsTop);
+	void AddDiaDimension(const AcGePoint3d & pnt); //直径标注
+	void AddLenDimension(const AcGePoint3d & pnt); // 插入长度标注
+	void AddAngleDimension(const AcGePoint3d & pnt); //角度标注
+	void Mending(const AcGePoint3d & pnt); // 补线
 private:
 	double m_grooveLength; //排屑槽长
 	double m_totallength; //悬伸长度

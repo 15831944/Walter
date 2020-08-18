@@ -320,5 +320,7 @@
     <Image Include="res\td.bmp">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="mhzt.bmp" />
+    <Image Include="res\mhzt.bmp" />
   </ItemGroup>
 </Project>

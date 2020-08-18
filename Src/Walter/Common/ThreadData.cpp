@@ -2069,7 +2069,8 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	//标注一个槽长
 	AcGePoint3d start(offsetXY.x, offsetXY.y, 0);
 	AcGePoint3d end(offsetXY.x + m_GrooveLength, offsetXY.y, 0);
-	AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue + 6,0);
+	AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue,0);
+	dimpt.y -= m_cutterSegs.size() * 4;
 	CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
 
 	//标注一个总长
@@ -2079,7 +2080,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 
 	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
 	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue,0);
-	dimpt2.y -= m_cutterSegs.size() * 4;
+	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 4 - 8;
 	CDimensionUtil::AddDimAligned(start2, end2, dimpt2,L"");
 
 

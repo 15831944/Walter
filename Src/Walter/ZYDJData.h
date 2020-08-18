@@ -2,13 +2,13 @@
 #include "Com.h"
 
 //整硬铣刀阶梯数据
-typedef struct ZYDJStepData
+typedef struct ZYXDStepData
 {
 	int index;
 	double m_diameter;//直径
 	double m_stepLength;//阶梯长度
 	double m_angle;//阶梯主偏角
-}ZYDJStepData;
+}ZYXDStepData;
 
 //整硬刀具共用的类
 class CZYDJData
@@ -18,7 +18,7 @@ public:
 	~CZYDJData();
 	//在模型空间中绘图
 	void Draw();
-	void SetStepData(vector<ZYDJStepData> const& data);
+	void SetStepData(vector<ZYXDStepData> const& data);
 	void SetPreDiameter(double diameter);
 	void SetDaobing(CString Daobing);
 	void SetLabberCount(int labberCount);
@@ -41,7 +41,7 @@ private:
 	//补线
 	void Mending(AcGePoint3d const& pnt);
 private:
-	vector<ZYDJStepData> m_StepData;
+	vector<ZYXDStepData> m_StepData;
 	
 	//扩孔刀数据预孔直径
 	double m_Prediameter;
@@ -55,5 +55,7 @@ private:
 	bool m_IsKKD;
 	//悬浮长度总长
 	double m_totalLength;
+	//排屑槽长
+	double m_grooveLength;
 };
 

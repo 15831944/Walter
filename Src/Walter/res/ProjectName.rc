@@ -186,6 +186,23 @@ BEGIN
     CONTROL         IDB_BITMAP12,IDC_STATIC,"Static",SS_BITMAP,31,153,334,172
 END
 
+IDD_DIALOG_PCD_ZT DIALOGEX 0, 0, 373, 343
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "PCD钻头参数化"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "刀柄:",IDC_STATIC,11,9,21,8
+    COMBOBOX        IDC_COMBO1,33,8,41,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "悬伸长度:",IDC_STATIC,83,10,38,8
+    EDITTEXT        IDC_EDIT1,124,7,40,14,ES_AUTOHSCROLL
+    LTEXT           "阶梯数量:",IDC_STATIC,176,10,38,8
+    COMBOBOX        IDC_COMBO2,218,7,48,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "生成图纸",IDC_BUTTON1,275,6,50,14
+    CONTROL         "Custom1",IDC_PCD_ZT,"MFCGridCtrl",WS_TABSTOP,0,35,372,108
+    GROUPBOX        "示意图",IDC_STATIC,0,147,372,195
+    CONTROL         IDB_BITMAP13,IDC_STATIC,"Static",SS_BITMAP,19,154,334,172
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -232,6 +249,12 @@ BEGIN
 
     IDD_DIALOG_TD, DIALOG
     BEGIN
+    END
+
+    IDD_DIALOG_PCD_ZT, DIALOG
+    BEGIN
+        RIGHTMARGIN, 372
+        BOTTOMMARGIN, 342
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -287,6 +310,11 @@ BEGIN
     0
 END
 
+IDD_DIALOG_PCD_ZT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -329,6 +357,8 @@ IDB_BITMAP11            BITMAP                  "pcdxd.bmp"
 IDB_BITMAP12            BITMAP                  "td.bmp"
 
 IDB_BITMAP9             BITMAP                  "mhzt.bmp"
+
+IDB_BITMAP13            BITMAP                  "pcdzt.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

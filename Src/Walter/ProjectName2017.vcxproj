@@ -161,6 +161,7 @@
     <ClCompile Include="CutterTool.cpp" />
     <ClCompile Include="DlgPcdJD.cpp" />
     <ClCompile Include="DlgPcdXd.cpp" />
+    <ClCompile Include="DlgPcdZt.cpp" />
     <ClCompile Include="DlgTd.cpp" />
     <ClCompile Include="DlgTuKuang.cpp" />
     <ClCompile Include="DlgZyJd.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenExcelDialog.cpp" />
     <ClCompile Include="PCDXDdata.cpp" />
+    <ClCompile Include="PCDZTData.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -213,6 +215,7 @@
     <ClInclude Include="CutterTool.h" />
     <ClInclude Include="DlgPcdJD.h" />
     <ClInclude Include="DlgPcdXd.h" />
+    <ClInclude Include="DlgPcdZt.h" />
     <ClInclude Include="DlgTd.h" />
     <ClInclude Include="DlgTuKuang.h" />
     <ClInclude Include="DlgZyJd.h" />
@@ -233,6 +236,7 @@
     <ClInclude Include="GridCtrl\GridCtrl_src\TitleTip.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="OpenExcelDialog.h" />
+    <ClInclude Include="PCDZTData.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
@@ -250,14 +254,13 @@
     <ResourceCompile Include="res\ProjectName.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="mhzt.bmp" />
     <Image Include="res\11.BMP" />
     <Image Include="res\111.bmp" />
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
-    <Image Include="res\mhz.bmp" />
     <Image Include="res\mhzt.bmp" />
     <Image Include="res\pcdxd.bmp" />
+    <Image Include="res\pcdzt.bmp" />
     <Image Include="res\td.bmp" />
     <Image Include="res\xd.bmp" />
     <Image Include="res\zyjd.bmp" />

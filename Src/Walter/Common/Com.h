@@ -55,7 +55,7 @@ void TY_Project3DSolidTo2D(AcDbObjectId solid3d,
 	bool hidLines,
 	bool  internalVisibility,
 	bool calculateSilhouettes,
-	bool preUnit);
+	bool preUnit,AcDbObjectIdArray& idarr);
 
 //½Ç¶È±ê×¢2
 AcDbObjectId MD2010_AddAngleDimension2(AcGePoint3d centerPoint, AcGePoint3d xLine1Point, AcGePoint3d xLine2Point, AcGePoint3d arcPoint,

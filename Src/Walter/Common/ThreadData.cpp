@@ -691,6 +691,8 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	CEntityUtil::SetLayer(plineId2, L"1");
 	//JHCOM_SetEntityType(plineId1, L"ACAD_ISO02W100");
 	//JHCOM_SetEntityType(plineId2, L"ACAD_ISO02W100");
+	CEntityUtil::Mirror(plineId1, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Mirror(plineId2, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 
 	//第三步：创建基础模型
 	Acad::ErrorStatus es = Acad::eOk;
@@ -820,10 +822,15 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	{
 		//CreateLengBians(mainid, offsetXY,cirrad,true);
 	}
-	
+	AcDbObjectIdArray idarr;
 	//投影
-	TY_Project3DSolidTo2D(mainid, false, false, false,false);
-
+	TY_Project3DSolidTo2D(mainid, false, false, false,false,idarr);
+	
+	for (AcDbObjectId id : idarr)
+	{
+		
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0,1,0));
+	}
 #ifndef TY_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
@@ -833,6 +840,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0));
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
 	CEntityUtil::SetLayer(centerLine, L"SK4");
+	CEntityUtil::Mirror(centerLine, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	//第六步：创建标注
 	CreateDims(offsetXY,AcGePoint3d(0,0,0));
 
@@ -1151,7 +1159,6 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	AcDbPolyline *pline = CreatePolyline2d(offsetXY, dxys);
 	AcDbObjectId plineId = CDwgDatabaseUtil::PostToModelSpace(pline); 
 	//JHCOM_SetEntityType(plineId, L"ACAD_ISO02W100");
-
 	AcDb3dSolid *pSolid = NULL;
 	AcDbRegion * region = CRegionUtil::CreateRegionFromCurve(pline);
 
@@ -1164,6 +1171,8 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	AcDbObjectId plineId2 = CDwgDatabaseUtil::PostToModelSpace(pMirrorPline);
 	//JHCOM_SetEntityType(plineId2, L"ACAD_ISO02W100");
 
+	CEntityUtil::Mirror(plineId, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Mirror(plineId2, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	//第三步：创建基础模型
 	Acad::ErrorStatus es = Acad::eOk;
 	if (region != NULL)
@@ -1225,8 +1234,12 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	CreateLengBians(mainid, offsetXY, taiQiLen, false);
 
 	//投影
-	TY_Project3DSolidTo2D(mainid, false, false, false,false) ;
-
+	AcDbObjectIdArray idarr;
+	TY_Project3DSolidTo2D(mainid, false, false, false,false,idarr) ;
+	for (auto id : idarr)
+	{
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y,0),AcGeVector3d(0,1,0));
+	}
 #ifndef TY_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
 #endif
@@ -1235,6 +1248,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	AcDbObjectId centerLine = CLineUtil::CreateLine(AcGePoint3d(offsetXY.x - 3, offsetXY.y, 0),AcGePoint3d(offsetXY.x + m_totalLength + 3, offsetXY.y, 0));
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
 	CEntityUtil::SetLayer(centerLine, L"SK4");
+	CEntityUtil::Mirror(centerLine, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	CreateDims(offsetXY,farestPnt);
 
 	//第八步：冷却
@@ -2049,6 +2063,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	//		CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
 	//	}
 	//}
+	AcDbObjectId id;
 	for (int i = 0; i < m_cutterSegs.size() ; i++)
 	{
 			AcGePoint3d start(0, offsetXY.y, 0), end(0, offsetXY.y, 0);
@@ -2064,15 +2079,17 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			AcGePoint3d dimpt(0, yvalue, 0);
 			dimpt.x = (start.x + end.x) / 2;
 			dimpt.y -= i * 4;
-			CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
+			id = CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
+			CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+
 	}
 	//标注一个槽长
 	AcGePoint3d start(offsetXY.x, offsetXY.y, 0);
 	AcGePoint3d end(offsetXY.x + m_GrooveLength, offsetXY.y, 0);
 	AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue,0);
 	dimpt.y -= m_cutterSegs.size() * 4;
-	CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
-
+	id = CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
+	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	//标注一个总长
 	AcGePoint3d start2(offsetXY.x, offsetXY.y, 0);
 	//总长标注改变 需要加上刀柄的长度
@@ -2081,8 +2098,8 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
 	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue,0);
 	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 4 - 8;
-	CDimensionUtil::AddDimAligned(start2, end2, dimpt2,L"");
-
+	id = CDimensionUtil::AddDimAligned(start2, end2, dimpt2,nullptr);
+	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 
 	//Y方向标注
 	double backX = 13;
@@ -2139,9 +2156,9 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_cutterSegs[i].m_diameter));
 		//直径标注解决
-		CDimensionUtil::AddDimAligned(start, end, dim,temp);
+		id = CDimensionUtil::AddDimAligned(start, end, dim,temp);
 
-
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 		if (m_cutterSegs[i].m_lengBianType != SEdgeType::E_EdgeType_不清边)
 		{
 			dim.y += 20;
@@ -2156,9 +2173,9 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		double dx = 10;
 		double dy = 10*tan(topRad);
 
-        MD2010_AddAngleDimension2(AcGePoint3d(offsetXY.x, offsetXY.y, 0), 
+        id = MD2010_AddAngleDimension2(AcGePoint3d(offsetXY.x, offsetXY.y, 0), 
 			AcGePoint3d(offsetXY.x+dx, offsetXY.y-dy, 0),AcGePoint3d(offsetXY.x+dx, offsetXY.y+dy, 0), AcGePoint3d(offsetXY.x-15, offsetXY.y, 0),ACDB_MODEL_SPACE);
-
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 		//MD2010_AddAngleDimension(AcGePoint3d(0,0,0), AcGePoint3d (-5,-3,0),AcGePoint3d(-5,3,0), AcGePoint3d(-5,0,0));
 	}
 
@@ -2193,9 +2210,9 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			replaceText.Format(L"%s°", removeLastZero(angle));
 			//replaceText.Format(L"%.1f°", angle);
 		}
-		MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
+		id = MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
 			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"2");
-		
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	}
 
 	//钻头三尖标注
@@ -2209,7 +2226,8 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		CString replace;
 		//replace.Format(L"%%%%C%.1f{\\H0.7x;\\S-0.1^+0.1;}", m_pointCenterDistance);
 		replace.Format(L"%%%%C%.1f%%%%P0.1", m_pointCenterDistance);
-		MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
+		id = MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	}
 }
 
@@ -2243,6 +2261,7 @@ int CThreadData::CheckLength(bool isMirror)
 
 void CThreadData::Draw(bool IsZC)
 {
+	CDocLock lock;
 	
 	//插入点
 	AcDbObjectId id;
@@ -2258,7 +2277,9 @@ void CThreadData::Draw(bool IsZC)
 
 	CString filePath = TY_GetDaoBingSFolder() + m_daobing + L".dwg";
 	CString blkName = CCommonUtil::GenStrByTime();
-	CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
+	id = CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
+
+	CEntityUtil::Mirror(id, AcGePoint3d(pInt.x,pInt.y,ptInsert.z), AcGeVector3d(0, 1, 0));
 	//判断是否是直槽刀
 	/*double len = GetHandleLengthFromDaoBing(m_daobing);
 	m_totalLength += len;*/

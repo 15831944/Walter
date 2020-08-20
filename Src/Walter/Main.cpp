@@ -45,6 +45,7 @@
 #include "DlgZyJd.h"
 #include  "DlgPcdXd.h"
 #include "DlgTd.h"
+#include "DlgPcdZt.h"
 HINSTANCE g_tytoolInst = 0;
 
 #ifdef _DEBUG
@@ -83,6 +84,15 @@ void CMD_PCDJD1()
 	g_dlgPcdJd1 = new DlgPcdJD(acedGetAcadFrame());
 	g_dlgPcdJd1->Create(IDD_DIALOG_PCD_JD);
 	g_dlgPcdJd1->ShowWindow(SW_SHOW);
+}
+//PCD×êÍ·
+CDlgPcdZt *g_pcdzt = NULL;
+void CMD_PCDZT()
+{
+	CAcModuleResourceOverride resOverride;
+	g_pcdzt = new CDlgPcdZt(acedGetAcadFrame());
+	g_pcdzt->Create(IDD_DIALOG_PCD_ZT);
+	g_pcdzt->ShowWindow(SW_SHOW);
 }
 //ïÛµ¶
 CDlgTd* g_td = NULL;
@@ -131,6 +141,7 @@ void CMD_ZYJD()
 	gZyDJ->Create(IDD_DIALOG_ZYKKD);
 	gZyDJ->ShowWindow(SW_SHOW);
 }
+
 //Í¼¿ò
 CDlgTuKuang *gTuKuang = NULL;
 void CMD_INTK()
@@ -320,6 +331,15 @@ static void initApp()
 			theArxDLL.ModuleResourceInstance());
 
 		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("PCDZT"),
+			_T("PCDZT"),
+			ACRX_CMD_MODAL,
+			CMD_PCDZT,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
+
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
 			_T("TD"),
 			_T("TD"),
 			ACRX_CMD_MODAL,
@@ -481,6 +501,11 @@ void menu()
 			V_VT(&index) = VT_I4;
 			V_I4(&index) = MenuIndex++;
 			IPopUpMenu.AddMenuItem(index, _T("&PCDÏ³µ¶"), _T("PCDXD "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&PCD×êÍ·"), _T("PCDZT "));
 
 			VariantInit(&index);
 			V_VT(&index) = VT_I4;

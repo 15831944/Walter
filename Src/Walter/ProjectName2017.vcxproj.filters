@@ -103,6 +103,8 @@
     <ClCompile Include="DlgTd.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="DlgPcdZt.cpp" />
+    <ClCompile Include="PCDZTData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -252,6 +254,8 @@
     <ClInclude Include="DlgTd.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="DlgPcdZt.h" />
+    <ClInclude Include="PCDZTData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">
@@ -308,9 +312,6 @@
     <Image Include="res\zykkd.bmp">
       <Filter>Res</Filter>
     </Image>
-    <Image Include="res\mhz.bmp">
-      <Filter>Res</Filter>
-    </Image>
     <Image Include="res\xd.bmp">
       <Filter>Res</Filter>
     </Image>
@@ -320,7 +321,11 @@
     <Image Include="res\td.bmp">
       <Filter>Res</Filter>
     </Image>
-    <Image Include="mhzt.bmp" />
-    <Image Include="res\mhzt.bmp" />
+    <Image Include="res\mhzt.bmp">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="res\pcdzt.bmp">
+      <Filter>Res</Filter>
+    </Image>
   </ItemGroup>
 </Project>

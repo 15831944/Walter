@@ -441,7 +441,7 @@ void TY_Project3DSolidTo2D(AcDbObjectId solid3d,
 	bool hidLines,
 	bool  internalVisibility,
 	bool calculateSilhouettes,
-	bool preUnit)
+	bool preUnit,AcDbObjectIdArray& idarr)
 {
 	//----- Select the entities
 
@@ -484,11 +484,13 @@ void TY_Project3DSolidTo2D(AcDbObjectId solid3d,
 	//----- red for visible edges
 	//----- blue for non-visible edges
 	//----- yellow for internal edges
+	
+
 	n = collector.mOutputData.logicalLength();
+
 	for (int i = 0; i < n; i++)
 	{
 		AsdkHlrData *p = collector.mOutputData[i];
-
 		AcDbEntity *pEnt = p->getResultEntity();
 		AsdkHlrData::Visibility vis = p->getVisibility();
 		//if (vis == AsdkHlrData::kVisible)
@@ -508,8 +510,9 @@ void TY_Project3DSolidTo2D(AcDbObjectId solid3d,
 		//}
 
 		pEnt->setLayer(L"1");
-
 		solid3d = CDwgDatabaseUtil::PostToModelSpace(pEnt);
+		idarr.append(solid3d);
+
 		if (solid3d == 0)
 		{
 			acutPrintf(_T("Failed to add entity to current space.\n"));
@@ -561,7 +564,7 @@ AcDbObjectId MD2010_AddAngleDimension2(AcGePoint3d centerPoint, AcGePoint3d xLin
 	//pDim->setDimensionStyle(dimSty);
 	//pDim->setColorIndex(3);
 	AcDbObjectId dimID = CDwgDatabaseUtil::PostModalToBlockTable(pDim);
-
+	
 	//pDim->setLayer(newLayer);
 	//pDim->setColorIndex(3);
 	pDim->close();

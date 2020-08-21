@@ -46,7 +46,7 @@ void CZYDJData::Draw()
 		InsertPreDiaDim(ptInsert);
 	}
 	//设置参数数据
-	for (int i = 0; i < m_DjLabberCount; i++)
+	for (int i = 0; i < m_StepData.size(); i++)
 	{
 		CString temp;
 		temp.Format(L"L%d", i + 1);
@@ -56,9 +56,6 @@ void CZYDJData::Draw()
 		temp.Format(L"D%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_diameter);
 	}
-	//CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"L4", m_StepData[3].m_stepLength);
-	//CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"A4", m_StepData[3].m_angle);
-	//CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"D4", m_StepData[3].m_diameter);
 	//插入标注
 	InsertDiaDim(ptInsert);
 	InsertAngleDim(ptInsert);
@@ -134,11 +131,15 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 	temp.Format(L"%%%%C%s", removeLastZero(m_Prediameter));
 	CDimensionUtil::AddDimAligned(pt1, pt2, dimTextPosition, temp);
 }
-//插入直径标注
+/*
+insert the dimension of diameter 
+@return
+@pnt : the insert point
+*/
 void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 {
 	CLayerSwitch layer(DIMLAYERNAME);
-	for (size_t i = 0; i < m_DjLabberCount; i++)
+	for (int i = 0; i < m_DjLabberCount; i++)
 	{
 		AcGePoint3d TopPoint = GetVertexPoint(pnt, i, TRUE);
 		AcGePoint3d BottomPoint = GetVertexPoint(pnt, i, FALSE);
@@ -149,7 +150,10 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint,temp);
 	}
 }
-//插入长度标注
+/*
+ @return 
+ @pnt : the insert point
+*/
 void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 {
 	CLayerSwitch layer(DIMLAYERNAME);
@@ -166,7 +170,6 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	}
 	
 	// 插入总长标注
-	//double dis = GetHandleLengthFromDaoBing(m_DaoBingName);
 	AcGePoint3d ptInsert(pnt);
 	ptInsert.y = pnt.y + m_StepData[0].m_diameter / 2.0;
 	
@@ -186,11 +189,14 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
 
 }
-//插入角度标注
+/*
+ @return 
+ @pnt : the insert point
+*/
 void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
 {
 	CLayerSwitch layer(DIMLAYERNAME);
-	for (size_t i = 1; i < m_DjLabberCount; i++)
+	for (int i = 1; i < m_DjLabberCount; i++)
 	{
 		
 		double diff = (m_StepData[i].m_diameter - m_StepData[i - 1].m_diameter) / 2.0;
@@ -212,7 +218,11 @@ void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
 		CDimensionUtil::AddDim2LineAngular(TopPoint2, TopPoint1, BottomPoint2, BottomPoint1, dimTextPosition);
 	}
 }
-//如果刀柄直径小于刀身直径,则需要将刀的缺口补上
+/*
+	the function is used to mend the gap
+	@return
+	@pnt : the insert point
+*/
 void CZYDJData::Mending(AcGePoint3d const & pnt)
 {
 	//轮廓线为图层1

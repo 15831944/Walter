@@ -85,12 +85,12 @@ void CDlgPcdZt::InitGridCtrl()
 void CDlgPcdZt::loadGridData()
 {
 	if (m_allrowData.size() > 0) {
-		m_gridctrl.SetContentItemEditable(m_allrowData.size() - 1, m_allrowData[m_allrowData.size() - 1].size() - 2, true);
+		m_gridctrl.SetContentItemEditable((int)m_allrowData.size() - 1, (int)m_allrowData[m_allrowData.size() - 1].size() - 2, true);
 	}
 	int index = m_StepNumCtrl.GetCurSel();
 	m_allrowData = getDefaultData(index);
 	m_gridctrl.FillTable(m_allrowData);
-	m_gridctrl.SetContentItemEditable(m_allrowData.size() - 1, m_allrowData[m_allrowData.size() - 1].size() - 2, false);
+	m_gridctrl.SetContentItemEditable((int)m_allrowData.size() - 1, (int)m_allrowData[m_allrowData.size() - 1].size() - 2, false);
 	m_gridctrl.Refresh();
 }
 
@@ -238,7 +238,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 }
 void CDlgPcdZt::SetCellHight()
 {
-	for (size_t i = 0; i < m_allrowData.size(); ++i)
+	for (int i = 0; i < m_allrowData.size(); ++i)
 	{
 		m_gridctrl.SetRowHeight(i, 30);
 	}

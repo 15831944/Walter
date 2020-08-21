@@ -53,7 +53,7 @@ AcDbObjectId CCutterTool::CreateTable()
 
 
 	//设置行和列的高度
-	pTable->rowHeight(8.0);
+	pTable->rowHeight(8);
 
 	pTable->setColumnWidth(0,40);
 	pTable->setColumnWidth(1,90);

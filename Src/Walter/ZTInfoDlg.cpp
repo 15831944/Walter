@@ -231,13 +231,13 @@ void CZTInfoDlg::LoadGridData()
 	//将上一次设置的不可编辑设置为可编辑
 	if (m_alldjInfos.size() > 0)
 	{
-		m_djInfoCtrl.SetContentItemEditable(m_alldjInfos.size() - 1, m_alldjInfos[0].size() - 1, true);
+		m_djInfoCtrl.SetContentItemEditable((int)m_alldjInfos.size() - 1,static_cast<int>( m_alldjInfos[0].size()) - 1, true);
 	}
 	m_alldjInfos = getDefaultGridData(index);
 	m_djInfoCtrl.FillTable(m_alldjInfos);
 	
 	//设置最后一个不可编辑
-	m_djInfoCtrl.SetContentItemEditable(m_alldjInfos.size() - 1, m_alldjInfos[0].size() - 1, false);
+	m_djInfoCtrl.SetContentItemEditable((int)m_alldjInfos.size() - 1, (int)m_alldjInfos[0].size() - 1, false);
 	//CGridCellBase *cell = m_djInfoCtrl.GetCell(m_alldjInfos.size() - 1, m_alldjInfos[0].size() -1)
 }
 
@@ -291,7 +291,7 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	{
 		return _ttof(m_alldjInfos[i][1]) - _ttof(m_alldjInfos[i-1][1]);
 	 };
-	double sum;
+	//double sum;
 	for (int i=0;i < m_alldjInfos.size();i++)
 	{
 		OneRowText RowData = m_alldjInfos[i];

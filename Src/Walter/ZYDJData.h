@@ -22,7 +22,6 @@ public:
 	void SetPreDiameter(double diameter);
 	void SetDaobing(CString Daobing);
 	void SetLabberCount(int labberCount);
-	//设置是否为扩孔刀
 	void SetKKD(bool isKKD) { m_IsKKD = isKKD; }
 	bool GetIsKKD() const { return m_IsKKD; }
 	void SetTotalLength(double length) { m_totalLength = length; }

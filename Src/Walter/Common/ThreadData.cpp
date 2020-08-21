@@ -331,7 +331,7 @@ int CThreadData::ConvertToDxy(double topAngle, //输入
 			}
 			
 
-			int last = cutterSegs.size() - 1;
+			int last = (int)cutterSegs.size() - 1;
 
 			if(cutterSegs[last].m_lengthType == E_CutterSegLength_刀尖到刀尖 || cutterSegs[last].m_lengthType == E_CutterSegLength_刀尖到圆柱)
 				//secondxy.dx = cutterSegs[last].m_length - ladderA.dx - ladderB.dx;
@@ -519,7 +519,7 @@ int CThreadData::PostProcessAngleHead(vSDXY &dxys) const
 
 			if (m_cutterSegs[0].m_lengthType == E_CutterSegLength_圆柱到刀尖 || m_cutterSegs[0].m_lengthType == E_CutterSegLength_圆柱到圆柱)
 			{
-				int size = dxys.size();
+				int size = (int)dxys.size();
 				dxys[size-2].dx += xAdd;
 			}
 			else
@@ -730,7 +730,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	    pSolid->close();
 	}
 
-	int ladderNum = m_cutterSegs.size();
+	int ladderNum = (int)m_cutterSegs.size();
 	//第四步： 创建螺旋线 并根据螺旋线起点参数生成圆形
 	AcDbObjectId helixId = 0, helixId2 = 0;
 
@@ -1469,7 +1469,7 @@ int CThreadData::CreateLengBians(AcDbObjectId mainid, AcGePoint2d offsetXY, doub
 	std::vector<AcGeCurve3d*> edgeCurves;
 
 	AcGe::EntityId ctype;
-	bool is;
+	//bool is;
 	for (int i = 0; i < edges.size(); i++)
 	{
 		AcGeCurve3d *oneCurve;
@@ -1531,7 +1531,7 @@ int CThreadData::CreateLengBianForOneSeg(AcDbObjectId mainId, std::vector<AcGeCu
 
 	//第一步找到所有的半径是rad的圆弧
 	std::vector<AcGeCircArc3d> allRadCurves;
-	Acad::ErrorStatus es;
+//	Acad::ErrorStatus es;
 	for (int i = 0; i < edges.size(); i++)
 	{
 		AcGeCurve3d *crv = edges[i];
@@ -2039,7 +2039,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	//标注图层
 	CLayerSwitch layer(DIMLAYERNAME);
 	//
-	int size = m_cutterSegs.size();
+	int size = (int)m_cutterSegs.size();
 	if (size == 0)
 		return -1;
 
@@ -2321,18 +2321,11 @@ void CThreadData::Draw(bool IsZC)
 	CBlockUtil::InsertDwgAsBlockRef(filePath, blkName, ACDB_MODEL_SPACE, ptInsert, 0, 1);
 #endif // MIRROR
 
-	//判断是否是直槽刀
-	/*double len = GetHandleLengthFromDaoBing(m_daobing);
-	m_totalLength += len;*/
 	if (IsZC)
 		ret = CreateModel3D_ZhiCao(pInt, id);
 	else
 		ret = CreateModel3D(pInt, id);
-	//插入刀柄 插入点的位置计算
-	/*if (ret == 0)
-	{
-		
-	}*/
+
 }
 
 void CThreadData::SetDaoBingName(const CString & DaoBingName)

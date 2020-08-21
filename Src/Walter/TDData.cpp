@@ -159,8 +159,8 @@ void CTDData::Mending(const AcGePoint3d & pnt)
 	CLayerSwitch layer(L"1");
 	double dis = GetDisByDBName(m_HandleName);
 	AcGePoint3d firstTopPoint = getVertexPoint(pnt, 0, true);
-	AcGePoint3d TopPoint = getVertexPoint(pnt, m_tdSegdata.size() - 1, true);
-	AcGePoint3d BottomPoint = getVertexPoint(pnt, m_tdSegdata.size() - 1, false);
+	AcGePoint3d TopPoint = getVertexPoint(pnt, (int)m_tdSegdata.size() - 1, true);
+	AcGePoint3d BottomPoint = getVertexPoint(pnt, (int)m_tdSegdata.size() - 1, false);
 	TopPoint.x = firstTopPoint.x - m_totallength + dis;
 	BottomPoint.x = firstTopPoint.x - m_totallength + dis;
 	CLineUtil::CreateLine(TopPoint, BottomPoint);

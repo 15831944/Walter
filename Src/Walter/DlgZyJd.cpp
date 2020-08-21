@@ -80,7 +80,7 @@ void CDlgZyJd::InitGrid()
 
 void CDlgZyJd::SetCellHight()
 {
-	for (size_t i=0;i < m_allrowData.size() ; ++i)
+	for (int i=0;i < m_allrowData.size() ; ++i)
 	{
 		m_XdLabberDataCtrl.SetRowHeight(i, 30);
 	}
@@ -222,11 +222,11 @@ void CDlgZyJd::SetGridData()
 void CDlgZyJd::ReloadGridData()
 {
 	if (m_allrowData.size() > 0)
-		m_XdLabberDataCtrl.SetContentItemEditable(m_allrowData.size(), m_allrowData[0].size() - 1, true);
+		m_XdLabberDataCtrl.SetContentItemEditable((int)m_allrowData.size(), (int)m_allrowData[0].size() - 1, true);
 	int selectIndex = m_ui_LabberCtrl.GetCurSel();
 	m_allrowData = GetDefaultGridData(selectIndex);
 	m_XdLabberDataCtrl.FillTable(m_allrowData);
-	m_XdLabberDataCtrl.SetContentItemEditable(m_allrowData.size(), m_allrowData[0].size() - 1, false);
+	m_XdLabberDataCtrl.SetContentItemEditable((int)m_allrowData.size(), (int)m_allrowData[0].size() - 1, false);
 }
 
 //¸ü»»Ê¾ÒâÍ¼
@@ -242,10 +242,10 @@ MultiRowText CDlgZyJd::GetGridData()
 {
 	
 	MultiRowText nRowdata;
-	for (size_t i = 0; i < m_XdLabberDataCtrl.GetRowCount();i++ )
+	for (int i = 0; i < m_XdLabberDataCtrl.GetRowCount();i++ )
 	{
 		OneRowText rowText;
-		for (size_t j=0;j < m_XdLabberDataCtrl.GetColumnCount(); ++j)
+		for (int j=0;j < m_XdLabberDataCtrl.GetColumnCount(); ++j)
 		{
 			rowText.push_back(m_XdLabberDataCtrl.GetContentItemText(i, j));
 		}
@@ -308,7 +308,7 @@ void CDlgZyJd::OnBnClickedButton1()
 	for (size_t i = 0; i < _ttoi(labberCountStr); i++)
 	{
 		ZYXDStepData oneStepData;
-		oneStepData.index = _ttof(m_allrowData[i][0]);
+		oneStepData.index = _ttoi(m_allrowData[i][0]);
 		oneStepData.m_diameter = _ttof(m_allrowData[i][1]);
 		oneStepData.m_stepLength = _ttof(m_allrowData[i][2]);
 		if (i > 0)

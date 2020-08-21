@@ -155,7 +155,7 @@ void DlgPcdJD::OnCbnSelchangeComboStepNum()
 
 	if (m_allListData.size() > 0)
 	{
-		m_gridCtrl.SetContentItemEditable(m_allListData.size() - 1, m_allListData[0].size() - 2, true);
+		m_gridCtrl.SetContentItemEditable((int)m_allListData.size() - 1, (int)m_allListData[0].size() - 2, true);
 	}
 	int tableColumnCount = 3;
 	int index;
@@ -176,7 +176,7 @@ void DlgPcdJD::OnCbnSelchangeComboStepNum()
 	default:
 		break;
 	}
-	m_gridCtrl.SetContentItemEditable(m_allListData.size() - 1, m_allListData[0].size() - 2, false);
+	m_gridCtrl.SetContentItemEditable((int)m_allListData.size() - 1, (int)m_allListData[0].size() - 2, false);
 	m_gridCtrl.Refresh();
 }
 
@@ -193,7 +193,7 @@ void DlgPcdJD::InitGridCtrl()
 	{
 		SetCellHeight();
 		m_gridCtrl.FillTable(m_allListData);
-		m_gridCtrl.SetContentItemEditable(m_allListData.size() - 1, m_allListData[0].size() - 2, false);
+		m_gridCtrl.SetContentItemEditable((int)m_allListData.size() - 1, (int)m_allListData[0].size() - 2, false);
 	}
 }
 

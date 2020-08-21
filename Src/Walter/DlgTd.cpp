@@ -295,7 +295,7 @@ void CDlgTd::InitGrid()
 	{
 		SetGridHeight();
 		m_tdSegDataCtrl.FillTable(m_tdAllSegData);
-		m_tdSegDataCtrl.SetContentItemEditable(m_tdAllSegData.size() - 1, m_tdAllSegData[0].size() - 2, false);
+		m_tdSegDataCtrl.SetContentItemEditable((int)m_tdAllSegData.size() - 1, (int)m_tdAllSegData[0].size() - 2, false);
 	}
 }
 
@@ -338,13 +338,13 @@ void CDlgTd::OnBnClickedButton1()
 void CDlgTd::OnCbnSelchangeCombo2()
 {
 	if (m_tdAllSegData.size() > 0) {
-		m_tdSegDataCtrl.SetContentItemEditable(m_tdAllSegData.size() - 1, m_tdAllSegData[0].size() - 2, true);
+		m_tdSegDataCtrl.SetContentItemEditable((int)m_tdAllSegData.size() - 1, (int)m_tdAllSegData[0].size() - 2, true);
 	}
 	// TODO: 在此添加控件通知处理程序代码
 	int sel = m_SegNumCtrl.GetCurSel();
 	m_labberCount = sel + 1;
 	m_tdAllSegData = FillDefaultData(sel);
 	m_tdSegDataCtrl.FillTable(m_tdAllSegData);
-	m_tdSegDataCtrl.SetContentItemEditable(m_tdAllSegData.size() - 1, m_tdAllSegData[0].size() - 2, true);
+	m_tdSegDataCtrl.SetContentItemEditable((int)m_tdAllSegData.size() - 1, (int)m_tdAllSegData[0].size() - 2, true);
 	m_tdSegDataCtrl.Refresh();
 }

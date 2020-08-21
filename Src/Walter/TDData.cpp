@@ -3,14 +3,6 @@
 #include "Entity/DimensionUtil.h"
 #include "Entity/DynamicBlockUtil.h"
 
-CTDData::CTDData()
-{
-}
-
-
-CTDData::~CTDData()
-{
-}
 
 void CTDData::Draw()
 {
@@ -23,7 +15,7 @@ void CTDData::Draw()
 	CBlockUtil::InsertDwgAsBlockRef(Handle, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 	//≤Â»Îµ∂…Ì
 	CString temp;
-	temp.Format(L"%d", m_labberCount);
+	temp.Format(L"%d",m_tdSegdata.size());
 	CString KnifeName = TY_GetDynamicBlockFolder() + "ø…ªªµ∂∆¨Ô€µ∂ƒ£∞ÂX" + temp + ".dwg";
 	AcGePoint3d ptInsert(pnt);
 	ptInsert.x += m_totallength;

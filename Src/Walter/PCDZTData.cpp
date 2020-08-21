@@ -31,7 +31,7 @@ void CPCDZTData::Draw()
 	CString knife = TY_GetDynamicBlockFolder() + L"PCD钻头模板X" + labberCountStr + L".dwg";
 	AcDbObjectId knifeId = CBlockUtil::InsertDwgAsBlockRef(knife, NULL, ACDB_MODEL_SPACE, ptInsert, 0, 1);
 	//设置动态块属性
-	CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"L", m_totalLen  );
+	CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"L", m_totalLen );
 	//排屑槽长
 	CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"lf", m_grooveLenth);
 
@@ -141,7 +141,7 @@ void CPCDZTData::AddAngleDimension(AcGePoint3d const& pnt)
 		dimtextposition.x -= 15;
 		CDimensionUtil::AddDim2LineAngular(firstpoint, secondpoint, firstPoint1, secondPoint1, dimtextposition);
 	}
-	//插入一个顶角
+	//插入一个顶角标注
 	AcGePoint3d firstTopPoint = getVertexPoint(pnt, 0, true);
 	AcGePoint3d bottomPoint = getVertexPoint(pnt, 0, false);
 	AcGePoint3d center = CMathUtil::GetMidPoint(firstTopPoint, bottomPoint);

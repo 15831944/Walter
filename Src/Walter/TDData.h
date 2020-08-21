@@ -10,8 +10,8 @@ typedef struct TDSegData {
 class CTDData
 {
 public:
-	CTDData();
-	virtual ~CTDData();
+	CTDData() {};
+	virtual ~CTDData() {};
 	void AddSegData(TDSegData const&& segdata) { m_tdSegdata.push_back(segdata); }
 	void ClearData() { m_tdSegdata.clear(); m_tdSegdata.shrink_to_fit(); }
 	void SetHandleName(CString const&& HandleName) { m_HandleName = HandleName; }

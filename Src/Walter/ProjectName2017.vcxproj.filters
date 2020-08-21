@@ -103,8 +103,12 @@
     <ClCompile Include="DlgTd.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="DlgPcdZt.cpp" />
-    <ClCompile Include="PCDZTData.cpp" />
+    <ClCompile Include="DlgPcdZt.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PCDZTData.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -254,8 +258,12 @@
     <ClInclude Include="DlgTd.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="DlgPcdZt.h" />
-    <ClInclude Include="PCDZTData.h" />
+    <ClInclude Include="DlgPcdZt.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PCDZTData.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">

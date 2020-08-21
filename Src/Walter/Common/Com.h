@@ -26,7 +26,7 @@ CString TY_GetDwgFolder();
 CString TY_GetDynamicBlockFolder();
 CString TY_GetDaoBingFolder();
 //另外一种刀具
-CString TY_GetDaoBingSFolder();
+CString TY_GetDaoBingZtFolder();
 CString TY_GetDaoBingZyFolder();
 //得到图框存储路径
 CString TY_GetFrameFolder();
@@ -39,8 +39,7 @@ vector<CString> GetAllDwgFile(const CString& dirPath);
 //去掉浮点数无效的0
 CString removeLastZero(double num);
 
-
-
+AcGePoint3d getMirrorPoint(AcGePoint3d point,AcGePoint3d const& ptbase,AcGeVector3d const& line);
 
 
 
@@ -73,3 +72,4 @@ AcDbObjectId MD2010_AddAlignedDimension_GongCha(AcGePoint3d start, AcGePoint3d e
 	const WCHAR * preStr = L"", const WCHAR * entryname = ACDB_MODEL_SPACE, const ACHAR* newLayer = L"0", CString replaceText = L"", double roa = 0);
 
 void AN_Project3DSolidTo2D(AcDbObjectId solid3d);
+

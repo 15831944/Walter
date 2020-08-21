@@ -36,7 +36,7 @@ void CZyXdDlg::InitDefaultPara()
 {
 	int defaultIndex = 0;
 	//…Ë÷√µ∂±˙
-	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingSFolder());
+	vector<CString> dwgfiles = GetAllDwgFile(TY_GetDaoBingZtFolder());
 	for (int i = 0; i < dwgfiles.size(); i++)
 	{
 		m_ui_DbCtrl.AddString(dwgfiles[i]);

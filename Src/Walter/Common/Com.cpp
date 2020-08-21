@@ -93,7 +93,7 @@ CString TY_GetDaoBingFolder()
 }
 
 //得到钻头和直槽刀的刀柄路径
-CString TY_GetDaoBingSFolder()
+CString TY_GetDaoBingZtFolder()
 {
 #ifdef DEV_TEST_ENV
 	return TY_GetAppPath() + "\\Support\\Walter\\DaoBingForZuanTou\\";
@@ -155,6 +155,23 @@ CString removeLastZero(double num)
 		result = temp.Left(pos - 1);
 	}
 	return result;
+}
+/*
+	@return:the destition point
+	@point :the source point
+	@line  :the reference is used to calculate the mirror point
+*/
+AcGePoint3d getMirrorPoint(AcGePoint3d point, AcGePoint3d const& ptbase, AcGeVector3d const & line)
+{
+	AcGePlane mirrorplane;
+	if (line.x == 0 && line.z == 0)
+		mirrorplane.set(1, 0, 0, -ptbase.x);
+	else if (line.y == 0 && line.z == 0)
+		mirrorplane.set(0, 1, 0, -ptbase.y);
+	else if (line.x == 0 && line.y == 0)
+		mirrorplane.set(0, 0, 1, -ptbase.z);
+	AcGePoint3d destPoint = point.mirror(mirrorplane);
+	return destPoint;
 }
 
 //根据刀柄名称获取刀柄长度

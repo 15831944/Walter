@@ -1,5 +1,4 @@
 #pragma once
-
 #include "GridCtrl/GridCtrlEx.h"
 #include "res/resource.h"
 #include "afxwin.h"

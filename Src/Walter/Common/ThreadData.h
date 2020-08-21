@@ -1,11 +1,12 @@
 #pragma once
+#include "Com.h"
 #include <vector>
 #include <ocdbid.h>
 using namespace std;
 
 
 //#define  TY_DRAW_3D
-
+#define MIRROR
 enum E_CutterType//刀具类型
 {
 	T_DRILL_CUTTER = 0, //钻头

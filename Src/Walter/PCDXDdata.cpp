@@ -27,7 +27,8 @@ int PCDXD::Draw()
 	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"Dc", m_diameter);
 	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"Lc", m_bladeLength);
 
-
+	//切换到标注层
+	CLayerSwitch layer(DIMLAYERNAME);
 	//添加直径标注
 	AcGePoint3d topPoint(ptInsert.x + offset, ptInsert.y + m_diameter / 2.0, ptInsert.z);
 	AcGePoint3d bottomPoint(ptInsert.x + offset, ptInsert.y - m_diameter / 2.0, ptInsert.z);
@@ -41,7 +42,7 @@ int PCDXD::Draw()
 	AcGePoint3d LendPoint(topPoint);
 	LendPoint.x -= m_totalLength;
 	center =  CMathUtil::GetMidPoint(topPoint, LendPoint);
-	center.y += 15;
+	center.y += 18;
 	CDimensionUtil::AddDimRotated(topPoint, LendPoint, center, NULL, NULL);
 	
 	
@@ -55,8 +56,19 @@ int PCDXD::Draw()
 	AcGePoint3d LfendPoint(topPoint);
 	LfendPoint.x -= m_grooveLength;
 	center = CMathUtil::GetMidPoint(topPoint, LfendPoint);
-	center.y += 10;
+	center.y += 12;
 	CDimensionUtil::AddDimRotated(topPoint, LfendPoint, center, NULL, NULL);
+	
+	//切换到显示层
+	CLayerSwitch lay(L"1");
+	//补线
+	AcGePoint3d TopEndPoint(0,0,0);
+	TopEndPoint.x = ptInsert.x - m_totalLength + offset;
+	TopEndPoint.y = ptInsert.y + (m_diameter - 2* offset) / 2;
+	TopEndPoint.z = ptInsert.z;
+	AcGePoint3d BottomEndPoint(TopEndPoint);
+	BottomEndPoint.y = TopEndPoint.y - (m_diameter - 2 * offset);
+	CLineUtil::CreateLine(TopEndPoint, BottomEndPoint);
 	return 0;
 }
 

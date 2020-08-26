@@ -13,6 +13,7 @@ IMPLEMENT_DYNAMIC(CDlgPcdZt, CDialogEx)
 CDlgPcdZt::CDlgPcdZt(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG_PCD_ZT, pParent)
 	, m_totalLen(0)
+	, m_VertexAngle(0)
 {
 
 }
@@ -32,18 +33,25 @@ BOOL CDlgPcdZt::OnInitDialog()
 	m_StepNumCtrl.AddString(L"4");
 	m_StepNumCtrl.SetCurSel(defaultindex);
 
+	//设置默认顶角
+	m_VertexAngle = 140;
 	//设置默认悬伸长度
 	m_totalLen = 160;
 	//设置刀柄
-	m_ui_HandleCtrl.AddString(L"Z06");
-	m_ui_HandleCtrl.AddString(L"Z08");
-	m_ui_HandleCtrl.AddString(L"Z10");
-	m_ui_HandleCtrl.AddString(L"Z12");
-	m_ui_HandleCtrl.AddString(L"Z16");
-	m_ui_HandleCtrl.AddString(L"Z18");
-	m_ui_HandleCtrl.AddString(L"Z20");
-	m_ui_HandleCtrl.AddString(L"Z25");
-	m_ui_HandleCtrl.AddString(L"Z32");
+	vector<CString> daobings = GetAllDwgFile(TY_GetDaoBingFolder());
+	for (auto&& d : daobings)
+	{
+		m_ui_HandleCtrl.AddString(d);
+	}
+	//m_ui_HandleCtrl.AddString(L"Z06");
+	//m_ui_HandleCtrl.AddString(L"Z08");
+	//m_ui_HandleCtrl.AddString(L"Z10");
+	//m_ui_HandleCtrl.AddString(L"Z12");
+	//m_ui_HandleCtrl.AddString(L"Z16");
+	//m_ui_HandleCtrl.AddString(L"Z18");
+	//m_ui_HandleCtrl.AddString(L"Z20");
+	//m_ui_HandleCtrl.AddString(L"Z25");
+	//m_ui_HandleCtrl.AddString(L"Z32");
 	m_ui_HandleCtrl.SetCurSel(defaultindex);
 
 	InitGridCtrl();
@@ -63,6 +71,7 @@ void CDlgPcdZt::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, m_ui_HandleCtrl);
 	DDX_Text(pDX, IDC_EDIT1, m_totalLen);
 	DDX_Control(pDX, IDC_COMBO2, m_StepNumCtrl);
+	DDX_Text(pDX, IDC_EDIT2, m_VertexAngle);
 }
 
 void CDlgPcdZt::InitGridCtrl()
@@ -86,11 +95,13 @@ void CDlgPcdZt::loadGridData()
 {
 	if (m_allrowData.size() > 0) {
 		m_gridctrl.SetContentItemEditable((int)m_allrowData.size() - 1, (int)m_allrowData[m_allrowData.size() - 1].size() - 2, true);
+		m_gridctrl.SetContentItemEditable((int)m_allrowData.size() - 1, (int)m_allrowData[m_allrowData.size() - 1].size() - 1, true);
 	}
 	int index = m_StepNumCtrl.GetCurSel();
 	m_allrowData = getDefaultData(index);
 	m_gridctrl.FillTable(m_allrowData);
 	m_gridctrl.SetContentItemEditable((int)m_allrowData.size() - 1, (int)m_allrowData[m_allrowData.size() - 1].size() - 2, false);
+	m_gridctrl.SetContentItemEditable((int)m_allrowData.size() - 1, (int)m_allrowData[m_allrowData.size() - 1].size() - 1, false);
 	m_gridctrl.Refresh();
 }
 
@@ -124,7 +135,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"0");
 			defaultText.push_back(str);
-			str.Format(L"140");
+			str.Format(L"0");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 			break;
@@ -136,7 +147,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"22");
 			defaultText.push_back(str);
-			str.Format(L"140");
+			str.Format(L"90");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 
@@ -147,7 +158,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"0");
 			defaultText.push_back(str);
-			str.Format(L"90");
+			str.Format(L"0");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 			break;
@@ -159,7 +170,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"22");
 			defaultText.push_back(str);
-			str.Format(L"140");
+			str.Format(L"90");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 
@@ -181,7 +192,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"0");
 			defaultText.push_back(str);
-			str.Format(L"90");
+			str.Format(L"0");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 			break;
@@ -193,7 +204,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"22");
 			defaultText.push_back(str);
-			str.Format(L"140");
+			str.Format(L"90");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 
@@ -226,7 +237,7 @@ MultiRowText CDlgPcdZt::getDefaultData(int rowCount)
 			defaultText.push_back(str);
 			str.Format(L"0");
 			defaultText.push_back(str);
-			str.Format(L"90");
+			str.Format(L"0");
 			defaultText.push_back(str);
 			vec.push_back(defaultText);
 			break;
@@ -270,12 +281,13 @@ void CDlgPcdZt::OnBnClickedButton1()
 	m_pcdZtData.SetHandleName(temp);
 	//加载阶梯数据
 	MultiRowText alldata = getTableData();
-	for (auto&& oneRowData : alldata)
+	for (int i=0; i < alldata.size();++i)
 	{
+		OneRowText oneRowData = alldata[i];
 		ZtSegData onedata;
-		onedata.diameter = _ttof(oneRowData[1]);
+		onedata.diameter =  _ttof(oneRowData[1]);
 		onedata.len = _ttof(oneRowData[2]);
-		onedata.angle = _ttof(oneRowData[3]);
+		onedata.angle = i ==0 ? m_VertexAngle : _ttof(alldata[i-1][3]);
 		m_pcdZtData.AddSegData(std::move(onedata));
 	}
 	//设置悬伸长度

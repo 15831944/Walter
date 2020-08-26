@@ -16,7 +16,7 @@ public:
 	void SetGrooveLen(double len) { m_grooveLenth = len; }
 	void AddSegData(ZtSegData&& segdata) {
 		m_StepData.push_back(segdata);
-		if (m_StepData.size() == 1) { m_grooveLenth = m_StepData[0].len; }
+		if (m_StepData.size() == 1) { m_grooveLenth = m_StepData[0].len + 30; }
 		else { m_grooveLenth = m_StepData[m_StepData.size() - 2].len  + 20; }
 	}
 	void Draw();

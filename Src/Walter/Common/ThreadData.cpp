@@ -653,6 +653,7 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 
 int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 {
+	double angle = acos(-1);
 	//AcGePoint2d offsetXY = AcGePoint2d(300,100);
 	//第一步： 转换点
 	vSDXY dxys;
@@ -692,8 +693,10 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 	//JHCOM_SetEntityType(plineId1, L"ACAD_ISO02W100");
 	//JHCOM_SetEntityType(plineId2, L"ACAD_ISO02W100");
 #ifdef MIRROR
-	CEntityUtil::Mirror(plineId1, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-	CEntityUtil::Mirror(plineId2, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Rotate(plineId1, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+	CEntityUtil::Rotate(plineId2, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+	/*CEntityUtil::Mirror(plineId1, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Mirror(plineId2, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));*/
 #endif
 	//第三步：创建基础模型
 	Acad::ErrorStatus es = Acad::eOk;
@@ -842,10 +845,11 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 #ifdef MIRROR
 	for (AcDbObjectId id : idarr)
 	{
-
-		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+		CEntityUtil::Rotate(id, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+		//CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 	}
-	CEntityUtil::Mirror(centerLine, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Rotate(centerLine, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+	//CEntityUtil::Mirror(centerLine, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
 	//第七步：内冷孔处理
 	//CreateLengQue(offsetXY);
@@ -1143,7 +1147,7 @@ double GetTaiQiLen_ZhiCao(double dia)
 int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 {
 	//AcGePoint2d offsetXY = AcGePoint2d(300,100);
-
+	const volatile double angle = acos(-1);
 	//第一步： 转换点
 	vSDXY dxys;
 
@@ -1174,8 +1178,10 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	AcDbObjectId plineId2 = CDwgDatabaseUtil::PostToModelSpace(pMirrorPline);
 	//JHCOM_SetEntityType(plineId2, L"ACAD_ISO02W100");
 #ifdef MIRROR
-	CEntityUtil::Mirror(plineId, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-	CEntityUtil::Mirror(plineId2, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Rotate(plineId, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+	CEntityUtil::Rotate(plineId2, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+	/*CEntityUtil::Mirror(plineId, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Mirror(plineId2, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));*/
 #endif
 	//第三步：创建基础模型
 	Acad::ErrorStatus es = Acad::eOk;
@@ -1243,8 +1249,10 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 #ifdef MIRROR
 	for (auto id : idarr)
 	{
-		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y,0),AcGeVector3d(0,1,0));
+		CEntityUtil::Rotate(id, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+		//CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y,0),AcGeVector3d(0,1,0));
 	}
+
 #endif
 #ifndef TY_DRAW_3D
 	CObjectUtil::DeleteObject(mainid);
@@ -1255,7 +1263,8 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	//JHCOM_SetEntityType(centerLine, L"ACAD_ISO04W100");
 	CEntityUtil::SetLayer(centerLine, L"SK4");
 #ifdef MIRROR
-	CEntityUtil::Mirror(centerLine, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	CEntityUtil::Rotate(centerLine, AcGePoint2d(offsetXY.x, offsetXY.y), angle);
+	//CEntityUtil::Mirror(centerLine, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
 	CreateDims(offsetXY,farestPnt);
 

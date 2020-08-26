@@ -43,4 +43,6 @@ private:
 public:
 	afx_msg void OnCbnSelchangeCombo2();
 	afx_msg void OnBnClickedButton1();
+	// ¶¥½Ç
+	double m_VertexAngle;
 };

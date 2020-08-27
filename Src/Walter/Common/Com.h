@@ -38,7 +38,7 @@ double GetHandleLengthFromDaoBing(CString daoBingName);
 vector<CString> GetAllDwgFile(const CString& dirPath);
 //去掉浮点数无效的0
 CString removeLastZero(double num);
-
+//获取镜像点，输入 一个点和过这个点的一个空间向量确定一个平面 得到关于这个平面的对称的点
 AcGePoint3d getMirrorPoint(AcGePoint3d point,AcGePoint3d const& ptbase,AcGeVector3d const& line);
 
 

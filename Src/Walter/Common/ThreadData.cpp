@@ -610,15 +610,6 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 
 	int start  = 0;
 	points.append(offsetXY);
-	//if (T_DRILL_MILLING_CUTTER == m_cutterType && fabs(m_pointR) > 0)
-	//{
-	//	start += 1;
-	//	//AcGePoint2d temp = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy - m_pointR);
-	//	//points.append(temp);
-	//	AcGePoint2d temp = AcGePoint2d(offsetXY.x + dxys[0].dx - m_pointR, offsetXY.y + dxys[0].dy);
-	//	points.append(temp);
-	//	offsetXY = AcGePoint2d(offsetXY.x + dxys[0].dx, offsetXY.y + dxys[0].dy);
-	//}
 
 	for (int i = start; i < (int)dxys.size(); i++)
 	{
@@ -2083,32 +2074,49 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	AcDbObjectId id;
 	for (int i = 0; i < m_cutterSegs.size() ; i++)
 	{
-			AcGePoint3d start(0, offsetXY.y, 0), end(0, offsetXY.y, 0);
-			GetXValueForOneCutterSeg_2(0, start.x);
-			start.x += offsetXY.x;
-
+		AcGePoint3d start(0,offsetXY.y,0), end(0,offsetXY.y,0);
+		double x = 0;
+		if (m_cutterType != T_DRILL_MILLING_CUTTER) {
+			GetXValueForOneCutterSeg(0, x);
+		}
+		else {
+			GetXValueForOneCutterSeg_2(0, x);
+		}
+		start.x = offsetXY.x + x;
 			double sum = 0.0;
 			for (int j = 0; j<=i;j++)
 			{
 				sum += m_cutterSegs[j].m_length;
 			}
-			end.x = start.x + sum;
+			end.x = start.x + sum - x;
 			AcGePoint3d dimpt(0, yvalue, 0);
 			dimpt.x = (start.x + end.x) / 2;
-			dimpt.y -= i * 4;
+			dimpt.y -= i * 8;
 			id = CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
 #ifdef MIRROR
 			CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
 	}
-	//标注一个槽长
+	//排屑槽长不需要标注
+	////标注一个槽长
 	AcGePoint3d start(offsetXY.x, offsetXY.y, 0);
 	AcGePoint3d end(offsetXY.x + m_GrooveLength, offsetXY.y, 0);
-	AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue,0);
-	dimpt.y -= m_cutterSegs.size() * 4;
-	id = CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
+	//AcGePoint3d dimpt(start.x/2 + end.x/2,yvalue,0);
+	//dimpt.y -= m_cutterSegs.size() * 4;
+	//id = CDimensionUtil::AddDimAligned(start, end, dimpt,L"");
+	//铣刀添加一个刀尖圆角标注
+	if (m_cutterType == T_DRILL_MILLING_CUTTER)
+	{
+		double x;
+		AcGePoint3d start(0, offsetXY.y - m_cutterSegs[0].m_diameter / 2, 0);
+		GetXValueForOneCutterSeg(0, x);
+		start.x = offsetXY.x + x;
+		AcGePoint3d ptCenter(start.x, start.y + m_pointR, start.z);
+		AcDbObjectId id = CDimensionUtil::AddDimRadial(ptCenter,m_pointR,acos(-0.5) *2 );
+		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	}
 #ifdef MIRROR
-	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+	//CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
 	//标注一个总长
 	AcGePoint3d start2(offsetXY.x, offsetXY.y, 0);
@@ -2117,13 +2125,13 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 
 	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
 	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue,0);
-	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 4 - 8;
+	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 4 - 12;
 	id = CDimensionUtil::AddDimAligned(start2, end2, dimpt2,nullptr);
 #ifdef MIRROR
 	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
 	//Y方向标注
-	double backX = 13;
+	double backX = 10;
 	//AcDbHandle tkhandle;
 	//tkhandle = CObjectUtil::IDtoHandle(m_tuKuangId);
 	for (int i = 0; i < m_cutterSegs.size(); i++)
@@ -2381,8 +2389,6 @@ int TY_CreateHandleA(AcGePoint3d pnt, double dia, double len)
 	start = AcGePoint3d(pnt.x + len, pnt.y - dia / 2, 0);
 	end = AcGePoint3d(pnt.x + len, pnt.y + dia / 2, 0);
 	dim = AcGePoint3d(end.x + 15, (start.y + end.y) / 2, 0);
-
-
 	//y方向
 	/*double gc1 = 0, gc2 = 0;
 	AN_GetGongCha(dia, gc1, gc2);
@@ -2390,5 +2396,6 @@ int TY_CreateHandleA(AcGePoint3d pnt, double dia, double len)
 	CString rePlaceText;
 	rePlaceText.Format(L"%%%%C%.1fh6({\\H0.7x;\\S 0^%.3f;})", dia, gc1, gc2);
 	MD2010_AddAlignedDimension_GongCha(start, end, dim, gc1, gc2, L"%%C", ACDB_MODEL_SPACE, L"尺寸", rePlaceText, -PI / 2);
-	*/return 0;
+	*/
+	return 0;
 }

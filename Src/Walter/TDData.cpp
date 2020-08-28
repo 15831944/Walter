@@ -11,12 +11,12 @@ void CTDData::Draw()
 	AcGePoint3d pnt;
 	CGetInputUtil::GetPoint(L"«Î ‰»Î≤Â»Îµ„£∫",pnt);
 	//≤Â»Îµ∂±˙
-	CString Handle = TY_GetDaoBingFolder() + m_HandleName + ".dwg";
+	CString Handle = TY_GetDaoBingFolder() + m_HandleName + L".dwg";
 	CBlockUtil::InsertDwgAsBlockRef(Handle, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 	//≤Â»Îµ∂…Ì
 	CString temp;
 	temp.Format(L"%d",m_tdSegdata.size());
-	CString KnifeName = TY_GetDynamicBlockFolder() + "ø…ªªµ∂∆¨Ô€µ∂ƒ£∞ÂX" + temp + ".dwg";
+	CString KnifeName = TY_GetDynamicBlockFolder() + L"ø…ªªµ∂∆¨Ô€µ∂ƒ£∞ÂX" + temp + L".dwg";
 	AcGePoint3d ptInsert(pnt);
 	ptInsert.x += m_totallength;
 	AcGePoint3d firstPoint = getVertexPoint(ptInsert, 0, true);

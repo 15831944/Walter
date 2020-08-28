@@ -20,17 +20,11 @@ public:
 
 private:
 	void Init();
-
-
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
 public:
-
-
-
-
 	// 图框选择
 	CComboBox m_tukuang;
 	// 比例

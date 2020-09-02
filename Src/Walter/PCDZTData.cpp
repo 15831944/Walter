@@ -49,6 +49,13 @@ void CPCDZTData::Draw()
 		//直径
 		temp.Format(L"D%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, temp, m_StepData[i].diameter);
+		//设置pcd片的大小
+		double xlen = getXlen(m_StepData[i].diameter);
+		double ylen = getYlen(m_StepData[i].diameter);
+		double R = getR(m_StepData[i].diameter);
+		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"R", R);
+		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"Ylen", ylen);
+		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"Xlen", xlen);
 		//长度
 		temp.Format(L"L%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, temp, m_StepData[i].len);
@@ -158,4 +165,31 @@ void CPCDZTData::Mending(AcGePoint3d const & pnt)
 	AcGePoint3d topPoint(pnt.x - m_totalLen , pnt.y + offset_y, pnt.z);
 	AcGePoint3d BottomPoint(pnt.x-m_totalLen, pnt.y - offset_y, pnt.z);
 	CLineUtil::CreateLine(topPoint, BottomPoint);
+}
+
+double CPCDZTData::getR(double diameter)
+{
+	double R = 14.0f;
+	if (CMathUtil::IsBiger(diameter, 25.0))	R = 14.0;
+	else if (CMathUtil::IsInRange(12.0, 25.0, diameter)) R = 10.0;
+	else R = 6.0f;
+	return R;
+}
+
+double CPCDZTData::getXlen(double diameter)
+{
+	double Xlen = 5.0f;
+	if (CMathUtil::IsBiger(diameter, 25.0))	Xlen = 5.0;
+	else if (CMathUtil::IsInRange(12.0, 25.0, diameter)) Xlen = 3.0;
+	else Xlen = 2.0f;
+	return Xlen;
+}
+
+double CPCDZTData::getYlen(double diameter)
+{
+	double ylen = 2.0f;
+	if (CMathUtil::IsBiger(diameter, 25.0))	ylen = 2.0;
+	else if (CMathUtil::IsInRange(12.0, 25.0, diameter)) ylen = 2.0;
+	else ylen = 1.0f;
+	return ylen;
 }

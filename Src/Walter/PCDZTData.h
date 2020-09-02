@@ -1,5 +1,6 @@
 #pragma once
 #include "Com.h"
+#include <tuple>
 typedef struct ZtSegData {
 	double angle = 0.0f;
 	double len = 0.0f;
@@ -26,8 +27,14 @@ private:
 	void AddDiaDimension(AcGePoint3d const& pnt); //直径标注
 	void AddLenDimension(AcGePoint3d const& pnt);	// 长度标注
 	void AddAngleDimension(AcGePoint3d const& pnt); // 角度标注
-
 	void Mending(AcGePoint3d const& pnt); //缺口补线
+
+	//根据直径获取半径和长度以及高度
+	double getR(double diameter);
+	double getXlen(double diameter);
+	double getYlen(double diameter);
+
+	
 private:
 	vector<ZtSegData> m_StepData;
 	double m_grooveLenth;

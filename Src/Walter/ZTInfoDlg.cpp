@@ -63,7 +63,6 @@ void CZTInfoDlg::SetCellHight()
 
 void CZTInfoDlg::InitDefaultPara()
 {
-	UpdateData(TRUE);
 	int defaultIndex = 0;
 	//¶¥½Ç
 	m_VertAngle = 140.0;

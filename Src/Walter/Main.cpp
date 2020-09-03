@@ -46,6 +46,7 @@
 #include  "DlgPcdXd.h"
 #include "DlgTd.h"
 #include "DlgPcdZt.h"
+#include "PrintDlg.h"
 HINSTANCE g_tytoolInst = 0;
 
 #ifdef _DEBUG
@@ -93,6 +94,14 @@ void CMD_PCDZT()
 	g_pcdzt = new CDlgPcdZt(acedGetAcadFrame());
 	g_pcdzt->Create(IDD_DIALOG_PCD_ZT);
 	g_pcdzt->ShowWindow(SW_SHOW);
+}
+CPrintDlg* g_printdlg = nullptr;
+void CMD_PRINT()
+{
+	CAcModuleResourceOverride resOverride;
+	g_printdlg = new CPrintDlg(acedGetAcadFrame());
+	g_printdlg->Create(IDD_DIALOG_PRINTER);
+	g_printdlg->ShowWindow(SW_SHOW);
 }
 //ïÛµ¶
 CDlgTd* g_td = NULL;
@@ -401,8 +410,18 @@ static void initApp()
 			NULL,
 			-1,
 			theArxDLL.ModuleResourceInstance());
-	}
+
+		acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+			_T("PRINT_"),
+			_T("PRINT_"),
+			ACRX_CMD_MODAL,
+			CMD_PRINT,
+			NULL,
+			-1,
+			theArxDLL.ModuleResourceInstance());
 #endif
+	}
+
 	//É¾³ýË«»÷ÊÂ¼þ
 	//LoadManagedDll(CCommonUtil::GetAppPath() + L"\\support\\rcdc.dll");
 	TY_LoadTyTool();
@@ -536,6 +555,11 @@ void menu()
 			V_VT(&index) = VT_I4;
 			V_I4(&index) = MenuIndex++;
 			IPopUpMenu.AddMenuItem(index, _T("&²åÈëÍ¼¿ò"), _T("INTK "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("&´òÓ¡"), _T("PRINT_ "));
 #endif
 		}
 		pDisp = IPopUpMenu.m_lpDispatch;

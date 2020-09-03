@@ -28,6 +28,7 @@
 #define IDB_BITMAP9                     178
 #define IDB_BITMAP13                    179
 #define IDD_DIALOG_PCD_ZT               180
+#define IDD_DIALOG_PRINTER              182
 #define IDC_EDIT_XPT                    1000
 #define IDC_EDIT_ANGLE                  1001
 #define IDC_BUTTON_POINT                1002
@@ -87,14 +88,21 @@
 #define IDC_KKD_STATIC                  1056
 #define IDC_STATIC_ZY                   1057
 #define IDC_ZT_BMP                      1058
+#define IDC_RADIO1                      1059
+#define IDC_RADIO2                      1060
+#define IDC_RADIO3                      1061
+#define IDC_RADIO4                      1062
+#define IDC_RADIO5                      1063
+#define IDC_RADIO6                      1064
+#define IDC_LIST1                       1065
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        182
+#define _APS_NEXT_RESOURCE_VALUE        184
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1059
+#define _APS_NEXT_CONTROL_VALUE         1066
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

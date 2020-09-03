@@ -252,6 +252,8 @@
     <None Include="res\xd.bmp" />
     <None Include="res\pcdxd.bmp" />
     <None Include="res\td.bmp" />
+    <None Include="res\mhzt.bmp" />
+    <None Include="res\pcdzt.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

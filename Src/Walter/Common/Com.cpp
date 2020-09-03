@@ -182,7 +182,7 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"W08") == 0)	length = 36.0;		//BT40 27
 	else if (daoBingName.Compare(L"W10") == 0)	length = 40.0;		//BT50 38
 	else if (daoBingName.Compare(L"W12") == 0)	length = 46.0;		//HSK-A40 20
-	else if (daoBingName.Compare(L"W16") == 0)	length = 49.0;	//HSK-A50 25.95
+	else if (daoBingName.Compare(L"W16") == 0)	length = 48.0;	//HSK-A50 25.95
 	else if (daoBingName.Compare(L"W18") == 0)	length = 48.0;	//HSK-A63 25.95
 	else if (daoBingName.Compare(L"W20") == 0)	length = 51.0;	//HSK-A80 25.95
 	else if (daoBingName.Compare(L"W25") == 0)	length = 57.0;	//HSK-A100 28.95

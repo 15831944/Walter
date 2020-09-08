@@ -33,7 +33,7 @@ int PCDXD::Draw()
 	AcGePoint3d topPoint(ptInsert.x + offset, ptInsert.y + m_diameter / 2.0, ptInsert.z);
 	AcGePoint3d bottomPoint(ptInsert.x + offset, ptInsert.y - m_diameter / 2.0, ptInsert.z);
 	AcGePoint3d center = CMathUtil::GetMidPoint(topPoint, bottomPoint);
-	center.x += 10;
+	center.x = ptInsert.x +  10;
 	CString temp;
 	temp.Format(L"%%%%C%s", removeLastZero(m_diameter));
 	CDimensionUtil::AddDimAligned(topPoint, bottomPoint, center, temp, NULL);
@@ -42,7 +42,7 @@ int PCDXD::Draw()
 	AcGePoint3d LendPoint(topPoint);
 	LendPoint.x -= m_totalLength;
 	center =  CMathUtil::GetMidPoint(topPoint, LendPoint);
-	center.y += 18;
+	center.y = topPoint.y + 30;
 	CDimensionUtil::AddDimRotated(topPoint, LendPoint, center, NULL, NULL);
 	
 	
@@ -50,13 +50,13 @@ int PCDXD::Draw()
 	AcGePoint3d LcendPoint(topPoint);
 	LcendPoint.x -= m_bladeLength;
 	center = CMathUtil::GetMidPoint(topPoint, LcendPoint);
-	center.y += 5;
+	center.y = topPoint.y + 10;
 	CDimensionUtil::AddDimRotated(topPoint, LcendPoint, center, NULL, NULL);
 	//添加lf标注 
 	AcGePoint3d LfendPoint(topPoint);
 	LfendPoint.x -= m_grooveLength;
 	center = CMathUtil::GetMidPoint(topPoint, LfendPoint);
-	center.y += 12;
+	center.y = topPoint.y + 20;
 	CDimensionUtil::AddDimRotated(topPoint, LfendPoint, center, NULL, NULL);
 	
 	//切换到显示层

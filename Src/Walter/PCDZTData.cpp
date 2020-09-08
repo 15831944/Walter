@@ -93,7 +93,7 @@ void CPCDZTData::AddDiaDimension(AcGePoint3d const& pnt)
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].diameter));
 		AcGePoint3d center = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
-		center.x = pnt.x + i *8 + 12;
+		center.x = pnt.x + i *10 + 10;
 		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, center, temp, nullptr);
 	}
 
@@ -104,27 +104,28 @@ void CPCDZTData::AddLenDimension(AcGePoint3d const& pnt)
 	double dis = GetDisByDBName(m_handleName);
 	CLayerSwitch layer(DIMLAYERNAME);
 	AcGePoint3d firstTopPoint = getVertexPoint(pnt, 0, true);
-	for (int i=0;i < m_StepData.size() -1;i ++ )
+	int i = 0;
+	for (i=0;i < m_StepData.size() -1;i ++ )
 	{
 		AcGePoint3d lastPoint = firstTopPoint;
 		lastPoint.x -= m_StepData[i].len;
 		lastPoint.y = i == 0 ? lastPoint.y : lastPoint.y + (m_StepData[i].diameter - m_StepData[0].diameter) / 2.0;
 		AcGePoint3d center = CMathUtil::GetMidPoint(firstTopPoint, lastPoint);
-		center.y = center.y + i * 5 + 5;
+		center.y = firstTopPoint.y + i * 10 + 10;
 		CDimensionUtil::AddDimRotated(firstTopPoint, lastPoint, center, 0);
 	}
 	//标注一个总长
 	AcGePoint3d lastPoint(pnt);
 	lastPoint.x = pnt.x - m_totalLen -dis;
 	AcGePoint3d center = CMathUtil::GetMidPoint(lastPoint, pnt);
-	center.y = center.y + 45;
+	center.y = firstTopPoint.y + (i +1 ) * 10 + 10;
 	CDimensionUtil::AddDimRotated(pnt, lastPoint, center, 0);
 	//标注一个lf
 	AcGePoint3d lfendPoint = firstTopPoint;
 	lfendPoint.y = lfendPoint.y + (m_StepData[m_StepData.size() - 1].diameter - m_StepData[0].diameter) / 2.0;
 	lfendPoint.x -= m_grooveLenth;
 	center = CMathUtil::GetMidPoint(firstTopPoint, lfendPoint);
-	center.y = center.y + 20;
+	center.y = firstTopPoint.y + i * 10 + 10;
 	CDimensionUtil::AddDimRotated(firstTopPoint, lfendPoint, center, 0);
 }
 //添加角度标注

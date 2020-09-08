@@ -112,6 +112,9 @@
     <ClCompile Include="PrintDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="PrintDwg.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -163,9 +166,6 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="res\resource.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
@@ -269,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="PrintDlg.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintDwg.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TYPlot.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

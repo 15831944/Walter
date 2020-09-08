@@ -278,8 +278,8 @@ int CThreadData::ConvertToDxy(double topAngle, // ‰»Î
 	secondxy.dy = 0;
 	if(cutterSegs.size() == 1)
 	{
-		if(cutterSegs[0].m_lengthType == E_CutterSegLength_µ∂º‚µΩµ∂º‚ || cutterSegs[0].m_lengthType == E_CutterSegLength_µ∂º‚µΩ‘≤÷˘)
-		    secondxy.dx = totalLength - firstxy.dx;
+		if (cutterSegs[0].m_lengthType == E_CutterSegLength_µ∂º‚µΩµ∂º‚ || cutterSegs[0].m_lengthType == E_CutterSegLength_µ∂º‚µΩ‘≤÷˘)
+			secondxy.dx = totalLength- firstxy.dx;
 		else
 			secondxy.dx = totalLength;
 	}
@@ -2091,7 +2091,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			end.x = start.x + sum - x;
 			AcGePoint3d dimpt(0, yvalue, 0);
 			dimpt.x = (start.x + end.x) / 2;
-			dimpt.y -= i * 8;
+			dimpt.y -= i * 10;
 			id = CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
 #ifdef MIRROR
 			CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
@@ -2125,7 +2125,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 
 	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
 	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue,0);
-	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 4 - 12;
+	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 10 - 10;
 	id = CDimensionUtil::AddDimAligned(start2, end2, dimpt2,nullptr);
 #ifdef MIRROR
 	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));

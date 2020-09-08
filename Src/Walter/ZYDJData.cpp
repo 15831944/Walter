@@ -68,10 +68,17 @@ void CZYDJData::Draw()
 void CZYDJData::SetStepData(vector<ZYXDStepData> const& data)
 {
 	m_StepData = data;
-	if (data.size() >= 2)
-		m_grooveLength = data[data.size() - 2].m_stepLength + data[data.size() - 1].m_diameter;
-	else
+	if (m_IsKKD) {
+		if (data.size() >= 2)
+			m_grooveLength = data[data.size() - 2].m_stepLength + data[data.size() - 1].m_diameter;
+		else
+			m_grooveLength = data[data.size() - 1].m_stepLength + data[data.size() - 1].m_diameter;
+
+	}
+	else {
 		m_grooveLength = data[data.size() - 1].m_stepLength + data[data.size() - 1].m_diameter;
+	}
+
 }
 
 void CZYDJData::SetPreDiameter(double diameter)
@@ -125,7 +132,7 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 	AcGePoint3d pt2(pnt);
 	pt2.y = pnt.y -  m_Prediameter / 2.0;
 	AcGePoint3d dimTextPosition = CMathUtil::GetMidPoint(pt1,pt2);
-	dimTextPosition.x += 5;
+	dimTextPosition.x += 10;
 
 	CString temp;
 	temp.Format(L"%%%%C%s", removeLastZero(m_Prediameter));
@@ -144,7 +151,7 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 		AcGePoint3d TopPoint = GetVertexPoint(pnt, i, TRUE);
 		AcGePoint3d BottomPoint = GetVertexPoint(pnt, i, FALSE);
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
-		centerPoint.x = pnt.x + 8 * i + 12;
+		centerPoint.x = pnt.x + 10 * i + 20;
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].m_diameter));
 		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint,temp);
@@ -157,15 +164,17 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 {
 	CLayerSwitch layer(DIMLAYERNAME);
-	for (size_t i = 0; i < m_DjLabberCount-1; i++)
+	//如果是铰刀，还需要再添加一个标注
+	int count = m_IsKKD ? m_DjLabberCount - 1 : m_DjLabberCount;
+	for (size_t i = 0; i < count; i++)
 	{
 		AcGePoint3d TopPoint;
 		TopPoint.x = pnt.x - m_StepData[i].m_stepLength;
 		TopPoint.y = pnt.y + m_StepData[i].m_diameter / 2.0;
 		AcGePoint3d ptend(pnt);
-		ptend.y = TopPoint.y;
+		ptend.y = pnt.y + m_StepData[0].m_diameter / 2.0;
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, ptend);
-		centerPoint.y = centerPoint.y + 5 * i + 5;
+		centerPoint.y = ptend.y + 10 * i + 10;
 		CDimensionUtil::AddDimRotated(TopPoint, ptend, centerPoint,0, NULL);
 	}
 	
@@ -177,15 +186,14 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	lastPoint.x = pnt.x - m_totalLength;
 	lastPoint.y = pnt.y + m_StepData[m_DjLabberCount - 1].m_diameter / 2.0;
 	AcGePoint3d centerPoint = CMathUtil::GetMidPoint(ptInsert, lastPoint);
-	centerPoint.y = centerPoint.y + 30;
+	centerPoint.y = ptInsert.y + 60;
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
 
 	//插入Lf标注
-	lastPoint = pnt;
 	lastPoint.y = pnt.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
 	lastPoint.x = pnt.x - m_grooveLength;
 	centerPoint =  CMathUtil::GetMidPoint(ptInsert, lastPoint);
-	centerPoint.y = centerPoint.y + 23;
+	centerPoint.y = ptInsert.y + 50;
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
 
 }

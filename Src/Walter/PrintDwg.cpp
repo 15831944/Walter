@@ -17,10 +17,10 @@ CPrintDwg::~CPrintDwg()
 
 void CPrintDwg::ExportToPdf()
 {
-	ExportToPdf(m_rect);
+		ExportToPdf(m_rect); //打印框选
 }
 
-void CPrintDwg::ExportToPdf(const Rect & rect)
+void CPrintDwg::ExportToPdf(const Rect & rect )
 {
 	ExportToPdf(rect.LB.x, rect.LB.y, rect.RT.x, rect.RT.y);
 }
@@ -28,6 +28,7 @@ void CPrintDwg::ExportToPdf(const Rect & rect)
 void CPrintDwg::ExportToPdf(double xmin, double ymin, double xmax, double ymax)
 {
 	CString test = m_dirPath + L"\\test.pdf";
+	//Plot(test,xmin,ymin,xmax,ymax);
 	Plot(test);
 }
 
@@ -36,20 +37,20 @@ void CPrintDwg::SetPaperType(PAPER_TYPE paper_type)
 	switch (paper_type)
 	{
 	case P_A2:
-		m_papertype = L"ISO_full_bleed_A2_(420.00_x_594.00_MM)";
+		m_papertype = L"ISO_full_bleed_A2_(594.00_x_420.00_MM)";
 		break;
 	case P_A3:
-		m_papertype = L"ISO_full_bleed_A3_(420.00_x_297.00_MM)";
+		m_papertype = L"ISO_full_bleed_A3_(297.00_x_420.00_MM)";
 		break;
 	case P_A4:
-		m_papertype = L"ISO_full_bleed_A4_(210.00_x_297.00_MM)";
+		m_papertype = L"ISO_full_bleed_A4_(297.00_x_210.00_MM)";
 		break;
 	default:
 		break;
 	}
 }
 
-//打印单张
+//打印框选
 void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, double ymax)
 {
 	CDocLock lock;
@@ -73,6 +74,7 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	pPSV->setCanonicalMediaName(&plotSettings, m_papertype);//设置纸张类型
 	pPSV->setCurrentStyleSheet(&plotSettings, L"monochrome.ctb");
 	pPSV->setPlotRotation(&plotSettings, AcDbPlotSettings::k0degrees);//设置打印方向
+	pPSV->setPlotPaperUnits(&plotSettings, AcDbPlotSettings::kMillimeters); //设置单位
 	AcPlPlotInfo* plotInfo = new AcPlPlotInfo;
 	//plotInfo.push_back(new AcPlPlotInfo);
 	plotInfo->setLayout(layoutId);
@@ -125,35 +127,35 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	}
 
 }
-//打印多张
+//打印全部
 void CPrintDwg::Plot(CString sPdfName)
 {
 	CDocLock lock;
 
-	TYPlot::SetTyPlotConfigFolder(TY_GetFrameFolder());
+	TYPlot::SetTyPlotConfigFolder(TY_GetFrameFolder()+ L"TuYuan");
 
 	TYPlot::vSTYTitle titlesModel;
 	TYPlot::TYPLOT_GetTitlesForModelSpace(titlesModel);
 
-	//识别不到图框时打印整个模型空间
-	if (titlesModel.empty())
-	{
-		AcDbBlockTable *pBlkTbl = NULL;
-		acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	////识别不到图框时打印整个模型空间
+	//if (titlesModel.empty())
+	//{
+	//	AcDbBlockTable *pBlkTbl = NULL;
+	//	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 
-		// 获得模型空间的块表记录
-		AcDbBlockTableRecord *pBlkTblRcd = NULL;
-		pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
-		pBlkTbl->close();
+	//	// 获得模型空间的块表记录
+	//	AcDbBlockTableRecord *pBlkTblRcd = NULL;
+	//	pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+	//	pBlkTbl->close();
 
-		AcDbExtents extent;
-		Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
-		pBlkTblRcd->close();
+	//	AcDbExtents extent;
+	//	Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
+	//	pBlkTblRcd->close();
 
-		titlesModel.resize(1);
-		titlesModel[0].m_lb = extent.minPoint();
-		titlesModel[0].m_rt = extent.maxPoint();
-	}
+	//	titlesModel.resize(1);
+	//	titlesModel[0].m_lb = extent.minPoint();
+	//	titlesModel[0].m_rt = extent.maxPoint();
+	//}
 
 	// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
@@ -174,6 +176,7 @@ void CPrintDwg::Plot(CString sPdfName)
 	pPSV->setCanonicalMediaName(&plotSettings, m_papertype);//设置纸张类型
 	pPSV->setCurrentStyleSheet(&plotSettings, L"monochrome.ctb");
 	pPSV->setPlotRotation(&plotSettings, AcDbPlotSettings::k0degrees);//设置打印方向
+	pPSV->setPlotPaperUnits(&plotSettings, AcDbPlotSettings::kMillimeters); //设置单位
 
 	plotInfo.push_back(new AcPlPlotInfo);
 	plotInfo[0]->setLayout(layoutId);

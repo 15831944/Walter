@@ -28,19 +28,9 @@ protected:
 
 public:
 	afx_msg void OnBnClickedButton1();
-	// 所有图框
-	BOOL m_AllBlock;
-	// 部分图框
-	BOOL m_partBlock;
-	// 单页
-	BOOL m_SinglePaper;
-	// 多页
-	BOOL m_multiPaper;
-	// A3
-	BOOL m_A3;
-	// A4
-	BOOL m_A4;
 	CPrintDwg m_printer; //进行打印工作
-	afx_msg void OnBnClickedRadio2();
-	BOOL m_A2; //A2
+
+	BOOL m_printAll;
+	int m_SinglePaper;
+	int m_PaperClass;
 };

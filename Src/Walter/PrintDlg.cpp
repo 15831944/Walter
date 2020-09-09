@@ -4,19 +4,16 @@
 #include "stdafx.h"
 #include "PrintDlg.h"
 #include "afxdialogex.h"
+#include "Com.h"
 // CPrintDlg 对话框
 
 IMPLEMENT_DYNAMIC(CPrintDlg, CDialogEx)
 
 CPrintDlg::CPrintDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG_PRINTER, pParent)
-	, m_AllBlock(FALSE)
-	, m_partBlock(FALSE)
-	, m_SinglePaper(FALSE)
-	, m_multiPaper(FALSE)
-	, m_A3(FALSE)
-	, m_A4(FALSE)
-	, m_A2(FALSE)
+	, m_printAll(FALSE)
+	, m_SinglePaper(0)
+	, m_PaperClass(0)
 {
 
 }
@@ -28,13 +25,10 @@ CPrintDlg::~CPrintDlg()
 void CPrintDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Radio(pDX, IDC_RADIO1, m_AllBlock);
-	DDX_Radio(pDX, IDC_RADIO2, m_partBlock);
+
+	DDX_Radio(pDX, IDC_RADIO1, m_printAll);
 	DDX_Radio(pDX, IDC_RADIO3, m_SinglePaper);
-	DDX_Radio(pDX, IDC_RADIO4, m_multiPaper);
-	DDX_Radio(pDX, IDC_RADIO5, m_A3);
-	DDX_Radio(pDX, IDC_RADIO6, m_A4);
-	DDX_Radio(pDX, IDC_RADIO7, m_A2);
+	DDX_Radio(pDX, IDC_RADIO5, m_PaperClass);
 }
 
 LRESULT CPrintDlg::OnAcadKeepFocus(WPARAM, LPARAM)
@@ -44,17 +38,11 @@ LRESULT CPrintDlg::OnAcadKeepFocus(WPARAM, LPARAM)
 BOOL CPrintDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-	//初始化参数
-	m_AllBlock = true;
-	m_SinglePaper = true;
-	m_A2 = true;
-	UpdateData(FALSE);
 	return TRUE;
 }
 BEGIN_MESSAGE_MAP(CPrintDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, &CPrintDlg::OnAcadKeepFocus)
 	ON_BN_CLICKED(IDC_BUTTON1, &CPrintDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_RADIO2, &CPrintDlg::OnBnClickedRadio2)
 END_MESSAGE_MAP()
 
 
@@ -64,21 +52,61 @@ void CPrintDlg::OnBnClickedButton1()
 	UpdateData(TRUE);
 
 	//设置纸张类型
-	if (m_A2)
-		m_printer.SetPaperType(P_A2);
-	else if (m_A3)
-		m_printer.SetPaperType(P_A3);
-	else
-		m_printer.SetPaperType(P_A4);
-	//单张还是多张 true 表示单张 false表示多张
-	if (m_SinglePaper)
-		m_printer.SetSingle(m_SinglePaper);
-	else
-		m_printer.SetSingle(false);
-
-	//读取范围 暂时还未设置
+	switch (m_PaperClass)
 	{
+	case 0:
+		m_printer.SetPaperType(P_A2);
+		break; //A2
+	case 1:
+		m_printer.SetPaperType(P_A3);
+		break; //A3
+	case 2:
+		m_printer.SetPaperType(P_A4);
+		break; // A4
+	default:
+		break;
+	}
+	//设置打印一张还是多张
+	if (m_SinglePaper == 0) //打印单张
+	{
+		m_printer.SetIsSingle(TRUE);
+	}
+	else //打印多张
+	{
+		m_printer.SetIsSingle(FALSE);
+	}
+	if(m_printAll == 0) //如果是全部打印就是打印整个模型空间
+	{
+		AcDbBlockTable *pBlkTbl = NULL;
+		acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 
+		// 获得模型空间的块表记录
+		AcDbBlockTableRecord *pBlkTblRcd = NULL;
+		pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+		pBlkTbl->close();
+
+		AcDbExtents extent;
+		Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
+		pBlkTblRcd->close();
+		Rect PrintRect;
+		PrintRect.LB = extent.minPoint();
+		PrintRect.RT = extent.maxPoint();
+		m_printer.SetRect(PrintRect);
+	}
+	else //部分打印应该框选 框选的时候需要设置读取图框
+	{
+		ShowWindow(SW_HIDE);
+		void* pt1 = NULL ;
+		//AcGePoint3d pt2(0,0,0);
+		ads_name adsName;
+		if (acedSSGet(NULL, NULL, pt1, NULL, adsName) != RTNORM)
+		{
+			MessageBox(L"框选失败");
+			CDialogEx::OnCancel();
+		}
+
+		Rect PrintRect;
+		m_printer.SetRect(PrintRect);
 	}
 	//
 	BROWSEINFO bInfo;
@@ -94,20 +122,16 @@ void CPrintDlg::OnBnClickedButton1()
 	{
 		SHGetPathFromIDList(lpDlist, dirPath);
 		m_printer.setDirPath(dirPath);
+		ShowWindow(SW_HIDE);
+		//需要使用进度条
+		TY_Progress_Init();
+		m_printer.ExportToPdf();
+		TY_Progress_Close();
 	}
-
-	ShowWindow(SW_HIDE);
 	//最后导出pdf
-	m_printer.ExportToPdf();
 	CDialogEx::OnOK();
 }
 
-//框选
-void CPrintDlg::OnBnClickedRadio2()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	
-}
 
 
 

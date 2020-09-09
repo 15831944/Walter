@@ -41,7 +41,8 @@ BOOL CDlgPcdZt::OnInitDialog()
 	vector<CString> daobings = GetAllDwgFile(TY_GetDaoBingFolder());
 	for (auto&& d : daobings)
 	{
-		m_ui_HandleCtrl.AddString(d);
+		if (d.Find(L"GR") == -1) //È¥µô·¨À¼µ¶±ú
+			m_ui_HandleCtrl.AddString(d);
 	}
 	//m_ui_HandleCtrl.AddString(L"Z06");
 	//m_ui_HandleCtrl.AddString(L"Z08");

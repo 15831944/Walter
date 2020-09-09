@@ -183,6 +183,7 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"W10") == 0)	length = 40.0;		//BT50 38
 	else if (daoBingName.Compare(L"W12") == 0)	length = 46.0;		//HSK-A40 20
 	else if (daoBingName.Compare(L"W16") == 0)	length = 48.0;	//HSK-A50 25.95
+	else if (daoBingName.Compare(L"W14") == 0)	length = 45.0;
 	else if (daoBingName.Compare(L"W18") == 0)	length = 48.0;	//HSK-A63 25.95
 	else if (daoBingName.Compare(L"W20") == 0)	length = 51.0;	//HSK-A80 25.95
 	else if (daoBingName.Compare(L"W25") == 0)	length = 57.0;	//HSK-A100 28.95
@@ -235,20 +236,37 @@ double GetDisByDBName(CString name)
 	else if (name.Compare(L"Z25") == 0)		dis = 0.0;		//Z25 0
 	else if (name.Compare(L"Z32") == 0)		dis = 0.0;		//Z32 0
 	else if (name.Compare(L"Z40") == 0)		dis = 0.0;		//Z40 0
+
+	else if (name.Compare(L"Z06") == 0)		dis = 0;		//Z06
+	else if (name.Compare(L"Z08") == 0)		dis = 0;		//Z08
+	else if (name.Compare(L"Z10") == 0)		dis =0;		//Z10
+	else if (name.Compare(L"Z12") == 0)		dis = 0;		//Z12
+	else if (name.Compare(L"Z14") == 0)		dis = 0;		//Z14
+	else if (name.Compare(L"W06") == 0)		dis = 0.0;		//w06
+	else if (name.Compare(L"W08") == 0)		dis = 0.0;		//w08
+	else if (name.Compare(L"W10") == 0)		dis = 0.0;		//w10 0
+	else if (name.Compare(L"W12") == 0)		dis = 0.0;		//w12 0
+	else if (name.Compare(L"W14") == 0)		dis = 0.0;		//w14 0
+	else if (name.Compare(L"GR60") == 0)		dis = 13.0;		//GR60 0
+	else if (name.Compare(L"GR70") == 0)		dis = 15.0;		//Z16 0
+	else if (name.Compare(L"GR80") == 0)		dis = 17.0;		//Z20 0
+	else if (name.Compare(L"GR100") == 0)		dis = 21.0;		//Z25 0
+	else if (name.Compare(L"GR117") == 0)		dis = 21.0;		//Z32 0
+	else if (name.Compare(L"GR140") == 0)		dis = 28.0;		//Z40 0
 	return dis;
 }
 
 //根据刀尖获取 lf2的值
 double GetLf2ByDiameter(double diameter)
 {
-	double Lf2 = 2.5f; //设置默认为2.5
-	if (diameter > 4 && diameter <= 6.1)
+	double Lf2 = 2.3f; //设置默认为2.5
+	if (diameter > 5 && diameter <= 6.1)
 	{
-		Lf2 = 2.5f;
+		Lf2 = 2.3f;
 	}
 	else if (diameter > 6.1 && diameter <= 8.6)
 	{
-		Lf2 = 3.0f;
+		Lf2 = 2.8f;
 	}
 	else if (diameter > 8.6 && diameter <= 10.6)
 	{

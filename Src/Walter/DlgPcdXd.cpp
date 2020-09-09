@@ -30,7 +30,8 @@ void CDlgPcdXd::InitParameters()
 	vector<CString> daobings = GetAllDwgFile(TY_GetDaoBingFolder());
 	for (auto&& daobing : daobings)
 	{
-		m_ui_HandleCtrl.AddString(daobing);
+		if (daobing.Find(L"GR") == -1)  //È¥µô·¨À¼µ¶±ú
+			m_ui_HandleCtrl.AddString(daobing);
 	}
 	m_ui_HandleCtrl.SetCurSel(0);
 	m_lengthOfKnife = 120;

@@ -148,7 +148,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\debug;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\lib-x64;..\..\..\CadCommon\TYCom\lib\x64\release;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\HlrApi\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>CadCommon2017.lib;acdbmgd.lib;acbr21.lib;AsdkHlrApi21.lib;acgex21.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TYPlotCom2017.lib;CadCommon2017.lib;acdbmgd.lib;acbr21.lib;AsdkHlrApi21.lib;acgex21.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -1141,7 +1141,7 @@ int CThreadData::CreateModel3D_ZhiCao(AcGePoint2d offsetXY, AcDbObjectId &mainid
 	const volatile double angle = acos(-1);
 	//第一步： 转换点
 	vSDXY dxys;
-
+	
 	int ret = ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_guoDuDaiX, dxys);//ConvertToDxy(m_topAngle, m_cutterSegs, m_totalLength - m_handleLength - m_guoDuDaiX, dxys);
 	//for (int i = 0; i < dxys.size(); i++)
 		//dxys[i].dy *= -1;
@@ -2339,7 +2339,10 @@ void CThreadData::Draw(bool IsZC)
 #endif // MIRROR
 
 	if (IsZC)
+	{
+		m_daoJianType = E_DaoJian_三尖; 
 		ret = CreateModel3D_ZhiCao(pInt, id);
+	}
 	else
 		ret = CreateModel3D(pInt, id);
 

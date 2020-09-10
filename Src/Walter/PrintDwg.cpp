@@ -17,7 +17,7 @@ CPrintDwg::~CPrintDwg()
 
 void CPrintDwg::ExportToPdf()
 {
-		ExportToPdf(m_rect); //打印框选
+	ExportToPdf(m_rect); //打印框选
 }
 
 void CPrintDwg::ExportToPdf(const Rect & rect )
@@ -29,7 +29,24 @@ void CPrintDwg::ExportToPdf(double xmin, double ymin, double xmax, double ymax)
 {
 	CString test = m_dirPath + L"\\test.pdf";
 	//Plot(test,xmin,ymin,xmax,ymax);
-	Plot(test);
+	Plot(test, xmin, ymin, xmax, ymax);
+}
+
+void CPrintDwg::SetRect(const AcGePoint3d& minPoint,const AcGePoint3d& maxPoint)
+{
+	Rect rect;
+	rect.LB = minPoint;
+	rect.RT = maxPoint;
+	SetRect(rect);
+}
+
+void CPrintDwg::SetRect(double xmin, double ymin, double xmax, double ymax)
+{
+	//只打印二维平面
+	Rect rect;
+	rect.LB = AcGePoint3d(xmin,ymin,0);
+	rect.RT = AcGePoint3d(xmax, ymax, 0);
+	SetRect(rect);
 }
 
 void CPrintDwg::SetPaperType(PAPER_TYPE paper_type)
@@ -54,7 +71,7 @@ void CPrintDwg::SetPaperType(PAPER_TYPE paper_type)
 void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, double ymax)
 {
 	CDocLock lock;
-	TYPlot::SetTyPlotConfigFolder(TY_GetFrameFolder());
+	//TYPlot::SetTyPlotConfigFolder(TY_GetFrameFolder());
 	//// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
 	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"模型");//获得当前布局
@@ -74,7 +91,7 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	pPSV->setCanonicalMediaName(&plotSettings, m_papertype);//设置纸张类型
 	pPSV->setCurrentStyleSheet(&plotSettings, L"monochrome.ctb");
 	pPSV->setPlotRotation(&plotSettings, AcDbPlotSettings::k0degrees);//设置打印方向
-	pPSV->setPlotPaperUnits(&plotSettings, AcDbPlotSettings::kMillimeters); //设置单位
+	//pPSV->setPlotPaperUnits(&plotSettings, AcDbPlotSettings::kMillimeters); //设置单位
 	AcPlPlotInfo* plotInfo = new AcPlPlotInfo;
 	//plotInfo.push_back(new AcPlPlotInfo);
 	plotInfo->setLayout(layoutId);
@@ -89,8 +106,9 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
 	pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
 	pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
-
-
+	//打印机设置完成之后要重新验证否则会出现错误
+	plotInfo->setOverrideSettings(&plotSettings);
+	validator.validate(*plotInfo);
 
 	////准备打印/////////////////////////////////////////////////////////////////////////
 	
@@ -103,20 +121,16 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	if (AcPlPlotFactory::createPublishEngine(pEngine) == Acad::eOk)
 	{
 		es = pEngine->beginPlot(NULL);
-
 		AcPlPlotPageInfo pageInfo;//打印页信息
-
 		const ACHAR* fileName = NULL;
 		acdbHostApplicationServices()->workingDatabase()->getFilename(fileName);
 		es = pEngine->beginDocument(*plotInfo, fileName, NULL, 1, true, sPdfName);
-
 		pEngine->beginPage(pageInfo, *plotInfo,true );
 		pEngine->beginGenerateGraphics();
 		pEngine->endGenerateGraphics();
 		pEngine->endPage();
 		pEngine->endDocument();
 		pEngine->endPlot();
-
 		//返回资源
 		pEngine->destroy();
 		acutPrintf(L"打印完成");
@@ -137,25 +151,25 @@ void CPrintDwg::Plot(CString sPdfName)
 	TYPlot::vSTYTitle titlesModel;
 	TYPlot::TYPLOT_GetTitlesForModelSpace(titlesModel);
 
-	////识别不到图框时打印整个模型空间
-	//if (titlesModel.empty())
-	//{
-	//	AcDbBlockTable *pBlkTbl = NULL;
-	//	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	//识别不到图框时打印整个模型空间
+	if (titlesModel.empty())
+	{
+		AcDbBlockTable *pBlkTbl = NULL;
+		acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 
-	//	// 获得模型空间的块表记录
-	//	AcDbBlockTableRecord *pBlkTblRcd = NULL;
-	//	pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
-	//	pBlkTbl->close();
+		// 获得模型空间的块表记录
+		AcDbBlockTableRecord *pBlkTblRcd = NULL;
+		pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+		pBlkTbl->close();
 
-	//	AcDbExtents extent;
-	//	Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
-	//	pBlkTblRcd->close();
+		AcDbExtents extent;
+		Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
+		pBlkTblRcd->close();
 
-	//	titlesModel.resize(1);
-	//	titlesModel[0].m_lb = extent.minPoint();
-	//	titlesModel[0].m_rt = extent.maxPoint();
-	//}
+		titlesModel.resize(1);
+		titlesModel[0].m_lb = extent.minPoint();
+		titlesModel[0].m_rt = extent.maxPoint();
+	}
 
 	// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象

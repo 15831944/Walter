@@ -5,6 +5,7 @@
 #include "PrintDlg.h"
 #include "afxdialogex.h"
 #include "Com.h"
+#include "Interaction/GetInputUtil.h"
 // CPrintDlg 对话框
 
 IMPLEMENT_DYNAMIC(CPrintDlg, CDialogEx)
@@ -95,18 +96,36 @@ void CPrintDlg::OnBnClickedButton1()
 	}
 	else //部分打印应该框选 框选的时候需要设置读取图框
 	{
+		CDocLock lock;
 		ShowWindow(SW_HIDE);
-		void* pt1 = NULL ;
-		//AcGePoint3d pt2(0,0,0);
-		ads_name adsName;
-		if (acedSSGet(NULL, NULL, pt1, NULL, adsName) != RTNORM)
+		//直接让用户选择要打印的区域
+		AcGePoint3d minPoint;
+		AcGePoint3d maxPoint;
+		vector<AcDbObjectId> vid;
+		CSelectUtil::SelectMany(vid);
+		for (int i = 0; i < vid.size(); i++)
 		{
-			MessageBox(L"框选失败");
-			CDialogEx::OnCancel();
+			AcDbEntity *pEntity = NULL;
+			if (acdbOpenAcDbEntity(pEntity, vid[i], AcDb::kForRead) == Acad::eOk)
+			{
+				AcDbExtents extent;
+				pEntity->getGeomExtents(extent);
+				if (i == 0)
+				{
+					minPoint = extent.minPoint();
+					maxPoint = extent.maxPoint();
+				}
+				else
+				{
+					minPoint.x = minPoint.x <= extent.minPoint().x ? minPoint.x : extent.minPoint().x;
+					minPoint.y = minPoint.y <= extent.minPoint().y ? minPoint.y : extent.minPoint().y;
+					maxPoint.x = maxPoint.x >= extent.maxPoint().x ? maxPoint.x : extent.maxPoint().x;
+					maxPoint.y = maxPoint.y >= extent.maxPoint().y ? maxPoint.y : extent.maxPoint().y;
+				}
+			}
 		}
 
-		Rect PrintRect;
-		m_printer.SetRect(PrintRect);
+		m_printer.SetRect(minPoint, maxPoint);
 	}
 	//
 	BROWSEINFO bInfo;

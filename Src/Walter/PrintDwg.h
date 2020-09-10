@@ -28,6 +28,8 @@ public:
 	~CPrintDwg();
 	
 	//≤Œ ˝…Ë÷√
+	void SetRect(const AcGePoint3d& minPoint, const AcGePoint3d& maxPoint);
+	void SetRect(double xmin, double ymin, double xmax, double ymax);
 	void setDirPath(TCHAR dir[]) { m_dirPath.Format(L"%s",dir); }
 	void SetPaperType(PAPER_TYPE paper_type);
 	void SetRect(const Rect& rect) { m_rect = rect; }

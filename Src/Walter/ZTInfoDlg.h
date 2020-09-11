@@ -55,4 +55,5 @@ public:
 	CComboBox m_DrillSel;
 	afx_msg void OnCbnSelchangeCombo1();
 	double m_GrooveLenth; //≈≈–º≤€≥§
+
 };

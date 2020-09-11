@@ -122,7 +122,6 @@ void CPrintDwg::AddRect(const CTYRect& rect)
 void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, double ymax)
 {
 	CDocLock lock;
-	//TYPlot::SetTyPlotConfigFolder(TY_GetFrameFolder());
 	//// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
 	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"模型");//获得当前布局

@@ -70,7 +70,14 @@ void CZTInfoDlg::InitDefaultPara()
 	m_DrillSel.AddString(L"麻花钻");
 	m_DrillSel.AddString(L"直槽钻");
 	m_DrillSel.SetCurSel(defaultIndex);
-	
+	CString temp;
+	m_DrillSel.GetLBText(defaultIndex, temp);
+	// TODO: 在此添加控件通知处理程序代码
+
+	if (temp.Compare(L"麻花钻") == 0)
+	{
+		GetDlgItem(IDC_CHECK_FORME)->ShowWindow(SW_HIDE);
+	}
 	
 	//m_VertexEdit.SetWindowTextW(temp);
 	m_ui_DrNumCtrl.AddString(L"2");
@@ -347,6 +354,14 @@ void CZTInfoDlg::OnBnClickedBtnok()
 	}
 	else 
 	{
+		CButton *pCheck = (CButton*)GetDlgItem(IDC_CHECK_FORME);
+		int state = pCheck->GetCheck();
+		if (state==1)
+		{
+			m_data.m_daoJianType = E_DaoJian_三尖;
+			m_data.m_pointCenterDistance = 0.3 * m_data.m_cutterSegs[0].m_diameter;
+
+		}
 		m_data.Draw(true);
 	}
 	CDialogEx::OnOK();
@@ -367,6 +382,7 @@ void CZTInfoDlg::OnCbnSelchangeCombo1()
 		CBitmap cbitmap;
 		cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP9));
 		pStatic->SetBitmap(cbitmap);
+		GetDlgItem(IDC_CHECK_FORME)->ShowWindow(SW_HIDE);
 	}
 	else
 	{
@@ -374,6 +390,7 @@ void CZTInfoDlg::OnCbnSelchangeCombo1()
 		CBitmap cbitmap;
 		cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP6));
 		pStatic->SetBitmap(cbitmap);
+		GetDlgItem(IDC_CHECK_FORME)->ShowWindow(SW_SHOW);
 	}
 	UpdateData(FALSE);
 }

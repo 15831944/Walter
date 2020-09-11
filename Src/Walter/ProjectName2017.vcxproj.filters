@@ -273,9 +273,6 @@
     <ClInclude Include="PrintDwg.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\TYPlot.h">
-      <Filter>Common</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">

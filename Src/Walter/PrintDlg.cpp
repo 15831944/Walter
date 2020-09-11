@@ -76,6 +76,7 @@ void CPrintDlg::OnBnClickedButton1()
 	{
 		m_printer.SetIsSingle(FALSE);
 	}
+	vCString tukuanNames = { CString(L"A1"),CString(L"A2"),CString(L"A3") };
 	if(m_printAll == 0) //如果是全部打印就是打印整个模型空间
 	{
 		AcDbBlockTable *pBlkTbl = NULL;
@@ -89,43 +90,12 @@ void CPrintDlg::OnBnClickedButton1()
 		AcDbExtents extent;
 		Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
 		pBlkTblRcd->close();
-		Rect PrintRect;
-		PrintRect.LB = extent.minPoint();
-		PrintRect.RT = extent.maxPoint();
-		m_printer.SetRect(PrintRect);
+		m_printer.GetAllPrintRects(false,tukuanNames);
 	}
 	else //部分打印应该框选 框选的时候需要设置读取图框
 	{
-		CDocLock lock;
 		ShowWindow(SW_HIDE);
-		//直接让用户选择要打印的区域
-		AcGePoint3d minPoint;
-		AcGePoint3d maxPoint;
-		vector<AcDbObjectId> vid;
-		CSelectUtil::SelectMany(vid);
-		for (int i = 0; i < vid.size(); i++)
-		{
-			AcDbEntity *pEntity = NULL;
-			if (acdbOpenAcDbEntity(pEntity, vid[i], AcDb::kForRead) == Acad::eOk)
-			{
-				AcDbExtents extent;
-				pEntity->getGeomExtents(extent);
-				if (i == 0)
-				{
-					minPoint = extent.minPoint();
-					maxPoint = extent.maxPoint();
-				}
-				else
-				{
-					minPoint.x = minPoint.x <= extent.minPoint().x ? minPoint.x : extent.minPoint().x;
-					minPoint.y = minPoint.y <= extent.minPoint().y ? minPoint.y : extent.minPoint().y;
-					maxPoint.x = maxPoint.x >= extent.maxPoint().x ? maxPoint.x : extent.maxPoint().x;
-					maxPoint.y = maxPoint.y >= extent.maxPoint().y ? maxPoint.y : extent.maxPoint().y;
-				}
-			}
-		}
-
-		m_printer.SetRect(minPoint, maxPoint);
+		m_printer.GetAllPrintRects(true, tukuanNames);
 	}
 	//
 	BROWSEINFO bInfo;
@@ -143,9 +113,7 @@ void CPrintDlg::OnBnClickedButton1()
 		m_printer.setDirPath(dirPath);
 		ShowWindow(SW_HIDE);
 		//需要使用进度条
-		TY_Progress_Init();
 		m_printer.ExportToPdf();
-		TY_Progress_Close();
 	}
 	//最后导出pdf
 	CDialogEx::OnOK();

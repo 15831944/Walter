@@ -61,7 +61,7 @@ CThreadSegData::CThreadSegData()
 {
 	m_diameter = 10; //刃径
 	m_length = 20; //长度
-	m_lengthType = E_CutterSegLength_刀尖到刀尖;
+	m_lengthType = E_CutterSegLength_圆柱到刀尖;
 
 	m_bDoubleLadder = false;
 	m_ladderAngle1 = 180; //阶梯角
@@ -532,15 +532,6 @@ int CThreadData::PostProcessAngleHead(vSDXY &dxys) const
 	{
 		if (m_pointR > 0)//处理平底 倒角
 		{
-			/*double A = CMathUtil::AngleToRadian(m_topAngle/4.0);
-			double B = 2*A;
-			double len2 = m_pointR/2;
-
-			double len = len2/cos(A);
-
-			double dx = len * cos(B);
-			double dy = len * sin(B);*/
-
 			 double dx = m_pointR;
 			 double dy = m_pointR;
 
@@ -606,7 +597,6 @@ AcDbPolyline * CThreadData::CreatePolyline2d(AcGePoint2d offsetXY, vSDXY &dxys, 
 
 	//根据倒角R 和倒角 做后续处理
 	PostProcessAngleHead(dxys);
-
 
 	int start  = 0;
 	points.append(offsetXY);
@@ -2088,7 +2078,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			{
 				sum += m_cutterSegs[j].m_length;
 			}
-			end.x = start.x + sum - x;
+			end.x = start.x + sum ;
 			AcGePoint3d dimpt(0, yvalue, 0);
 			dimpt.x = (start.x + end.x) / 2;
 			dimpt.y -= i * 10;
@@ -2339,8 +2329,7 @@ void CThreadData::Draw(bool IsZC)
 #endif // MIRROR
 
 	if (IsZC)
-	{
-		m_daoJianType = E_DaoJian_三尖; 
+	{ 
 		ret = CreateModel3D_ZhiCao(pInt, id);
 	}
 	else
@@ -2395,7 +2384,6 @@ int TY_CreateHandleA(AcGePoint3d pnt, double dia, double len)
 	//y方向
 	/*double gc1 = 0, gc2 = 0;
 	AN_GetGongCha(dia, gc1, gc2);
-
 	CString rePlaceText;
 	rePlaceText.Format(L"%%%%C%.1fh6({\\H0.7x;\\S 0^%.3f;})", dia, gc1, gc2);
 	MD2010_AddAlignedDimension_GongCha(start, end, dim, gc1, gc2, L"%%C", ACDB_MODEL_SPACE, L"尺寸", rePlaceText, -PI / 2);

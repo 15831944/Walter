@@ -34,6 +34,8 @@ void CDlgTuKuang::Init()
 {
 	int defaultIndex = 0;
 	//初始化图框
+	m_tukuang.AddString(L"A1");
+	m_tukuang.AddString(L"A2");
 	m_tukuang.AddString(L"A3");
 	m_tukuang.SetCurSel(defaultIndex);
 	
@@ -99,7 +101,7 @@ void CDlgTuKuang::OnBnClickedButton1()
 		CString TuKuangName;
 		m_tukuang.GetLBText(selectIndex, TuKuangName);
 		CString TuKuangPath = TY_GetFrameFolder() + TuKuangName + L".dwg";
-		CString blkName = CCommonUtil::GenStrByTime();
+		//CString blkName = CCommonUtil::GenStrByTime();
 
 		//比例
 		CString proportion;
@@ -107,11 +109,11 @@ void CDlgTuKuang::OnBnClickedButton1()
 		m_proportion.GetLBText(selectIndex, proportion);
 		AcDbObjectId tukuangId;
 		if (proportion.Compare(L"2:1") == 0)
-			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 0.5);
+			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, NULL, ACDB_MODEL_SPACE, pnt, 0, 0.5);
 		else if(proportion.Compare(L"1:1") == 0)
-			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1);
+			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1);
 		else if (proportion.Compare(L"2:3") == 0)
-			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, blkName, ACDB_MODEL_SPACE, pnt, 0, 1.5);
+			tukuangId = CBlockUtil::InsertDwgAsBlockRef(TuKuangPath, NULL, ACDB_MODEL_SPACE, pnt, 0, 1.5);
 		//设置属性定义
 		//类别
 		int index = m_KnifeClassSel.GetCurSel();

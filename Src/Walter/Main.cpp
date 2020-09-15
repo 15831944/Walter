@@ -33,7 +33,6 @@
 #include "Entity/ObjectUtil.h"
 #include "VBA/VBA_Inc.h"
 //#include "TYProgress.h"
-#include "Head.h"
 #include "Others/ToolingUtil.h"
 
 #include "WalterDialog.h"

@@ -20,20 +20,42 @@ void CPrintDwg::ExportToPdf()
 	{
 		CString fileName = m_dirPath + m_pdfFileName +L".pdf";
 		//不能打印完全 需要找到最大与最小的点
-		double xmin = 0.0;
-		double ymin = 0.0;
-		double xmax = 0.0;
-		double ymax = 0.0;
-		for (auto rect : m_allRect)
-		{
-			if (xmin >= rect.Left()) xmin = rect.Left();
-			if (ymin >= rect.Bottom()) xmin = rect.Bottom();
-			if (xmax <= rect.Right()) xmax = rect.Right();
-			if (ymax <= rect.Top()) ymax = rect.Top();
+		AcGePoint3d pt1;
+		AcGePoint3d pt2;
+		if (m_allRect.size() > 0) {
+			double xmin = 0.0;
+			double ymin = 0.0;
+			double xmax = 0.0;
+			double ymax = 0.0;
+			for (auto rect : m_allRect)
+			{
+				if (xmin >= rect.Left()) xmin = rect.Left();
+				if (ymin >= rect.Bottom()) xmin = rect.Bottom();
+				if (xmax <= rect.Right()) xmax = rect.Right();
+				if (ymax <= rect.Top()) ymax = rect.Top();
+			}
+			pt1 = AcGePoint3d(xmin, ymin, 0);
+			pt2 = AcGePoint3d(xmax, ymax, 0);
 		}
-		AcGePoint3d pt1(xmin, ymin, 0);
-		AcGePoint3d pt2(xmax, ymax, 0);
-		ExportToSinglePdf(fileName, CTYRect(pt1,pt2)); //打印框选
+		else
+		{
+			CDocLock lock;
+				AcDbBlockTable *pBlkTbl = NULL;
+				acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+
+				// 获得模型空间的块表记录
+				AcDbBlockTableRecord *pBlkTblRcd = NULL;
+				pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+				pBlkTbl->close();
+
+				AcDbExtents extent;
+				Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
+				pBlkTblRcd->close();
+				pt1 = extent.minPoint();
+				pt2 = extent.maxPoint();
+		}
+		CTYRect rect(pt1, pt2);
+		ExportToSinglePdf(fileName, rect); //打印框选
 	}
 	else
 	{
@@ -65,7 +87,7 @@ void CPrintDwg::SetPaperType(PAPER_TYPE paper_type)
 		m_papertype = L"ISO_full_bleed_A2_(594.00_x_420.00_MM)";
 		break;
 	case P_A3:
-		m_papertype = L"ISO_full_bleed_A3_(297.00_x_420.00_MM)";
+		m_papertype = L"ISO_full_bleed_A3_(420.00_x_297.00_MM)";
 		break;
 	case P_A4:
 		m_papertype = L"ISO_full_bleed_A4_(297.00_x_210.00_MM)";
@@ -87,12 +109,13 @@ void CPrintDwg::GetAllPrintRects(bool select, vCString tukuangBlockNames)
 	vAcDbObjectId tuKuangIDs;
 	for (int i = 0;i < vIds.size();++i)
 	{
+		CDocLock lock;
 		CString  blkName;
 		CBlockUtil::GetBlockNameByBlockRef(vIds[i], blkName);
 		bool HasThisName = false;
 		for (int i = 0;i<tukuangBlockNames.size();++i)
 		{
-			if (tukuangBlockNames[i].CompareNoCase(blkName) == 0)
+			if (tukuangBlockNames[i].Compare(blkName) == 0)
 			{
 				HasThisName = true;
 				break;
@@ -124,9 +147,9 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	CDocLock lock;
 	//// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
-	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"模型");//获得当前布局
+	//获取当前布局的时候要根据CAD的中英文
+	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(pLayoutManager->findActiveLayout(TRUE),TRUE);//获得当前布局
 	AcDbObjectId layoutId = pLayout->objectId();//获得布局的Id
-
 	//获得打印机验证器对象
 	AcDbPlotSettingsValidator *pPSV = acdbHostApplicationServices()->plotSettingsValidator();
 
@@ -137,10 +160,11 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	Acad::ErrorStatus es;
 
 	AcDbPlotSettings plotSettings(true);
-	pPSV->setPlotCfgName(&plotSettings, L"DWG To PDF.pc3");//设置打印设备
+	pPSV->setPlotCfgName(&plotSettings, L"PDFCreator");//设置打印设备
 	pPSV->setCanonicalMediaName(&plotSettings, m_papertype);//设置纸张类型
-	pPSV->setCurrentStyleSheet(&plotSettings, L"monochrome.ctb");
+	pPSV->setCurrentStyleSheet(&plotSettings, L"WA_LASER.CTB");
 	pPSV->setPlotRotation(&plotSettings, AcDbPlotSettings::k0degrees);//设置打印方向
+	pPSV->setUseStandardScale(&plotSettings, true);
 	//pPSV->setPlotPaperUnits(&plotSettings, AcDbPlotSettings::kMillimeters); //设置单位
 	AcPlPlotInfo* plotInfo = new AcPlPlotInfo;
 	//plotInfo.push_back(new AcPlPlotInfo);
@@ -149,7 +173,7 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	validator.validate(*plotInfo);
 
 
-
+	
 	//打印机设置
 	pPSV->setPlotWindowArea(&plotSettings,xmin,ymin,xmax,ymax);//设置打印范围,超出给范围的将打不出来
 	pPSV->setPlotType(&plotSettings, AcDbPlotSettings::kWindow);//设置打印范围为窗口
@@ -159,13 +183,13 @@ void CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, do
 	//打印机设置完成之后要重新验证否则会出现错误
 	plotInfo->setOverrideSettings(&plotSettings);
 	validator.validate(*plotInfo);
-
 	////准备打印/////////////////////////////////////////////////////////////////////////
 	
 	//关闭后台打印，否则打印速度很慢
 	pResbuf rb = acutBuildList(RTSHORT, 0, RTNONE);
 	acedSetVar(L"BACKGROUNDPLOT", rb);
 	acutRelRb(rb);
+
 
 	AcPlPlotEngine* pEngine = NULL;//创建打印引擎
 	if (AcPlPlotFactory::createPublishEngine(pEngine) == Acad::eOk)

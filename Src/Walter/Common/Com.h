@@ -12,7 +12,7 @@ const size_t N = 2; //小数点后的有效数字
 //#define TY_DRAW_3D
 
 //判断路径是否存在 如不存在则不可使用 
-#define WALTER PathFileExists(L"G:\\") 
+const BOOL WALTER =  PathFileExists(L"G:\\");
 
 CString TY_GetAppPath();
 //根据刀柄名称获取distance

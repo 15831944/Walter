@@ -27,7 +27,7 @@ public:
 	void ExportToPdf();
 	
 //打印图纸的是实现，不暴露给外部使用，只给外部使用接口
-private:
+public:
 	void ExportToSinglePdf(CString fileName, const CTYRect & rect);
 	void Plot(CString pdfName, double maxx, double maxy, double minx, double miny); //打印单张
 private:

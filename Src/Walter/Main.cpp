@@ -94,6 +94,7 @@ void CMD_PCDZT()
 	g_pcdzt->Create(IDD_DIALOG_PCD_ZT);
 	g_pcdzt->ShowWindow(SW_SHOW);
 }
+//批量打印
 CPrintDlg* g_printdlg = nullptr;
 void CMD_PRINT()
 {
@@ -563,7 +564,7 @@ void menu()
 			VariantInit(&index);
 			V_VT(&index) = VT_I4;
 			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("&批量打印"), _T("PRINT_ "));
+			IPopUpMenu.AddMenuItem(index, _T("&批量打印"), _T("PRINT_"));
 #endif
 		}
 		pDisp = IPopUpMenu.m_lpDispatch;

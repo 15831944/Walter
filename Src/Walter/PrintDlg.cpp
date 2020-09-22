@@ -114,6 +114,8 @@ void CPrintDlg::OnBnClickedButton1()
 		ShowWindow(SW_HIDE);
 		//需要使用进度条
 		MessageBox(L"打印开始");
+		m_printer.SetPlotDevice(L"PDFCreator");
+		m_printer.SetPlotStyleSheet(L"WA_LASER.CTB");
 		m_printer.ExportToPdf();
 	}
 	//最后导出pdf

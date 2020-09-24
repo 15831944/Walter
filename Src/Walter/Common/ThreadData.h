@@ -244,6 +244,8 @@ public:
 
 	void Draw(bool IsZC);
 	void SetDaoBingName(const CString& DaoBingName);
+
+	void SetIsFormE(bool isFormE) { IsFormE = isFormE; }
 public:
 	//刀柄位置
 	CString m_daobing;
@@ -282,6 +284,8 @@ public:
 	int m_jingDu;//标注的精度 默认3
 
 	Adesk::Int32 m_nLadderCount; //阶数 暂时不用的数据
+
+	bool IsFormE; //小钻尖形式顶角不用标记
 };
 
 

@@ -93,7 +93,7 @@ void CPCDZTData::AddDiaDimension(AcGePoint3d const& pnt)
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].diameter));
 		AcGePoint3d center = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
-		center.x = pnt.x + i *10 + 10;
+		center.x = pnt.x + i *DIMDISTANCE + DIMDISTANCE;
 		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, center, temp, nullptr);
 	}
 
@@ -118,14 +118,14 @@ void CPCDZTData::AddLenDimension(AcGePoint3d const& pnt)
 	AcGePoint3d lastPoint(pnt);
 	lastPoint.x = pnt.x - m_totalLen -dis;
 	AcGePoint3d center = CMathUtil::GetMidPoint(lastPoint, pnt);
-	center.y = firstTopPoint.y + (i +1 ) * 10 + 10;
+	center.y = firstTopPoint.y + (i +1 ) * DIMDISTANCE + DIMDISTANCE;
 	CDimensionUtil::AddDimRotated(pnt, lastPoint, center, 0);
 	//标注一个lf
 	AcGePoint3d lfendPoint = firstTopPoint;
 	lfendPoint.y = lfendPoint.y + (m_StepData[m_StepData.size() - 1].diameter - m_StepData[0].diameter) / 2.0;
 	lfendPoint.x -= m_grooveLenth;
 	center = CMathUtil::GetMidPoint(firstTopPoint, lfendPoint);
-	center.y = firstTopPoint.y + i * 10 + 10;
+	center.y = firstTopPoint.y + i * DIMDISTANCE + DIMDISTANCE;
 	CDimensionUtil::AddDimRotated(firstTopPoint, lfendPoint, center, 0);
 }
 //添加角度标注
@@ -147,7 +147,7 @@ void CPCDZTData::AddAngleDimension(AcGePoint3d const& pnt)
 		AcGePoint3d secondPoint1 = getVertexPoint(pnt, i, false);
 		//标注数字的位置并添加标注
 		AcGePoint3d dimtextposition = CMathUtil::GetMidPoint(secondpoint, secondPoint1);
-		dimtextposition.x -= 15;
+		dimtextposition.x -= DIMDISTANCE;
 		CDimensionUtil::AddDim2LineAngular(firstpoint, secondpoint, firstPoint1, secondPoint1, dimtextposition);
 	}
 	//插入一个顶角标注

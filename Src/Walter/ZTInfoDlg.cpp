@@ -358,9 +358,9 @@ void CZTInfoDlg::OnBnClickedBtnok()
 		int state = pCheck->GetCheck();
 		if (state==1)
 		{
+			m_data.IsFormE = true;
 			m_data.m_daoJianType = E_DaoJian_Èý¼â;
 			m_data.m_pointCenterDistance = 0.3 * m_data.m_cutterSegs[0].m_diameter;
-
 		}
 		m_data.Draw(true);
 	}

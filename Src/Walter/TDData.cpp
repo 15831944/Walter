@@ -89,7 +89,7 @@ void CTDData::AddDiaDimension(const AcGePoint3d & pnt)
 		AcGePoint3d ptTop = getVertexPoint(pnt, i, true);
 		AcGePoint3d ptBottom = getVertexPoint(pnt, i, false);
 		AcGePoint3d center = CMathUtil::GetMidPoint(ptTop, ptBottom);
-		center.x =pnt.x +  i * 10 + 10 ;
+		center.x =pnt.x +  i * DIMDISTANCE + 10 ;
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_tdSegdata[i].m_diameter));
 		CDimensionUtil::AddDimAligned(ptTop, ptBottom, center, temp, nullptr);
@@ -106,7 +106,7 @@ void CTDData::AddLenDimension(const AcGePoint3d & pnt)
 	{
 		AcGePoint3d topPoint = getVertexPoint(pnt, i, true);
 		AcGePoint3d center = CMathUtil::GetMidPoint(firstTopPoint, topPoint);
-		center.y = firstTopPoint.y +  i *10 + 10;
+		center.y = firstTopPoint.y +  i *DIMDISTANCE + 10;
 		CDimensionUtil::AddDimRotated(firstTopPoint, topPoint, center, 0, nullptr, nullptr);
 	}
 	//计算排屑槽长
@@ -115,13 +115,13 @@ void CTDData::AddLenDimension(const AcGePoint3d & pnt)
 	AcGePoint3d endPoint1(firstTopPoint.x, pnt.y + m_tdSegdata[m_tdSegdata.size() - 1].m_diameter / 2.0, firstTopPoint.z);
 	endPoint1.x -= m_grooveLength;
 	AcGePoint3d  center = CMathUtil::GetMidPoint(firstTopPoint, endPoint1);
-	center.y = firstTopPoint.y + i * 10 +10;
+	center.y = firstTopPoint.y + i * DIMDISTANCE +10;
 	CDimensionUtil::AddDimRotated(firstTopPoint, endPoint1, center, 0, nullptr, nullptr);
 	//添加总长标注
 	AcGePoint3d endPoint(firstTopPoint.x,firstTopPoint.y,firstTopPoint.z);
 	firstTopPoint.x -= m_totallength;
 	center = CMathUtil::GetMidPoint(firstTopPoint, endPoint);
-	center.y = firstTopPoint.y + (i+1) *10 + 10;
+	center.y = firstTopPoint.y + (i+1) *DIMDISTANCE + 10;
 	CDimensionUtil::AddDimRotated(firstTopPoint, endPoint, center, 0, nullptr, nullptr);
 }
 

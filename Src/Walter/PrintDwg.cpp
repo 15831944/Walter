@@ -4,6 +4,7 @@
 #include "AcPlPlotEngine.h"
 #include "acplplotfactory.h"
 #include "Com.h"
+#include "dbtable.h"
 
 CPrintDwg::CPrintDwg()
 {
@@ -19,9 +20,8 @@ void CPrintDwg::ExportToPdf()
 	int ret = 1;
 	if (m_IsSingle) 
 	{
-		CString fileName = m_dirPath + m_pdfFileName +L".pdf";
-		//不能打印完全 需要找到最大与最小的点
-		Plot(fileName);
+		CString filePath = m_dirPath + m_pdfFileName +L".pdf";
+		Plot(filePath);
 	}
 	else
 	{
@@ -129,7 +129,7 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 	//// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
 	//获取当前布局的时候要根据CAD的中英文
-	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"Model");//获得当前布局
+	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(pLayoutManager->findActiveLayout(true));//获得当前布局
 	AcDbObjectId layoutId = pLayout->objectId();//获得布局的Id
 	//获得打印机验证器对象
 	AcDbPlotSettingsValidator *pPSV = acdbHostApplicationServices()->plotSettingsValidator();
@@ -199,9 +199,6 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 void CPrintDwg::Plot(CString sPdfName)
 {
 	CDocLock lock;
-
-
-
 	//识别不到图框时打印整个模型空间
 	if (m_allRect.empty())
 	{
@@ -224,7 +221,7 @@ void CPrintDwg::Plot(CString sPdfName)
 
 	// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
-	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"Model");//获得当前布局
+	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(pLayoutManager->findActiveLayout(true));//获得当前布局
 	AcDbObjectId layoutId = pLayout->objectId();//获得布局的Id
 
 												//获得打印机验证器对象
@@ -281,6 +278,7 @@ void CPrintDwg::Plot(CString sPdfName)
 
 		const ACHAR* fileName = NULL;
 		acdbHostApplicationServices()->workingDatabase()->getFilename(fileName);
+		sPdfName = L"C:\\Users\\admin\\Desktop\\walter.pdf";
 		es = pEngine->beginDocument(*plotInfo[0], fileName, NULL, 1, true, sPdfName);
 
 		for (UINT i = 0; i < m_allRect.size(); i++)

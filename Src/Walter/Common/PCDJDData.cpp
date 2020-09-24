@@ -63,7 +63,7 @@ void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 	CString temp;
 	temp.Format(L"%%%%C%s", removeLastZero(m_stepDatas[stepIndex].m_diameter));
 	//
-	ptCenter.x = pnt.x + 10 + stepIndex * 10;
+	ptCenter.x = pnt.x + 10 + stepIndex * DIMDISTANCE;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, temp,dimStyleId);
 }
@@ -80,7 +80,7 @@ void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)
 	AcGePoint3d LDend = GetDaoJianPoint(pnt, true, stepIndex);
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LDstart, LDend);
-	center.y = pnt.y + 10*stepIndex;
+	center.y = pnt.y + DIMDISTANCE*stepIndex;
 	
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LDstart, LDend, center,0,NULL, dimStyleId);
@@ -98,7 +98,7 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 	LfDend.x = LfDend.x - 30;
 
 	AcGePoint3d center = CMathUtil::GetMidPoint(LfDstart, LfDend);
-	center.y = pnt.y + stepIndex * 10+ 10;
+	center.y = pnt.y + stepIndex * DIMDISTANCE + 10;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
 	CDimensionUtil::AddDimRotated(LfDstart, LfDend, center, 0,NULL, dimStyleId);
 	//插入总长标注
@@ -106,7 +106,7 @@ void SPCDJDData::InsertLf1Dimension(const AcGePoint3d & pnt, int stepIndex)
 	
 	lastpoint.x = lastpoint.x - m_stepDatas[stepIndex].m_stepLength;
 	center = CMathUtil::GetMidPoint(LfDstart, lastpoint);
-	center.y = LfDend.y + stepIndex * 5 + 20;
+	center.y = LfDend.y + stepIndex * DIMDISTANCE + 20;
 	CDimensionUtil::AddDimRotated(LfDstart, lastpoint, center, 0, NULL, dimStyleId);
 }
 

@@ -16,9 +16,7 @@ CPrintDlg::CPrintDlg(CWnd* pParent /*=NULL*/)
 	, m_SinglePaper(0)
 	, m_PaperClass(0)
 {
-
 }
-
 CPrintDlg::~CPrintDlg()
 {
 }
@@ -76,7 +74,7 @@ void CPrintDlg::OnBnClickedButton1()
 	{
 		m_printer.SetIsSingle(FALSE);
 	}
-	vCString tukuanNames = { CString(L"A1"),CString(L"A2"),CString(L"A3"),CString(L"RAHMEN_RAHM-A3Q") };
+	vCString tukuanNames = { CString(L"A1"),CString(L"A2"),CString(L"A3"),CString(L"RAHMEN_RAHM-A3Q"),CString(L"RAHMEN_RAHM-A2Q") };
 	if(m_printAll == 0) //如果是全部打印就是打印整个模型空间
 	{
 		AcDbBlockTable *pBlkTbl = NULL;
@@ -116,6 +114,7 @@ void CPrintDlg::OnBnClickedButton1()
 		MessageBox(L"打印开始");
 		m_printer.SetPlotDevice(L"PDFCreator");
 		m_printer.SetPlotStyleSheet(L"WA_LASER.CTB");
+		m_printer.SetPlotDevice(L"DWG To PDF.pc3");
 		m_printer.ExportToPdf();
 	}
 	//最后导出pdf

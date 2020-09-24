@@ -132,7 +132,7 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 	AcGePoint3d pt2(pnt);
 	pt2.y = pnt.y -  m_Prediameter / 2.0;
 	AcGePoint3d dimTextPosition = CMathUtil::GetMidPoint(pt1,pt2);
-	dimTextPosition.x += 10;
+	dimTextPosition.x += DIMDISTANCE;
 
 	CString temp;
 	temp.Format(L"%%%%C%s", removeLastZero(m_Prediameter));
@@ -151,7 +151,7 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 		AcGePoint3d TopPoint = GetVertexPoint(pnt, i, TRUE);
 		AcGePoint3d BottomPoint = GetVertexPoint(pnt, i, FALSE);
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
-		centerPoint.x = pnt.x + 10 * i + 20;
+		centerPoint.x = pnt.x + DIMDISTANCE * i + 20;
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].m_diameter));
 		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint,temp);
@@ -174,7 +174,7 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 		AcGePoint3d ptend(pnt);
 		ptend.y = pnt.y + m_StepData[0].m_diameter / 2.0;
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, ptend);
-		centerPoint.y = ptend.y + 10 * i + 10;
+		centerPoint.y = ptend.y + DIMDISTANCE * i + 10;
 		CDimensionUtil::AddDimRotated(TopPoint, ptend, centerPoint,0, NULL);
 	}
 	
@@ -222,7 +222,7 @@ void CZYDJData::InsertAngleDim(const AcGePoint3d & pnt)
 		/*BottomPoint2.x = BottomPoint1.x +  diff / tan(CMathUtil::AngleToRadian(m_StepData[i].m_angle / 2.0));*/
 		//计算插入标记位置
 		AcGePoint3d dimTextPosition = CMathUtil::GetMidPoint(TopPoint1, BottomPoint1);
-		dimTextPosition.x -= (10 * i);
+		dimTextPosition.x -= (DIMDISTANCE * i);
 		CDimensionUtil::AddDim2LineAngular(TopPoint2, TopPoint1, BottomPoint2, BottomPoint1, dimTextPosition);
 	}
 }

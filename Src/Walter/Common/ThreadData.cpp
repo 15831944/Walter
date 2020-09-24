@@ -1668,17 +1668,13 @@ int CThreadData::GetSegLadderAPnts(int index, AcGePoint3d &start, AcGePoint3d &e
 			end = AcGePoint3d(xlen+dxys[i].dx,ylen+dxys[i].dy,0);
 			return 0;
 		}
-
 		xlen+=dxys[i].dx;
 		ylen+=dxys[i].dy;
-
 		if (fabs(dxys[i].dy) < USER_TOL * 100)
 		{
 			count++;
 			continue;
 		}
-
-		
 	}
 
 	return -1;
@@ -2081,7 +2077,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			end.x = start.x + sum ;
 			AcGePoint3d dimpt(0, yvalue, 0);
 			dimpt.x = (start.x + end.x) / 2;
-			dimpt.y -= i * 10;
+			dimpt.y -= i * DIMDISTANCE;
 			id = CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
 #ifdef MIRROR
 			CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
@@ -2121,7 +2117,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
 	//Y方向标注
-	double backX = 10;
+	double backX = DIMDISTANCE;
 	//AcDbHandle tkhandle;
 	//tkhandle = CObjectUtil::IDtoHandle(m_tuKuangId);
 	for (int i = 0; i < m_cutterSegs.size(); i++)
@@ -2185,24 +2181,25 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			dim.x -=7;
 		}
 	}
-
-	//顶角
-	if (m_topAngle < 180)
-	{
-		double topRad = CMathUtil::AngleToRadian(m_topAngle/2.0);
-		double dx = 10;
-		double dy = 10*tan(topRad);
+	if (!IsFormE) {
+		//顶角
+		if (m_topAngle < 180)
+		{
+			double topRad = CMathUtil::AngleToRadian(m_topAngle / 2.0);
+			double dx = 10;
+			double dy = 10 * tan(topRad);
 #ifdef MIRROR
-		AcGePoint3d xline1Start = getMirrorPoint(AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		AcGePoint3d xline1End = getMirrorPoint(AcGePoint3d(offsetXY.x + dx, offsetXY.y - dy, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		AcGePoint3d xline2Start = getMirrorPoint(AcGePoint3d(offsetXY.x + dx, offsetXY.y + dy, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		AcGePoint3d xline2End = getMirrorPoint(AcGePoint3d(offsetXY.x - 15, offsetXY.y, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		MD2010_AddAngleDimension2(xline1Start, xline1End, xline2Start, xline2End, ACDB_MODEL_SPACE);
+			AcGePoint3d xline1Start = getMirrorPoint(AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			AcGePoint3d xline1End = getMirrorPoint(AcGePoint3d(offsetXY.x + dx, offsetXY.y - dy, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			AcGePoint3d xline2Start = getMirrorPoint(AcGePoint3d(offsetXY.x + dx, offsetXY.y + dy, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			AcGePoint3d xline2End = getMirrorPoint(AcGePoint3d(offsetXY.x - 15, offsetXY.y, 0), AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			MD2010_AddAngleDimension2(xline1Start, xline1End, xline2Start, xline2End, ACDB_MODEL_SPACE);
 #else
-      MD2010_AddAngleDimension2(AcGePoint3d(offsetXY.x, offsetXY.y, 0), 
-			AcGePoint3d(offsetXY.x+dx, offsetXY.y-dy, 0),AcGePoint3d(offsetXY.x+dx, offsetXY.y+dy, 0), AcGePoint3d(offsetXY.x-15, offsetXY.y, 0),ACDB_MODEL_SPACE);
+			MD2010_AddAngleDimension2(AcGePoint3d(offsetXY.x, offsetXY.y, 0),
+				AcGePoint3d(offsetXY.x + dx, offsetXY.y - dy, 0), AcGePoint3d(offsetXY.x + dx, offsetXY.y + dy, 0), AcGePoint3d(offsetXY.x - 15, offsetXY.y, 0), ACDB_MODEL_SPACE);
 #endif
-		//MD2010_AddAngleDimension(AcGePoint3d(0,0,0), AcGePoint3d (-5,-3,0),AcGePoint3d(-5,3,0), AcGePoint3d(-5,0,0));
+			//MD2010_AddAngleDimension(AcGePoint3d(0,0,0), AcGePoint3d (-5,-3,0),AcGePoint3d(-5,3,0), AcGePoint3d(-5,0,0));
+		}
 	}
 
 	//标注各个倒角
@@ -2213,6 +2210,14 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		GetSegLadderAPnts(i, ladderUpStart, ladderUpEnd);
 		ladderUpStart = GetOffsetPnt(ladderUpStart,offsetXY);
 		ladderUpEnd = GetOffsetPnt(ladderUpEnd,offsetXY);
+		if (IsFormE)
+		{
+			double delta_x = 0.0;
+			if (m_topAngle < 180 && m_topAngle> 0)
+			 delta_x = m_pointCenterDistance / tan(CMathUtil::AngleToRadian(m_topAngle / 2.0));
+			ladderUpStart.x -= delta_x;
+			ladderUpEnd.x -= delta_x;
+		}
 		ladderDownStart = GetMirrorPnt(ladderUpStart,offsetXY);
 		ladderDownEnd = GetMirrorPnt(ladderUpEnd,offsetXY);
 
@@ -2246,30 +2251,32 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		MD2010_AddAngleDimension3(xline1Start, xline1End, xline2Start, xline2End,
 			ArcPnt, dimPnt, replaceText, ACDB_MODEL_SPACE, L"2");
 #else
-	 MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
+	AcDbObjectId id = MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
 			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"2");
+	CEntityUtil::Mirror(id, AcGeLine3d(AcGePoint3d(offsetXY.x,offsetXY.y,0),AcGePoint3d(offsetXY.x,offsetXY.y+10,0)));
 #endif
 	}
-
-	//钻头三尖标注
-	if (m_cutterType == T_DRILL_CUTTER &&  m_daoJianType == E_DaoJian_三尖 && m_pointCenterDistance > USER_TOL * 100
-		&& m_topAngle > USER_TOL*100 && m_topAngle < 180)//处理中心距标注
-	{
-		AcGePoint3d start(offsetXY.x, offsetXY.y-m_pointCenterDistance/2, 0);
-		AcGePoint3d end(offsetXY.x, offsetXY.y+m_pointCenterDistance/2, 0);
-		AcGePoint3d dimpt(offsetXY.x-3, offsetXY.y,0);
-		//CDimensionUtil::AddDimAligned(start, end, dimpt,L"",ACDB_MODEL_SPACE,L"尺寸",L"", PI/2);
-		CString replace;
-		//replace.Format(L"%%%%C%.1f{\\H0.7x;\\S-0.1^+0.1;}", m_pointCenterDistance);
-		replace.Format(L"%%%%C%.1f%%%%P0.1", m_pointCenterDistance);
+	if (!IsFormE) {
+		//钻头三尖标注
+		if (m_cutterType == T_DRILL_CUTTER &&  m_daoJianType == E_DaoJian_三尖 && m_pointCenterDistance > USER_TOL * 100
+			&& m_topAngle > USER_TOL * 100 && m_topAngle < 180)//处理中心距标注
+		{
+			AcGePoint3d start(offsetXY.x, offsetXY.y - m_pointCenterDistance / 2, 0);
+			AcGePoint3d end(offsetXY.x, offsetXY.y + m_pointCenterDistance / 2, 0);
+			AcGePoint3d dimpt(offsetXY.x - 3, offsetXY.y, 0);
+			//CDimensionUtil::AddDimAligned(start, end, dimpt,L"",ACDB_MODEL_SPACE,L"尺寸",L"", PI/2);
+			CString replace;
+			//replace.Format(L"%%%%C%.1f{\\H0.7x;\\S-0.1^+0.1;}", m_pointCenterDistance);
+			replace.Format(L"%%%%C%.1f%%%%P0.1", m_pointCenterDistance);
 #ifdef MIRROR
-		AcGePoint3d start_m = getMirrorPoint(start, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		AcGePoint3d end_m = getMirrorPoint(end, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		AcGePoint3d dimpt_m = getMirrorPoint(dimpt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-		MD2010_AddAlignedDimension_GongCha2(start_m, end_m, dimpt_m, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
+			AcGePoint3d start_m = getMirrorPoint(start, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			AcGePoint3d end_m = getMirrorPoint(end, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			AcGePoint3d dimpt_m = getMirrorPoint(dimpt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
+			MD2010_AddAlignedDimension_GongCha2(start_m, end_m, dimpt_m, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
 #else
-	 MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);	
+			MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
 #endif
+		}
 	}
 }
 

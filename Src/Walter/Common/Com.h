@@ -15,6 +15,10 @@ const size_t N = 2; //小数点后的有效数字
 const BOOL WALTER =  PathFileExists(L"G:\\");
 const double DIMDISTANCE = 15; //标注间隔
 
+//首先是识别图框中的table，识别完table以后从table读取图纸号
+#define  TUKANGE_NAME_IDENTITY  L"TUKANGE_NAME_IDENTITY"
+
+
 
 CString TY_GetAppPath();
 //根据刀柄名称获取distance

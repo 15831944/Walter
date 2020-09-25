@@ -135,6 +135,7 @@ vector<CString> GetAllDwgFile(const CString& dirPath)
 	tempfind.Close();
 	return fileLists;
 }
+
 //去掉小数点后无效的0
 CString removeLastZero(double num)
 {

@@ -470,11 +470,12 @@ void WalterDialog::OnBnClickedDraw()
 	//第四步：绘制表格
 	for (int i = 0; i < cutterTools.size(); i++)
 	{
-
+		
 		cutterTools[i].m_tkType = type;
 		AcDbObjectId tableId = cutterTools[i].CreateTable();
 		CXDataUtil::AddEntityInfo(tableId, L"BOM_TABLE", cutterTools[i].toolNumber);
-
+		//解决识别图框中表格中的图纸号
+		CXDataUtil::AddEntityInfo(cutterTools[i].m_tkId, TUKANGE_NAME_IDENTITY, cutterTools[i].toolNumber);
 		//输入实体ID得到指针
 		int result=SetBlockAttribute(cutterTools[i].m_tkId);
 

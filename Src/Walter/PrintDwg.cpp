@@ -8,7 +8,7 @@
 
 CPrintDwg::CPrintDwg()
 {
-	m_pdfFileName = L"\\walter";
+	m_pdfFileName = L"walter";
 }
 
 CPrintDwg::~CPrintDwg()
@@ -18,30 +18,62 @@ CPrintDwg::~CPrintDwg()
 void CPrintDwg::ExportToPdf()
 {
 	int ret = 1;
-	if (m_IsSingle) 
+	if (m_IsSingle)
 	{
-		CString filePath = m_dirPath + m_pdfFileName +L".pdf";
+		CString filePath = m_dirPath + m_pdfFileName + L".pdf";
 		Plot(filePath);
 	}
 	else
 	{
 		//图框打印
-		TY_Progress_Init();
-		for (int i = 0;i < m_allRect.size() ;++i)
+		if (m_NameAndRect.size() == 0)
 		{
-			TY_SetProgress((int)m_allRect.size(), i + 1);
-			CString temp;
-			temp.Format(L"_%d.pdf", i+1);
-		
-			CString fileName = m_dirPath + m_pdfFileName + temp;
-			ret = ExportToSinglePdf(fileName,m_allRect[i]);
-			if (ret < 0) {
-				continue;
+			TY_Progress_Init();
+			for (int i = 0; i < m_allRect.size(); ++i)
+			{
+				TY_SetProgress((int)m_allRect.size(), i + 1);
+				CString temp;
+				temp.Format(L"_%d.pdf", i + 1);
+
+				CString fileName = m_dirPath + m_pdfFileName + temp;
+				ret = ExportToSinglePdf(fileName, m_allRect[i]);
+				if (ret < 0) {
+					continue;
+				}
 			}
+			TY_Progress_Close();
 		}
-		TY_Progress_Close();
+		else
+		{
+			TY_Progress_Init();
+			int i = 0;
+			for (auto it = m_NameAndRect.begin(); it != m_NameAndRect.end(); it++)
+			{
+
+				auto temp = it->first;
+				auto rects = it->second;
+				
+				for (int k = 0; k < rects.size(); k++)
+				{
+					TY_SetProgress((int)m_allRect.size(), i + 1);
+					CString fileName;
+					if (rects.size() == 1) {
+						fileName.Format(L"%s.pdf", temp);
+					}
+					else
+					{
+						fileName.Format(L"%s_%d.pdf", temp, k + 1);
+					}
+					CString filePath = m_dirPath + fileName;
+					ret = ExportToSinglePdf(filePath, rects[k]);
+					i++;
+				}
+			}
+			TY_Progress_Close();
+		}
+
 	}
-	if(ret < 0)
+	if (ret < 0)
 		MessageBox(NULL, L"打印失败", L"提示", MB_OK);
 	else
 		MessageBox(NULL, L"打印完成", L"提示", MB_OK);
@@ -49,7 +81,7 @@ void CPrintDwg::ExportToPdf()
 
 int CPrintDwg::ExportToSinglePdf(CString fileName, const CTYRect & rect)
 {
-	 return  Plot(fileName, rect.Left(), rect.Bottom(), rect.Right(), rect.Top());
+	return  Plot(fileName, rect.Left(), rect.Bottom(), rect.Right(), rect.Top());
 }
 
 void CPrintDwg::SetPaperType(PAPER_TYPE paper_type)
@@ -70,7 +102,7 @@ void CPrintDwg::SetPaperType(PAPER_TYPE paper_type)
 	}
 }
 
-void CPrintDwg::GetAllPrintRects(bool select, vCString tukuangBlockNames)
+void CPrintDwg::CycleAllPrintRects(bool select, vCString tukuangBlockNames)
 {
 	CDocLock lock;
 	//直接让用户选择要打印的区域
@@ -78,17 +110,17 @@ void CPrintDwg::GetAllPrintRects(bool select, vCString tukuangBlockNames)
 	if (select)
 		CSelectUtil::SelectMany(vIds);
 	else
-		CBlockUtil::CycleAllBlockReferences(vIds);
+		CSelectUtil::SelectAll(vIds);
 	vAcDbObjectId tuKuangIDs;
-	for (int i = 0;i < vIds.size();++i)
+	for (int i = 0; i < vIds.size(); ++i)
 	{
 		CDocLock lock;
 		CString  blkName;
 		CBlockUtil::GetBlockNameByBlockRef(vIds[i], blkName);
 		bool HasThisName = false;
-		for (int i = 0;i<tukuangBlockNames.size();++i)
+		for (int j = 0; j<tukuangBlockNames.size(); ++j)
 		{
-			if (tukuangBlockNames[i].Compare(blkName) == 0)
+			if (tukuangBlockNames[j].Compare(blkName) == 0)
 			{
 				HasThisName = true;
 				break;
@@ -104,6 +136,12 @@ void CPrintDwg::GetAllPrintRects(bool select, vCString tukuangBlockNames)
 	for (auto id : tuKuangIDs)
 	{
 		CTYRect rect(id);
+		CString name;
+		int ret = CXDataUtil::ReadEntityInfo(id, TUKANGE_NAME_IDENTITY, name);
+		if (ret == 0)
+		{
+			m_NameAndRect[name].push_back(rect);
+		}
 		AddRect(rect);
 	}
 }
@@ -129,9 +167,9 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 	//// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
 	//获取当前布局的时候要根据CAD的中英文
-	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(pLayoutManager->findActiveLayout(true));//获得当前布局
+	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"Model");//获得当前布局
 	AcDbObjectId layoutId = pLayout->objectId();//获得布局的Id
-	//获得打印机验证器对象
+												//获得打印机验证器对象
 	AcDbPlotSettingsValidator *pPSV = acdbHostApplicationServices()->plotSettingsValidator();
 
 	AcPlPlotInfoValidator validator; //创建打印信息验证器
@@ -141,7 +179,7 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 	Acad::ErrorStatus es;
 
 	AcDbPlotSettings plotSettings(true);
-	pPSV->setPlotCfgName(&plotSettings, m_Plotdevice);//设置打印设备
+	pPSV->setPlotCfgName(&plotSettings, m_Plotdevice);//设置打印设备，最好是默认设备，如果是其他的设备有可能出现崩溃的问题
 	pPSV->setCanonicalMediaName(&plotSettings, m_papertype);//设置纸张类型
 	pPSV->setCurrentStyleSheet(&plotSettings, m_PlotStyleSheet);
 	pPSV->setPlotRotation(&plotSettings, AcDbPlotSettings::k0degrees);//设置打印方向
@@ -154,18 +192,19 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 	validator.validate(*plotInfo);
 
 
-	
+
 	//打印机设置
-	pPSV->setPlotWindowArea(&plotSettings,xmin,ymin,xmax,ymax);//设置打印范围,超出给范围的将打不出来
-	pPSV->setPlotType(&plotSettings, AcDbPlotSettings::kWindow);//设置打印范围为窗口
-	pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
-	pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
-	pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
+	es = pPSV->setPlotWindowArea(&plotSettings, xmin, ymin, xmax, ymax);//设置打印范围,超出给范围的将打不出来
+	es = pPSV->setPlotType(&plotSettings, AcDbPlotSettings::PlotType::kWindow);//设置打印范围为窗口
+	es = pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
+	es = pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
+	es = pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
+	es = pPSV->setPlotWindowArea(&plotSettings, xmin, ymin, xmax, ymax);//设置打印范围,超出给范围的将打不出来
 	//打印机设置完成之后要重新验证否则会出现错误
 	plotInfo->setOverrideSettings(&plotSettings);
-	validator.validate(*plotInfo);
+	es = validator.validate(*plotInfo);
 	////准备打印/////////////////////////////////////////////////////////////////////////
-	
+
 	//关闭后台打印，否则打印速度很慢
 	pResbuf rb = acutBuildList(RTSHORT, 0, RTNONE);
 	acedSetVar(L"BACKGROUNDPLOT", rb);
@@ -180,7 +219,7 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 		const ACHAR* fileName = NULL;
 		acdbHostApplicationServices()->workingDatabase()->getFilename(fileName);
 		es = pEngine->beginDocument(*plotInfo, fileName, NULL, 1, true, sPdfName);
-		pEngine->beginPage(pageInfo, *plotInfo,true );
+		pEngine->beginPage(pageInfo, *plotInfo, true);
 		pEngine->beginGenerateGraphics();
 		pEngine->endGenerateGraphics();
 		pEngine->endPage();
@@ -221,7 +260,7 @@ void CPrintDwg::Plot(CString sPdfName)
 
 	// 取得当前布局
 	AcDbLayoutManager *pLayoutManager = acdbHostApplicationServices()->layoutManager(); //取得布局管理器对象
-	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(pLayoutManager->findActiveLayout(true));//获得当前布局
+	AcDbLayout *pLayout = pLayoutManager->findLayoutNamed(L"Model");//获得当前布局
 	AcDbObjectId layoutId = pLayout->objectId();//获得布局的Id
 
 												//获得打印机验证器对象
@@ -236,7 +275,7 @@ void CPrintDwg::Plot(CString sPdfName)
 	AcDbPlotSettings plotSettings(true);
 	pPSV->setPlotCfgName(&plotSettings, m_Plotdevice);//设置打印设备
 	pPSV->setCanonicalMediaName(&plotSettings, m_papertype);//设置纸张类型
-	pPSV->setCurrentStyleSheet(&plotSettings,m_PlotStyleSheet);
+	pPSV->setCurrentStyleSheet(&plotSettings, m_PlotStyleSheet);
 	pPSV->setPlotRotation(&plotSettings, AcDbPlotSettings::k0degrees);//设置打印方向
 
 	plotInfo.push_back(new AcPlPlotInfo);
@@ -255,7 +294,7 @@ void CPrintDwg::Plot(CString sPdfName)
 		pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
 		pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
 		pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
-
+		pPSV->setPlotWindowArea(&plotSettings, ptLB.x, ptLB.y, ptRT.x, ptRT.y); 
 		plotInfo.push_back(new AcPlPlotInfo);
 		plotInfo[i + 1]->setLayout(layoutId);
 		plotInfo[i + 1]->setOverrideSettings(&plotSettings);
@@ -278,7 +317,6 @@ void CPrintDwg::Plot(CString sPdfName)
 
 		const ACHAR* fileName = NULL;
 		acdbHostApplicationServices()->workingDatabase()->getFilename(fileName);
-		sPdfName = L"C:\\Users\\admin\\Desktop\\walter.pdf";
 		es = pEngine->beginDocument(*plotInfo[0], fileName, NULL, 1, true, sPdfName);
 
 		for (UINT i = 0; i < m_allRect.size(); i++)

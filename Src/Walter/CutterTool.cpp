@@ -19,7 +19,7 @@ AcDbObjectId CCutterTool::CreateTable()
 {
 	CDocLock lock;
 	AcGePoint3d pnt(0,0,0);
-	 AcGePoint3d insertPos;
+	AcGePoint3d insertPos;
 	CBlockUtil::GetBlockReferenceInsertPoint(m_tkId, pnt);
 	if(m_tkType==A1)
 	{
@@ -31,7 +31,7 @@ AcDbObjectId CCutterTool::CreateTable()
 	{
 		insertPos.x=pnt.x;
 		insertPos.y=pnt.y+400;
-		 insertPos.z=pnt.z;
+		insertPos.z=pnt.z;
 	}
 	else
 	{

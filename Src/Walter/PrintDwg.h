@@ -18,12 +18,12 @@ public:
 	//参数设置
 	void SetPlotDevice(const CString& deviceName) { m_Plotdevice = deviceName; }
 	void SetPlotStyleSheet(const CString& styleSheet) { m_PlotStyleSheet = styleSheet; }
-	void setDirPath(TCHAR dir[]) { m_dirPath.Format(L"%s",dir); }
+	void setDirPath(TCHAR dir[]) { m_dirPath.Format(L"%s\\",dir); }
 	void SetPaperType(PAPER_TYPE paper_type);
 	void SetIsSingle(BOOL IsSingle) { m_IsSingle = IsSingle; }
 
 	void AddRect( const CTYRect& rect);
-	void GetAllPrintRects(bool select, vCString tukuangBlockNames);
+	void CycleAllPrintRects(bool select, vCString tukuangBlockNames);
 	//打印图纸
 	void ExportToPdf();
 	
@@ -42,6 +42,7 @@ private:
 	//如果是多张 
 	//m_dirPath + m_pdfFileName + "_1"
 	//m_dirPath + m_pdfFileName + "_2"
+	std::map<CString, vCTYRect> m_NameAndRect; //打印的矩形和名字
 	CString m_pdfFileName;
 	CString m_Plotdevice;//the device of print
 	CString m_PlotStyleSheet; // the style sheet of print;

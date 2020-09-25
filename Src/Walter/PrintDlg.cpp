@@ -88,12 +88,12 @@ void CPrintDlg::OnBnClickedButton1()
 		AcDbExtents extent;
 		Acad::ErrorStatus es = extent.addBlockExt(pBlkTblRcd);
 		pBlkTblRcd->close();
-		m_printer.GetAllPrintRects(false,tukuanNames);
+		m_printer.CycleAllPrintRects(false,tukuanNames);
 	}
 	else //部分打印应该框选 框选的时候需要设置读取图框
 	{
 		ShowWindow(SW_HIDE);
-		m_printer.GetAllPrintRects(true, tukuanNames);
+		m_printer.CycleAllPrintRects(true, tukuanNames);
 	}
 	//
 	BROWSEINFO bInfo;
@@ -112,7 +112,6 @@ void CPrintDlg::OnBnClickedButton1()
 		ShowWindow(SW_HIDE);
 		//需要使用进度条
 		MessageBox(L"打印开始");
-		m_printer.SetPlotDevice(L"PDFCreator");
 		m_printer.SetPlotStyleSheet(L"WA_LASER.CTB");
 		m_printer.SetPlotDevice(L"DWG To PDF.pc3");
 		m_printer.ExportToPdf();

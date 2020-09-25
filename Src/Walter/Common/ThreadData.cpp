@@ -2210,6 +2210,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		GetSegLadderAPnts(i, ladderUpStart, ladderUpEnd);
 		ladderUpStart = GetOffsetPnt(ladderUpStart,offsetXY);
 		ladderUpEnd = GetOffsetPnt(ladderUpEnd,offsetXY);
+		//小钻尖形式的直槽钻标注会有问题，需要将角度的位置做一个移动，将每个点都要向x轴方向移动delta_x,delta_x的计算方法如下
 		if (IsFormE)
 		{
 			double delta_x = 0.0;

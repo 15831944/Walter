@@ -199,7 +199,6 @@ int CPrintDwg::Plot(CString sPdfName, double xmin, double ymin, double xmax, dou
 	es = pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
 	es = pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
 	es = pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
-	es = pPSV->setPlotWindowArea(&plotSettings, xmin, ymin, xmax, ymax);//设置打印范围,超出给范围的将打不出来
 	//打印机设置完成之后要重新验证否则会出现错误
 	plotInfo->setOverrideSettings(&plotSettings);
 	es = validator.validate(*plotInfo);
@@ -294,7 +293,6 @@ void CPrintDwg::Plot(CString sPdfName)
 		pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
 		pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
 		pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
-		pPSV->setPlotWindowArea(&plotSettings, ptLB.x, ptLB.y, ptRT.x, ptRT.y); 
 		plotInfo.push_back(new AcPlPlotInfo);
 		plotInfo[i + 1]->setLayout(layoutId);
 		plotInfo[i + 1]->setOverrideSettings(&plotSettings);

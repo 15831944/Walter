@@ -344,5 +344,7 @@
     <Image Include="res\pcdzt.bmp">
       <Filter>Res</Filter>
     </Image>
+    <Image Include="res\bitmap6.bmp" />
+    <Image Include="222.bmp" />
   </ItemGroup>
 </Project>

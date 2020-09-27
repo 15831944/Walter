@@ -257,10 +257,12 @@
     <ResourceCompile Include="res\ProjectName.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="222.bmp" />
     <Image Include="res\11.BMP" />
     <Image Include="res\111.bmp" />
     <Image Include="res\12.BMP" />
     <Image Include="res\222.bmp" />
+    <Image Include="res\bitmap6.bmp" />
     <Image Include="res\mhzt.bmp" />
     <Image Include="res\pcdxd.bmp" />
     <Image Include="res\pcdzt.bmp" />

@@ -205,7 +205,7 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"Z10") == 0)		length = 40.0;		//W25 0
 	else if (daoBingName.Compare(L"Z12") == 0)		length = 45.0;		//W32 0
 	else if (daoBingName.Compare(L"Z14") == 0)		length = 45.0;		//W40 0
-	else if (daoBingName.Compare(L"Z16") == 0)		length = 49.0;		//Z16 0
+	else if (daoBingName.Compare(L"Z16") == 0)		length = 48.0;		//Z16 0
 	else if (daoBingName.Compare(L"Z18") == 0)		length = 48.0;		//Z20 0
 	else if (daoBingName.Compare(L"Z20") == 0)		length = 51.0;		//Z25 0
 	else if (daoBingName.Compare(L"Z25") == 0)		length = 57.0;		//Z32 0

@@ -374,8 +374,6 @@ IDB_BITMAP4             BITMAP                  "12.BMP"
 
 IDB_BITMAP5             BITMAP                  "111.bmp"
 
-IDB_BITMAP6             BITMAP                  "222.bmp"
-
 IDB_BITMAP7             BITMAP                  "zyjd.bmp"
 
 IDB_BITMAP8             BITMAP                  "zykkd.bmp"
@@ -389,6 +387,8 @@ IDB_BITMAP12            BITMAP                  "td.bmp"
 IDB_BITMAP9             BITMAP                  "mhzt.bmp"
 
 IDB_BITMAP13            BITMAP                  "pcdzt.bmp"
+
+IDB_BITMAP6             BITMAP                  "222.bmp"
 
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////

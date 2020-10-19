@@ -72,13 +72,18 @@ END_MESSAGE_MAP()
 void CDlgPcdXd::OnBnClickedButton1()
 {
 	UpdateData(TRUE);
+	if (m_DiameterOfKnife < 5)
+	{
+		MessageBox(L"最小直径为5mm");
+		return;
+	}
 	m_Data.SetDiameter(m_DiameterOfKnife);
 	m_Data.SetBladeLength(m_BladeLength);
 	m_Data.SetTotalLength(m_lengthOfKnife);
 	int sel = m_ui_HandleCtrl.GetCurSel();
 	CString temp;
 	m_ui_HandleCtrl.GetLBText(sel, temp);
-	m_Data.SetHandleName(std::move(temp));
+	m_Data.SetHandleName(temp);
 	ShowWindow(SW_HIDE);
 	m_Data.Draw();
 	// TODO: 在此添加控件通知处理程序代码

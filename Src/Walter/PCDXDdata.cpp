@@ -27,6 +27,8 @@ int PCDXD::Draw()
 	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"Dc", m_diameter);
 	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"Lc", m_bladeLength);
 
+	double dr_dia = GetHeightByDiameter(m_diameter);
+	CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, L"DRen", dr_dia);
 	//切换到标注层
 	CLayerSwitch layer(DIMLAYERNAME);
 	//添加直径标注

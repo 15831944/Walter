@@ -310,6 +310,10 @@ void CDlgZyJd::OnBnClickedButton1()
 		ZYXDStepData oneStepData;
 		oneStepData.index = _ttoi(m_allrowData[i][0]);
 		oneStepData.m_diameter = _ttof(m_allrowData[i][1]);
+		if (oneStepData.m_diameter < 4.0) {
+			MessageBox(L"最小直径为4mm");
+			return;
+		}
 		oneStepData.m_stepLength = _ttof(m_allrowData[i][2]);
 		if (i > 0)
 			oneStepData.m_angle = _ttof(m_allrowData[i -1][3]);

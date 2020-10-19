@@ -142,7 +142,13 @@ void CPrintDwg::CycleAllPrintRects(bool select, vCString tukuangBlockNames)
 		{
 			m_NameAndRect[name].push_back(rect);
 		}
-		AddRect(rect);
+	}
+	for (auto it = m_NameAndRect.begin(); it != m_NameAndRect.end(); it++)
+	{
+		for (auto rect : it->second)
+		{
+			m_allRect.emplace_back(rect);
+		}
 	}
 }
 
@@ -286,13 +292,14 @@ void CPrintDwg::Plot(CString sPdfName)
 	{
 		AcGePoint3d ptLB = m_allRect[i].GetLB();
 		AcGePoint3d ptRT = m_allRect[i].GetRT();
-
+		
 		//打印机设置
 		pPSV->setPlotWindowArea(&plotSettings, ptLB.x, ptLB.y, ptRT.x, ptRT.y);//设置打印范围,超出给范围的将打不出来
 		pPSV->setPlotType(&plotSettings, AcDbPlotSettings::kWindow);//设置打印范围为窗口
 		pPSV->setPlotCentered(&plotSettings, true);//是否居中打印
 		pPSV->setUseStandardScale(&plotSettings, true);//设置是否采用标准比例
 		pPSV->setStdScaleType(&plotSettings, AcDbPlotSettings::kScaleToFit);//布满图纸
+
 		plotInfo.push_back(new AcPlPlotInfo);
 		plotInfo[i + 1]->setLayout(layoutId);
 		plotInfo[i + 1]->setOverrideSettings(&plotSettings);
@@ -312,7 +319,6 @@ void CPrintDwg::Plot(CString sPdfName)
 		es = pEngine->beginPlot(NULL);
 
 		AcPlPlotPageInfo pageInfo;//打印页信息
-
 		const ACHAR* fileName = NULL;
 		acdbHostApplicationServices()->workingDatabase()->getFilename(fileName);
 		es = pEngine->beginDocument(*plotInfo[0], fileName, NULL, 1, true, sPdfName);

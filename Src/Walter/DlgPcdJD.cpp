@@ -139,6 +139,10 @@ void DlgPcdJD::OnBnClickedButtonGenerateDwg()
 		PCDJDStepData temp;
 		temp.index = _ttoi(jdData.m_uiData_allListData[i][0]);
 		temp.m_diameter = _ttof(jdData.m_uiData_allListData[i][1]);
+		if (temp.m_diameter < 5.0) {
+			MessageBox(L"最小直径为5mm");
+			return;
+		}
 		temp.m_stepLength = _ttoi(jdData.m_uiData_allListData[i][2]) == 0? m_totalLength : _ttoi(jdData.m_uiData_allListData[i][2]);
 		temp.m_angle = _ttof(jdData.m_uiData_allListData[i][3]);
 		m_data.m_stepDatas.push_back(std::move(temp));

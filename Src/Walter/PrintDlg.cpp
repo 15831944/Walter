@@ -14,7 +14,7 @@ CPrintDlg::CPrintDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG_PRINTER, pParent)
 	, m_printAll(FALSE)
 	, m_SinglePaper(0)
-	, m_PaperClass(0)
+	, m_PaperClass(2)
 {
 }
 CPrintDlg::~CPrintDlg()
@@ -95,7 +95,7 @@ void CPrintDlg::OnBnClickedButton1()
 		ShowWindow(SW_HIDE);
 		m_printer.CycleAllPrintRects(true, tukuanNames);
 	}
-	//
+	//ä¯ÀÀÎÄ¼þ¼Ð
 	BROWSEINFO bInfo;
 	ZeroMemory(&bInfo, sizeof(bInfo));
 	bInfo.hwndOwner = m_hWnd;

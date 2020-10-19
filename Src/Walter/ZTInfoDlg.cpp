@@ -87,7 +87,7 @@ void CZTInfoDlg::InitDefaultPara()
 	m_TotalLength = 160.0;
 	//temp.Format(L"%.1f", m_TotalLength);
 	//m_TotalLenEdit.SetWindowTextW(temp);
-
+	defaultIndex = 1;
 	m_StepNum.AddString(L"1");
 	m_StepNum.AddString(L"2");
 	m_StepNum.AddString(L"3");

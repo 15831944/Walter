@@ -287,6 +287,11 @@ void CDlgPcdZt::OnBnClickedButton1()
 		OneRowText oneRowData = alldata[i];
 		ZtSegData onedata;
 		onedata.diameter =  _ttof(oneRowData[1]);
+		if (onedata.diameter < 5)
+		{
+			MessageBox(L"最小直径为5mm", L"警告");
+			return;
+		}
 		onedata.len = _ttof(oneRowData[2]);
 		onedata.angle = i ==0 ? m_VertexAngle : _ttof(alldata[i-1][3]);
 		m_pcdZtData.AddSegData(std::move(onedata));

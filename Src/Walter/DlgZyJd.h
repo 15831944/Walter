@@ -26,12 +26,12 @@ private:
 	void SetGridData();
 	MultiRowText GetGridData();
 	void ReloadGridData();
-
+	
 	//重新加载示意图
 	void ReloadPic();
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_DIALOG_PCD_XD };
+	enum { IDD = IDD_DIALOG_ZYKKD };
 #endif
 
 protected:

@@ -227,29 +227,16 @@ int SPCDJDData::Draw()
 	double radius = 0;
 	double Height = 0;
 
-	
 	Lf2 = GetLf2ByDiameter(m_stepDatas[0].m_diameter);
-	CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
+	if (Lf2 <= 2.3) {
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"FixAn", 1);
+	}
+	
+
 	for (size_t i = 0; i < m_stepDatas.size(); ++i)
 	{
 		CString temp;
-		temp.Format(L"D%d", i + 1);
-		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_diameter);
-
-	}
-	for (size_t i = 0; i < m_stepDatas.size(); ++i)
-	{
-		CString temp;
-		temp.Format(L"L%d", i + 1);
-		if (i == m_stepDatas.size() - 1)
-			CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_stepLength - dis);
-		else
-			CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_stepLength);
-
-	}
-	for (int i = 0; i < m_stepDatas.size(); i++)
-	{
-		CString temp;
+		//先设置焊刀模块
 		radius = GetRadiusByDiameter(m_stepDatas[i].m_diameter);
 		Height = GetHeightByDiameter(m_stepDatas[i].m_diameter);
 		temp.Format(L"An%d", i + 1);
@@ -259,12 +246,25 @@ int SPCDJDData::Draw()
 		temp.Format(L"yLen%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, Height);
 
+		
+
+		temp.Format(L"D%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_diameter);
+
+		temp.Format(L"L%d", i + 1);
+		if (i == m_stepDatas.size() - 1)
+			CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_stepLength - dis);
+		else
+			CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, temp, m_stepDatas[i].m_stepLength);
+
 		//直径标准
 		InsertDDiamension(pnt, i);
 		//长度标注
 		InsertLDiamension(pnt, i);
 	}
 	
+	
+	CDynamicBlockUtil::SetDynamicBlockValue(daoShenID, L"Lf2", Lf2);
 	
 	InsertLf1Dimension(pnt,(int) m_stepDatas.size() - 1);
 	//插入角度标注

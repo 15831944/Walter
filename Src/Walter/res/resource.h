@@ -97,6 +97,7 @@
 #define IDC_LIST1                       1065
 #define IDC_RADIO7                      1066
 #define IDC_CHECK_FORME                 1068
+#define IDC_IMAGE_ZYJD                  1069
 
 // Next default values for new objects
 // 
@@ -104,7 +105,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1069
+#define _APS_NEXT_CONTROL_VALUE         1070
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

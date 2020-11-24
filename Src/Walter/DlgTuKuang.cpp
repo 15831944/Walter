@@ -34,9 +34,9 @@ void CDlgTuKuang::Init()
 {
 	int defaultIndex = 0;
 	//初始化图框
+	m_tukuang.AddString(L"A3");
 	m_tukuang.AddString(L"A1");
 	m_tukuang.AddString(L"A2");
-	m_tukuang.AddString(L"A3");
 	m_tukuang.SetCurSel(defaultIndex);
 	
 	//初始化比例
@@ -46,6 +46,7 @@ void CDlgTuKuang::Init()
 	m_proportion.SetCurSel(defaultIndex);
 
 	//刀具类别
+	m_KnifeClassSel.AddString(L" ");
 	m_KnifeClassSel.AddString(L"整硬钻头");
 	m_KnifeClassSel.AddString(L"整硬铰刀");
 	m_KnifeClassSel.AddString(L"整硬铣刀");

@@ -142,7 +142,29 @@ void CPrintDwg::CycleAllPrintRects(bool select, vCString tukuangBlockNames)
 		{
 			m_NameAndRect[name].push_back(rect);
 		}
+		else
+		{
+			m_allRect.push_back(rect);
+			
+		}
 	}
+	//≈≈–Ú
+	auto LeftLess = [&](CTYRect tyrect1, CTYRect tyrect2) {
+		if (tyrect1.GetLB().x < tyrect2.GetLB().x) {
+			return true;
+		}
+		return false;
+	};
+	std::sort(m_allRect.begin(), m_allRect.end(), LeftLess);
+	auto yGreate = [&](CTYRect tyrect1, CTYRect tyrect2) {
+		if (tyrect1.GetLB().y > tyrect2.GetLB().y) {
+			return true;
+		}
+		return false;
+	};
+	std::sort(m_allRect.begin(), m_allRect.end(), yGreate);
+	if (!m_NameAndRect.empty())
+		m_allRect.clear();
 	for (auto it = m_NameAndRect.begin(); it != m_NameAndRect.end(); it++)
 	{
 		for (auto rect : it->second)

@@ -40,6 +40,8 @@ void CPCDZTData::Draw()
 	CString temp;
 	for (int i=0;i < m_StepData.size() ;i++)
 	{
+
+		
 		if (i == 0)
 			temp.Format(L"A");
 		else
@@ -50,15 +52,17 @@ void CPCDZTData::Draw()
 		temp.Format(L"D%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, temp, m_StepData[i].diameter);
 		//设置pcd片的大小
+	
+		//长度
+		temp.Format(L"L%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, temp, m_StepData[i].len);
+
 		double xlen = getXlen(m_StepData[i].diameter);
 		double ylen = getYlen(m_StepData[i].diameter);
 		double R = getR(m_StepData[i].diameter);
 		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"R", R);
 		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"Ylen", ylen);
 		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, L"Xlen", xlen);
-		//长度
-		temp.Format(L"L%d", i + 1);
-		CDynamicBlockUtil::SetDynamicBlockValue(knifeId, temp, m_StepData[i].len);
 	}
 	CreateDims(ptInsert);
 	//补线

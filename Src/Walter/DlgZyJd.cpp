@@ -48,10 +48,12 @@ void CDlgZyJd::InitDefaultPara()
 	}
 
 	m_ui_DbCtrl.SetCurSel(0);
+	((CStatic*)GetDlgItem(IDC_IMAGE_ZYJD))->ShowWindow(SW_HIDE);
 	//刀具设置
 	if (!m_isKKd) 
 	{
-		ReloadPic();
+		((CStatic*)GetDlgItem(IDC_STATIC_ZY))->ShowWindow(SW_HIDE);
+		((CStatic*)GetDlgItem(IDC_IMAGE_ZYJD))->ShowWindow(SW_SHOW);
 		((CStatic*)GetDlgItem(IDC_KKD_STATIC))->ShowWindow(SW_HIDE);
 		((CEdit*)GetDlgItem(IDC_KKD_DIA))->ShowWindow(SW_HIDE);
 		this->SetWindowText(L"整硬铰刀");
@@ -99,7 +101,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"20");
 		defaultText.push_back(str);
-		str.Format(L"20");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -122,7 +124,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"26");
 		defaultText.push_back(str);
-		str.Format(L"40");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -156,7 +158,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"32");
 		defaultText.push_back(str);
-		str.Format(L"60");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -201,7 +203,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"38");
 		defaultText.push_back(str);
-		str.Format(L"80");
+		str.Format(L"0");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -229,14 +231,6 @@ void CDlgZyJd::ReloadGridData()
 	m_XdLabberDataCtrl.SetContentItemEditable((int)m_allrowData.size(), (int)m_allrowData[0].size() - 1, false);
 }
 
-//更换示意图
-void CDlgZyJd::ReloadPic()
-{
-	CStatic *pStatic = (CStatic*)GetDlgItem(IDC_STATIC_ZY);
-	CBitmap cbitmap;
-	cbitmap.LoadBitmap(MAKEINTRESOURCE(IDB_BITMAP7));
-	pStatic->SetBitmap(cbitmap);
-}
 
 MultiRowText CDlgZyJd::GetGridData()
 {
@@ -330,3 +324,5 @@ void CDlgZyJd::OnBnClickedButton1()
 	m_ZyDjData.Draw();
 	CDialogEx::OnOK();
 }
+
+

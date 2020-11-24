@@ -260,8 +260,8 @@ double GetDisByDBName(CString name)
 //根据刀尖获取 lf2的值
 double GetLf2ByDiameter(double diameter)
 {
-	double Lf2 = 2.3f; //设置默认为2.5
-	if (diameter > 5 && diameter <= 6.1)
+	double Lf2 = 2.3f; //设置默认为2.3
+	if (diameter >= 5 && diameter <= 6.1)
 	{
 		Lf2 = 2.3f;
 	}

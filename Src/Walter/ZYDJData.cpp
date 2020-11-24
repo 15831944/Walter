@@ -49,12 +49,13 @@ void CZYDJData::Draw()
 	for (int i = 0; i < m_StepData.size(); i++)
 	{
 		CString temp;
+		temp.Format(L"D%d", i + 1);
+		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_diameter);
 		temp.Format(L"L%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_stepLength);
 		temp.Format(L"A%d", i + 1);
 		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_angle);
-		temp.Format(L"D%d", i + 1);
-		CDynamicBlockUtil::SetDynamicBlockValue(DaoShenId, temp, m_StepData[i].m_diameter);
+		
 	}
 	//插入标注
 	InsertDiaDim(ptInsert);
@@ -190,11 +191,13 @@ void CZYDJData::InsertLenDim(const AcGePoint3d & pnt)
 	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
 
 	//插入Lf标注
-	lastPoint.y = pnt.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
-	lastPoint.x = pnt.x - m_grooveLength;
-	centerPoint =  CMathUtil::GetMidPoint(ptInsert, lastPoint);
-	centerPoint.y = ptInsert.y + 50;
-	CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
+	if (m_IsKKD) {
+		lastPoint.y = pnt.y + m_StepData[m_StepData.size() - 1].m_diameter / 2.0;
+		lastPoint.x = pnt.x - m_grooveLength;
+		centerPoint = CMathUtil::GetMidPoint(ptInsert, lastPoint);
+		centerPoint.y = ptInsert.y + 50;
+		CDimensionUtil::AddDimRotated(ptInsert, lastPoint, centerPoint, 0, NULL);
+	}
 
 }
 /*

@@ -123,9 +123,10 @@ void CMD_CWDR()
 }
 
 //ÕûÓ²À©¿×µ¶
-CDlgZyJd *gZyDJ = NULL;
+
 void CMD_ZYKKD()
 {
+	CDlgZyJd *gZyDJ = NULL;
 	CAcModuleResourceOverride resOverride;
 	gZyDJ = new CDlgZyJd(acedGetAcadFrame());
 	gZyDJ->SetKnifeClass(true);
@@ -144,6 +145,7 @@ void CMD_ZYXD()
 //ÕûÓ²½Âµ¶
 void CMD_ZYJD()
 {
+	CDlgZyJd *gZyDJ = NULL;
 	CAcModuleResourceOverride resOverride;
 	gZyDJ = new CDlgZyJd(acedGetAcadFrame());
 	gZyDJ->SetKnifeClass(false);

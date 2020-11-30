@@ -92,7 +92,7 @@ void CTDData::AddDiaDimension(const AcGePoint3d & pnt)
 		center.x =pnt.x +  i * DIMDISTANCE + 10 ;
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_tdSegdata[i].m_diameter));
-		CDimensionUtil::AddDimAligned(ptTop, ptBottom, center, temp, nullptr);
+		CDimensionUtil::AddDimAligned(ptTop, ptBottom, center, nullptr, nullptr);
 	}
 }
 

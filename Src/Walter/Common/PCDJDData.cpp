@@ -65,7 +65,7 @@ void SPCDJDData::InsertDDiamension(const AcGePoint3d& pnt,int stepIndex)
 	//
 	ptCenter.x = pnt.x + 10 + stepIndex * DIMDISTANCE;
 	AcDbObjectId dimStyleId = CDimensionUtil::GetDimstylerID(DIMSTYLENAME);
-	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, temp,dimStyleId);
+	CDimensionUtil::AddDimAligned(ptTop, ptBottom, ptCenter, NULL,dimStyleId);
 }
 //≤Â»ÎL±Í◊¢
 void SPCDJDData::InsertLDiamension(const AcGePoint3d & pnt, int stepIndex)

@@ -2078,7 +2078,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			AcGePoint3d dimpt(0, yvalue, 0);
 			dimpt.x = (start.x + end.x) / 2;
 			dimpt.y -= i * DIMDISTANCE;
-			id = CDimensionUtil::AddDimAligned(start, end, dimpt, L"");
+			id = CDimensionUtil::AddDimAligned(start, end, dimpt, nullptr);
 #ifdef MIRROR
 			CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
@@ -2171,7 +2171,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		CString temp;
 		temp.Format(L"%%%%C%s", removeLastZero(m_cutterSegs[i].m_diameter));
 		//直径标注解决
-		id = CDimensionUtil::AddDimAligned(start, end, dim,temp);
+		id = CDimensionUtil::AddDimAligned(start, end, dim,nullptr);
 #ifdef MIRROR
 		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
@@ -2250,7 +2250,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		AcGePoint3d dimPnt = getMirrorPoint(textPnt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 		AcGePoint3d ArcPnt = getMirrorPoint(arcPnt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 		MD2010_AddAngleDimension3(xline1Start, xline1End, xline2Start, xline2End,
-			ArcPnt, dimPnt, replaceText, ACDB_MODEL_SPACE, L"2");
+			ArcPnt, dimPnt,L"", ACDB_MODEL_SPACE, L"2");
 #else
 	AcDbObjectId id = MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
 			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"2");
@@ -2273,7 +2273,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			AcGePoint3d start_m = getMirrorPoint(start, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 			AcGePoint3d end_m = getMirrorPoint(end, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 			AcGePoint3d dimpt_m = getMirrorPoint(dimpt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-			MD2010_AddAlignedDimension_GongCha2(start_m, end_m, dimpt_m, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
+			MD2010_AddAlignedDimension_GongCha2(start_m, end_m, dimpt_m, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", L"", CMathUtil::PI / 2);
 #else
 			MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
 #endif

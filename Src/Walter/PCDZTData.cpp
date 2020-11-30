@@ -98,7 +98,7 @@ void CPCDZTData::AddDiaDimension(AcGePoint3d const& pnt)
 		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].diameter));
 		AcGePoint3d center = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
 		center.x = pnt.x + i *DIMDISTANCE + DIMDISTANCE;
-		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, center, temp, nullptr);
+		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, center, nullptr, nullptr);
 	}
 
 }

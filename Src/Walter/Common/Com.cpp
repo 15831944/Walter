@@ -186,19 +186,19 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"W16") == 0)	length = 48.0;	//HSK-A50 25.95
 	else if (daoBingName.Compare(L"W14") == 0)	length = 45.0;
 	else if (daoBingName.Compare(L"W18") == 0)	length = 48.0;	//HSK-A63 25.95
-	else if (daoBingName.Compare(L"W20") == 0)	length = 51.0;	//HSK-A80 25.95
-	else if (daoBingName.Compare(L"W25") == 0)	length = 57.0;	//HSK-A100 28.95
-	else if (daoBingName.Compare(L"W32") == 0)	length = 61.0;	//SK30 19.05
+	else if (daoBingName.Compare(L"W20") == 0)	length = 50.0;	//HSK-A80 25.95
+	else if (daoBingName.Compare(L"W25") == 0)	length = 56.0;	//HSK-A100 28.95
+	else if (daoBingName.Compare(L"W32") == 0)	length = 60.0;	//SK30 19.05
 	else if (daoBingName.Compare(L"WN06") == 0)	length = 36.0;	//SK40 19.05
 	else if (daoBingName.Compare(L"WN08") == 0)	length = 36.0;	//SK50 19.05
-	else if (daoBingName.Compare(L"WN10") == 0)		length =40.0;		//W16 0
+	else if (daoBingName.Compare(L"WN10") == 0)		length = 40.0;		//W16 0
 	else if (daoBingName.Compare(L"WN12") == 0)		length = 45.0;		//W20 0
 	else if (daoBingName.Compare(L"WN14") == 0)		length = 45.0;		//W25 0
-	else if (daoBingName.Compare(L"WN16") == 0)		length = 49.0;		//W32 0
+	else if (daoBingName.Compare(L"WN16") == 0)		length = 48.0;		//W32 0
 	else if (daoBingName.Compare(L"WN18") == 0)		length = 48.0;		//W40 0
-	else if (daoBingName.Compare(L"WN20") == 0)		length = 51.0;		//Z16 0
-	else if (daoBingName.Compare(L"WN25") == 0)		length = 57.0;		//Z20 0
-	else if (daoBingName.Compare(L"WN32") == 0)		length = 61.0;		//Z25 0
+	else if (daoBingName.Compare(L"WN20") == 0)		length = 50.0;		//Z16 0
+	else if (daoBingName.Compare(L"WN25") == 0)		length = 56.0;		//Z20 0
+	else if (daoBingName.Compare(L"WN32") == 0)		length = 60.0;		//Z25 0
 	else if (daoBingName.Compare(L"Z03") == 0)		length = 28.0;		//Z32 0
 	else if (daoBingName.Compare(L"Z06") == 0)		length = 36.0;		//Z40 0
 	else if (daoBingName.Compare(L"Z08") == 0)		length = 36.0;		//W20 0
@@ -207,9 +207,9 @@ double GetHandleLengthFromDaoBing(CString daoBingName)
 	else if (daoBingName.Compare(L"Z14") == 0)		length = 45.0;		//W40 0
 	else if (daoBingName.Compare(L"Z16") == 0)		length = 48.0;		//Z16 0
 	else if (daoBingName.Compare(L"Z18") == 0)		length = 48.0;		//Z20 0
-	else if (daoBingName.Compare(L"Z20") == 0)		length = 51.0;		//Z25 0
-	else if (daoBingName.Compare(L"Z25") == 0)		length = 57.0;		//Z32 0
-	else if (daoBingName.Compare(L"Z32") == 0)		length = 61.0;		//Z40 0
+	else if (daoBingName.Compare(L"Z20") == 0)		length = 50.0;		//Z25 0
+	else if (daoBingName.Compare(L"Z25") == 0)		length = 56.0;		//Z32 0
+	else if (daoBingName.Compare(L"Z32") == 0)		length = 60.0;		//Z40 0
 	return length;
 }
 //根据刀柄的名称获取一个距离
@@ -600,7 +600,7 @@ AcDbObjectId MD2010_AddAngleDimension2(AcGePoint3d centerPoint, AcGePoint3d xLin
 	//pDim->setDimensionStyle(dimSty);
 	//pDim->setColorIndex(3);
 	AcDbObjectId dimID = CDwgDatabaseUtil::PostModalToBlockTable(pDim);
-	
+
 	//pDim->setLayer(newLayer);
 	//pDim->setColorIndex(3);
 	pDim->close();

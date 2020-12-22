@@ -136,8 +136,9 @@ void CZYDJData::InsertPreDiaDim(const AcGePoint3d & pnt)
 	dimTextPosition.x += DIMDISTANCE;
 
 	CString temp;
-	temp.Format(L"%%%%C%s", removeLastZero(m_Prediameter));
-	CDimensionUtil::AddDimAligned(pt1, pt2, dimTextPosition, nullptr);
+	//temp.Format(L"%%%%C%s", removeLastZero(m_Prediameter));
+	temp = L"%%C";
+	CDimensionUtil::AddDimAligned(pt1, pt2, dimTextPosition, temp,nullptr);
 }
 /*
 insert the dimension of diameter 
@@ -154,8 +155,9 @@ void CZYDJData::InsertDiaDim(const AcGePoint3d & pnt)
 		AcGePoint3d centerPoint = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
 		centerPoint.x = pnt.x + DIMDISTANCE * i + 20;
 		CString temp;
-		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].m_diameter));
-		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint, nullptr);
+		//temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].m_diameter));
+		temp = L"%%C";
+		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, centerPoint, temp,nullptr);
 	}
 }
 /*

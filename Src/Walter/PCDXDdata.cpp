@@ -40,8 +40,9 @@ int PCDXD::Draw()
 	AcGePoint3d center = CMathUtil::GetMidPoint(topPoint, bottomPoint);
 	center.x = ptInsert.x +  10;
 	CString temp;
-	temp.Format(L"%%%%C%s", removeLastZero(m_diameter));
-	CDimensionUtil::AddDimAligned(topPoint, bottomPoint, center, NULL, NULL);
+	//temp.Format(L"%%%%C%s", removeLastZero(m_diameter));
+	temp = L"%%C";
+	CDimensionUtil::AddDimAligned(topPoint, bottomPoint, center, temp, NULL, NULL);
 
 	//添加总长标注
 	AcGePoint3d LendPoint(topPoint);

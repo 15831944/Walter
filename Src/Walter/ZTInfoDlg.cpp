@@ -306,6 +306,7 @@ void CZTInfoDlg::OnBnClickedBtnok()
 		{
 			double len = DrLength(i);
 			m_segdata.m_length = len; //刃段长度 //需要修改
+			m_segdata.m_lengthType = E_CutterSegLength_刀尖到刀尖;
 		}
 		else
 		{

@@ -761,7 +761,7 @@ int CThreadData::CreateModel3D(AcGePoint2d offsetXY, AcDbObjectId &mainid) const
 			
 		CreateHelix(offsetXY, m_cutterSegs[ladderNum-1].m_diameter/2.0, 
 			              i * 2 * CMathUtil::PI/m_cuttingEdgeCount + GetHelixStartAngle(m_cuttingEdgeCount),
-						   xLen,//总的高度
+						   xLen,////总的高度
 						   helixId
 						   );
 
@@ -2069,16 +2069,16 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			GetXValueForOneCutterSeg_2(0, x);
 		}
 		start.x = offsetXY.x + x;
-			double sum = 0.0;
-			for (int j = 0; j<=i;j++)
-			{
-				sum += m_cutterSegs[j].m_length;
-			}
-			end.x = start.x + sum ;
-			AcGePoint3d dimpt(0, yvalue, 0);
-			dimpt.x = (start.x + end.x) / 2;
-			dimpt.y -= i * DIMDISTANCE;
-			id = CDimensionUtil::AddDimAligned(start, end, dimpt, nullptr);
+		double sum = 0.0;
+		for (int j = 0; j<=i;j++)
+		{
+			sum += m_cutterSegs[j].m_length;
+		}
+		end.x = start.x + sum ;
+		AcGePoint3d dimpt(0, yvalue, 0);
+		dimpt.x = (start.x + end.x) / 2;
+		dimpt.y -= i * DIMDISTANCE;
+		id = CDimensionUtil::AddDimAligned(start, end, dimpt,nullptr, nullptr);
 #ifdef MIRROR
 			CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
@@ -2112,7 +2112,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 	AcGePoint3d end2(offsetXY.x + m_totalLength + len, offsetXY.y, 0);
 	AcGePoint3d dimpt2(start.x/2 + end.x/2,yvalue,0);
 	dimpt2.y = dimpt2.y - m_cutterSegs.size() * 10 - 10;
-	id = CDimensionUtil::AddDimAligned(start2, end2, dimpt2,nullptr);
+	id = CDimensionUtil::AddDimAligned(start2, end2, dimpt2,nullptr,nullptr);
 #ifdef MIRROR
 	CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
@@ -2169,9 +2169,10 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		}
 		
 		CString temp;
-		temp.Format(L"%%%%C%s", removeLastZero(m_cutterSegs[i].m_diameter));
+		//temp.Format(L"%%%%C%s", removeLastZero(m_cutterSegs[i].m_diameter));
+		temp = L"%%C";
 		//直径标注解决
-		id = CDimensionUtil::AddDimAligned(start, end, dim,nullptr);
+		id = CDimensionUtil::AddDimAligned(start, end, dim,temp,nullptr);
 #ifdef MIRROR
 		CEntityUtil::Mirror(id, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 #endif
@@ -2250,7 +2251,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 		AcGePoint3d dimPnt = getMirrorPoint(textPnt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 		AcGePoint3d ArcPnt = getMirrorPoint(arcPnt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 		MD2010_AddAngleDimension3(xline1Start, xline1End, xline2Start, xline2End,
-			ArcPnt, dimPnt,L"", ACDB_MODEL_SPACE, L"2");
+			ArcPnt, dimPnt, replaceText, ACDB_MODEL_SPACE, L"2");
 #else
 	AcDbObjectId id = MD2010_AddAngleDimension3(ladderUpStart, ladderUpEnd, ladderDownStart, ladderDownEnd,
 			arcPnt,textPnt, replaceText, ACDB_MODEL_SPACE, L"2");
@@ -2273,7 +2274,7 @@ int CThreadData::CreateDims(AcGePoint2d offsetXY,AcGePoint3d farestPnt) const
 			AcGePoint3d start_m = getMirrorPoint(start, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 			AcGePoint3d end_m = getMirrorPoint(end, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
 			AcGePoint3d dimpt_m = getMirrorPoint(dimpt, AcGePoint3d(offsetXY.x, offsetXY.y, 0), AcGeVector3d(0, 1, 0));
-			MD2010_AddAlignedDimension_GongCha2(start_m, end_m, dimpt_m, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", L"", CMathUtil::PI / 2);
+			MD2010_AddAlignedDimension_GongCha2(start_m, end_m, dimpt_m, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
 #else
 			MD2010_AddAlignedDimension_GongCha2(start, end, dimpt, 0.1, -0.1, L"%%C", ACDB_MODEL_SPACE, L"2", replace, CMathUtil::PI / 2);
 #endif
@@ -2384,7 +2385,7 @@ int TY_CreateHandleA(AcGePoint3d pnt, double dia, double len)
 	AcGePoint3d start(pnt.x, pnt.y, 0);
 	AcGePoint3d end(pnt.x + len, pnt.y, 0);
 	AcGePoint3d dim((start.x + end.x) / 2, pnt.y - dia, 0);
-	CDimensionUtil::AddDimAligned(start, end, dim, L"");
+	CDimensionUtil::AddDimAligned(start, end, dim, L"",L"");
 
 	start = AcGePoint3d(pnt.x + len, pnt.y - dia / 2, 0);
 	end = AcGePoint3d(pnt.x + len, pnt.y + dia / 2, 0);

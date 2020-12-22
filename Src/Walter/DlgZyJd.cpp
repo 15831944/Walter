@@ -101,7 +101,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"20");
 		defaultText.push_back(str);
-		str.Format(L"0");
+		str.Format(L"20");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -124,7 +124,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"26");
 		defaultText.push_back(str);
-		str.Format(L"0");
+		str.Format(L"40");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -158,7 +158,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"32");
 		defaultText.push_back(str);
-		str.Format(L"0");
+		str.Format(L"60");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);
@@ -203,7 +203,7 @@ MultiRowText CDlgZyJd::GetDefaultGridData(int rowCount)
 		defaultText.push_back(str);
 		str.Format(L"38");
 		defaultText.push_back(str);
-		str.Format(L"0");
+		str.Format(L"80");
 		defaultText.push_back(str);
 		str.Format(L"0");
 		defaultText.push_back(str);

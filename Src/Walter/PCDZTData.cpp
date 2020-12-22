@@ -95,10 +95,11 @@ void CPCDZTData::AddDiaDimension(AcGePoint3d const& pnt)
 		AcGePoint3d TopPoint = getVertexPoint(pnt, i, true);
 		AcGePoint3d BottomPoint = getVertexPoint(pnt, i, false);
 		CString temp;
-		temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].diameter));
+		//temp.Format(L"%%%%C%s", removeLastZero(m_StepData[i].diameter));
+		temp = L"%%C";
 		AcGePoint3d center = CMathUtil::GetMidPoint(TopPoint, BottomPoint);
 		center.x = pnt.x + i *DIMDISTANCE + DIMDISTANCE;
-		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, center, nullptr, nullptr);
+		CDimensionUtil::AddDimAligned(TopPoint, BottomPoint, center, temp,nullptr, nullptr);
 	}
 
 }
@@ -174,11 +175,19 @@ void CPCDZTData::Mending(AcGePoint3d const & pnt)
 
 double CPCDZTData::getR(double diameter)
 {
-	double R = 14.0f;
-	if (CMathUtil::IsBiger(diameter, 25.0))	R = 14.0;
-	else if (CMathUtil::IsInRange(12.0, 25.0, diameter)) R = 10.0;
-	else R = 6.0f;
-	return R;
+	if (m_StepData.size() != 1) {
+		double R = 14.0f;
+		if (CMathUtil::IsBiger(diameter, 25.0))	R = 14.0;
+		else if (CMathUtil::IsInRange(12.0, 25.0, diameter)) R = 10.0;
+		else R = 6.0f;
+		return R;
+	}
+	else {
+		double R = 10.0f;
+		if (CMathUtil::IsBiger(diameter, 12.0))	R = 20.0;
+		else if (CMathUtil::IsInRange(5.0, 12.0, diameter)) R = 10.0;
+		return R;
+	}
 }
 
 double CPCDZTData::getXlen(double diameter)
